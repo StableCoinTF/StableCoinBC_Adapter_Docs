@@ -1,0 +1,11 @@
+{
+  "name": "stablecoin-bc-adapter-docs",
+  "version": "1.0.0",
+  "description": "StableCoin BC Adapter AsyncAPI Documentation",
+  "scripts": {
+    "build": "docker run --rm -v %cd%:/app -w //app asyncapi/cli generate fromTemplate asyncapi.yaml @asyncapi/html-template -o docs --force-write",
+    "serve": "npx http-server . -p 8081 -o /docs",
+    "start": "npm run build && npm run serve",
+    "validate": "asyncapi validate asyncapi.yaml"
+  }
+}
