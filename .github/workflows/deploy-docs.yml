@@ -26,19 +26,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Generate HTML from AsyncAPI
         run: |
-          rm -rf docs
-          mkdir -p docs
-          docker run --rm -v ${{ github.workspace }}:/app -w /app \
-            asyncapi/cli generate fromTemplate asyncapi.yaml \
+          npx -y @asyncapi/cli generate fromTemplate asyncapi.yaml \
             @asyncapi/html-template -o docs --force-write
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
 
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
