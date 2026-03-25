@@ -10,6 +10,8 @@
   "channels": {
     "accountCreate": {
       "address": "adapter.account.create",
+      "title": "계정 생성 요청",
+      "description": "Core → Adapter",
       "messages": {
         "AccountCreateRequest": {
           "name": "AccountCreateRequest",
@@ -56,6 +58,8 @@
     },
     "accountCreated": {
       "address": "adapter.account.created",
+      "title": "계정 생성 결과",
+      "description": "Adapter → Core",
       "messages": {
         "AccountCreateResponse": {
           "name": "AccountCreateResponse",
@@ -134,6 +138,8 @@
     },
     "accountDeploy": {
       "address": "adapter.account.deploy",
+      "title": "계정 배포 요청",
+      "description": "Core → Adapter",
       "messages": {
         "AccountDeployRequest": {
           "name": "AccountDeployRequest",
@@ -191,6 +197,8 @@
     },
     "accountDeployed": {
       "address": "adapter.account.deployed",
+      "title": "계정 배포 결과",
+      "description": "Adapter → Core",
       "messages": {
         "AccountDeployResponse": {
           "name": "AccountDeployResponse",
@@ -213,6 +221,7 @@
                 "x-parser-schema-id": "<anonymous-schema-14>"
               },
               "status": {
+                "title": "트랜잭션 상태",
                 "type": "string",
                 "enum": [
                   "TXPD",
@@ -220,7 +229,7 @@
                   "TXFA"
                 ],
                 "description": "트랜잭션 상태:\n- TXPD: Pending (제출됨, 컨펌 대기 중)\n- TXCF: Confirmed (블록 컨펌 완료)\n- TXFA: Failed (트랜잭션 실패)\n",
-                "x-parser-schema-id": "TransactionStatus"
+                "x-parser-schema-id": "트랜잭션 상태"
               },
               "txHash": {
                 "type": "string",
@@ -282,6 +291,8 @@
     },
     "accountDelete": {
       "address": "adapter.account.delete",
+      "title": "계정 삭제 요청",
+      "description": "Core → Adapter (응답 없음)",
       "messages": {
         "AccountDeleteRequest": {
           "name": "AccountDeleteRequest",
@@ -329,6 +340,8 @@
     },
     "withdrawRequest": {
       "address": "adapter.withdraw.request",
+      "title": "출금 요청",
+      "description": "Core → Adapter",
       "messages": {
         "WithdrawRequest": {
           "name": "WithdrawRequest",
@@ -418,6 +431,8 @@
     },
     "withdrawResult": {
       "address": "adapter.withdraw.result",
+      "title": "출금 결과",
+      "description": "Adapter → Core",
       "messages": {
         "WithdrawResponse": {
           "name": "WithdrawResponse",
@@ -520,6 +535,8 @@
     },
     "paymentRequest": {
       "address": "adapter.payment.request",
+      "title": "결제 요청",
+      "description": "Core → Adapter",
       "messages": {
         "PaymentRequest": {
           "name": "PaymentRequest",
@@ -577,6 +594,8 @@
     },
     "paymentResult": {
       "address": "adapter.payment.result",
+      "title": "결제 결과",
+      "description": "Adapter → Core",
       "messages": {
         "PaymentResponse": {
           "name": "PaymentResponse",
@@ -690,6 +709,8 @@
     },
     "commonConfirm": {
       "address": "adapter.common.confirm",
+      "title": "트랜잭션 컨펌 요청",
+      "description": "Core → Adapter",
       "messages": {
         "ConfirmRequest": {
           "name": "ConfirmRequest",
@@ -755,6 +776,8 @@
     },
     "commonConfirmed": {
       "address": "adapter.common.confirmed",
+      "title": "트랜잭션 컨펌 결과",
+      "description": "Adapter → Core",
       "messages": {
         "ConfirmResponse": {
           "name": "ConfirmResponse",
@@ -846,6 +869,8 @@
     },
     "balanceInquiry": {
       "address": "adapter.balance.inquiry",
+      "title": "잔액 조회 요청",
+      "description": "Core → Adapter",
       "messages": {
         "BalanceRequest": {
           "name": "BalanceRequest",
@@ -903,6 +928,8 @@
     },
     "balanceResult": {
       "address": "adapter.balance.result",
+      "title": "잔액 조회 결과",
+      "description": "Adapter → Core",
       "messages": {
         "BalanceResponse": {
           "name": "BalanceResponse",
@@ -979,6 +1006,8 @@
     },
     "configRegister": {
       "address": "adapter.config.register",
+      "title": "토큰 설정 등록",
+      "description": "Core → Adapter (응답 없음)",
       "messages": {
         "ConfigRegisterRequest": {
           "name": "ConfigRegisterRequest",
@@ -1067,6 +1096,8 @@
     },
     "depositDetected": {
       "address": "adapter.deposit.detected",
+      "title": "입금 감지 이벤트",
+      "description": "Adapter → Core (WebSocket 감지)",
       "messages": {
         "DepositEvent": {
           "name": "DepositEvent",
@@ -1201,163 +1232,133 @@
     }
   },
   "operations": {
-    "receiveAccountCreate": {
+    "계정 생성 요청 수신": {
       "action": "receive",
       "channel": "$ref:$.channels.accountCreate",
+      "title": "계정 생성 요청 수신",
       "summary": "계정 생성 요청 수신",
       "reply": {
         "channel": "$ref:$.channels.accountCreated"
       },
-      "x-parser-unique-object-id": "receiveAccountCreate"
+      "x-parser-unique-object-id": "계정 생성 요청 수신"
     },
-    "sendAccountCreated": {
+    "계정 생성 결과 발행": {
       "action": "send",
       "channel": "$ref:$.channels.accountCreated",
+      "title": "계정 생성 결과 발행",
       "summary": "계정 생성 결과 발행",
-      "x-parser-unique-object-id": "sendAccountCreated"
+      "x-parser-unique-object-id": "계정 생성 결과 발행"
     },
-    "receiveAccountDeploy": {
+    "계정 배포 요청 수신": {
       "action": "receive",
       "channel": "$ref:$.channels.accountDeploy",
+      "title": "계정 배포 요청 수신",
       "summary": "계정 배포 요청 수신",
       "reply": {
         "channel": "$ref:$.channels.accountDeployed"
       },
-      "x-parser-unique-object-id": "receiveAccountDeploy"
+      "x-parser-unique-object-id": "계정 배포 요청 수신"
     },
-    "sendAccountDeployed": {
+    "계정 배포 결과 발행": {
       "action": "send",
       "channel": "$ref:$.channels.accountDeployed",
+      "title": "계정 배포 결과 발행",
       "summary": "계정 배포 결과 발행",
-      "x-parser-unique-object-id": "sendAccountDeployed"
+      "x-parser-unique-object-id": "계정 배포 결과 발행"
     },
-    "receiveAccountDelete": {
+    "계정 삭제 요청 수신": {
       "action": "receive",
       "channel": "$ref:$.channels.accountDelete",
+      "title": "계정 삭제 요청 수신",
       "summary": "계정 삭제 요청 수신 (응답 없음)",
-      "x-parser-unique-object-id": "receiveAccountDelete"
+      "x-parser-unique-object-id": "계정 삭제 요청 수신"
     },
-    "receiveWithdrawRequest": {
+    "출금 요청 수신": {
       "action": "receive",
       "channel": "$ref:$.channels.withdrawRequest",
+      "title": "출금 요청 수신",
       "summary": "출금 요청 수신",
       "reply": {
         "channel": "$ref:$.channels.withdrawResult"
       },
-      "x-parser-unique-object-id": "receiveWithdrawRequest"
+      "x-parser-unique-object-id": "출금 요청 수신"
     },
-    "sendWithdrawResult": {
+    "출금 결과 발행": {
       "action": "send",
       "channel": "$ref:$.channels.withdrawResult",
+      "title": "출금 결과 발행",
       "summary": "출금 결과 발행",
-      "x-parser-unique-object-id": "sendWithdrawResult"
+      "x-parser-unique-object-id": "출금 결과 발행"
     },
-    "receivePaymentRequest": {
+    "결제 요청 수신": {
       "action": "receive",
       "channel": "$ref:$.channels.paymentRequest",
+      "title": "결제 요청 수신",
       "summary": "결제 요청 수신",
       "reply": {
         "channel": "$ref:$.channels.paymentResult"
       },
-      "x-parser-unique-object-id": "receivePaymentRequest"
+      "x-parser-unique-object-id": "결제 요청 수신"
     },
-    "sendPaymentResult": {
+    "결제 결과 발행": {
       "action": "send",
       "channel": "$ref:$.channels.paymentResult",
+      "title": "결제 결과 발행",
       "summary": "결제 결과 발행",
-      "x-parser-unique-object-id": "sendPaymentResult"
+      "x-parser-unique-object-id": "결제 결과 발행"
     },
-    "receiveConfirm": {
+    "트랜잭션 컨펌 요청 수신": {
       "action": "receive",
       "channel": "$ref:$.channels.commonConfirm",
+      "title": "트랜잭션 컨펌 요청 수신",
       "summary": "트랜잭션 컨펌 요청 수신",
       "reply": {
         "channel": "$ref:$.channels.commonConfirmed"
       },
-      "x-parser-unique-object-id": "receiveConfirm"
+      "x-parser-unique-object-id": "트랜잭션 컨펌 요청 수신"
     },
-    "sendConfirmed": {
+    "트랜잭션 컨펌 결과 발행": {
       "action": "send",
       "channel": "$ref:$.channels.commonConfirmed",
+      "title": "트랜잭션 컨펌 결과 발행",
       "summary": "트랜잭션 컨펌 결과 발행",
-      "x-parser-unique-object-id": "sendConfirmed"
+      "x-parser-unique-object-id": "트랜잭션 컨펌 결과 발행"
     },
-    "receiveBalanceInquiry": {
+    "잔액 조회 요청 수신": {
       "action": "receive",
       "channel": "$ref:$.channels.balanceInquiry",
+      "title": "잔액 조회 요청 수신",
       "summary": "잔액 조회 요청 수신",
       "reply": {
         "channel": "$ref:$.channels.balanceResult"
       },
-      "x-parser-unique-object-id": "receiveBalanceInquiry"
+      "x-parser-unique-object-id": "잔액 조회 요청 수신"
     },
-    "sendBalanceResult": {
+    "잔액 조회 결과 발행": {
       "action": "send",
       "channel": "$ref:$.channels.balanceResult",
+      "title": "잔액 조회 결과 발행",
       "summary": "잔액 조회 결과 발행",
-      "x-parser-unique-object-id": "sendBalanceResult"
+      "x-parser-unique-object-id": "잔액 조회 결과 발행"
     },
-    "receiveConfigRegister": {
+    "토큰 설정 등록 요청 수신": {
       "action": "receive",
       "channel": "$ref:$.channels.configRegister",
+      "title": "토큰 설정 등록 요청 수신",
       "summary": "토큰 설정 등록 요청 수신 (응답 없음)",
-      "x-parser-unique-object-id": "receiveConfigRegister"
+      "x-parser-unique-object-id": "토큰 설정 등록 요청 수신"
     },
-    "sendDepositDetected": {
+    "입금 감지 이벤트 발행": {
       "action": "send",
       "channel": "$ref:$.channels.depositDetected",
-      "summary": "입금 감지 이벤트 발행 (WebSocket -> Kafka)",
-      "x-parser-unique-object-id": "sendDepositDetected"
+      "title": "입금 감지 이벤트 발행",
+      "summary": "입금 감지 이벤트 발행 (WebSocket → Kafka)",
+      "x-parser-unique-object-id": "입금 감지 이벤트 발행"
     }
   },
   "components": {
     "schemas": {
-      "TransactionStatus": "$ref:$.channels.accountDeployed.messages.AccountDeployResponse.payload.properties.status",
-      "evmAddress": {
-        "type": "string",
-        "pattern": "^0x[a-fA-F0-9]{40}$",
-        "description": "EVM 주소 (0x + 40자 hex)",
-        "examples": [
-          "0x1234567890abcdef1234567890abcdef12345678"
-        ],
-        "x-parser-schema-id": "evmAddress"
-      },
-      "txHash": {
-        "type": "string",
-        "pattern": "^0x[a-fA-F0-9]{64}$",
-        "description": "트랜잭션 해시 (0x + 64자 hex)",
-        "examples": [
-          "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
-        ],
-        "x-parser-schema-id": "txHash"
-      },
-      "numericString": {
-        "type": "string",
-        "pattern": "^\\d+(\\.\\d+)?$",
-        "description": "숫자 문자열 (정수 또는 소수)",
-        "examples": [
-          "1000",
-          "100.50"
-        ],
-        "x-parser-schema-id": "numericString"
-      }
-    },
-    "messages": {
-      "AccountCreateRequest": "$ref:$.channels.accountCreate.messages.AccountCreateRequest",
-      "AccountCreateResponse": "$ref:$.channels.accountCreated.messages.AccountCreateResponse",
-      "AccountDeployRequest": "$ref:$.channels.accountDeploy.messages.AccountDeployRequest",
-      "AccountDeployResponse": "$ref:$.channels.accountDeployed.messages.AccountDeployResponse",
-      "AccountDeleteRequest": "$ref:$.channels.accountDelete.messages.AccountDeleteRequest",
-      "WithdrawRequest": "$ref:$.channels.withdrawRequest.messages.WithdrawRequest",
-      "WithdrawResponse": "$ref:$.channels.withdrawResult.messages.WithdrawResponse",
-      "PaymentRequest": "$ref:$.channels.paymentRequest.messages.PaymentRequest",
-      "PaymentResponse": "$ref:$.channels.paymentResult.messages.PaymentResponse",
-      "ConfirmRequest": "$ref:$.channels.commonConfirm.messages.ConfirmRequest",
-      "ConfirmResponse": "$ref:$.channels.commonConfirmed.messages.ConfirmResponse",
-      "BalanceRequest": "$ref:$.channels.balanceInquiry.messages.BalanceRequest",
-      "BalanceResponse": "$ref:$.channels.balanceResult.messages.BalanceResponse",
-      "ConfigRegisterRequest": "$ref:$.channels.configRegister.messages.ConfigRegisterRequest",
-      "DepositEvent": "$ref:$.channels.depositDetected.messages.DepositEvent"
+      "트랜잭션 상태": "$ref:$.channels.accountDeployed.messages.AccountDeployResponse.payload.properties.status"
     }
   },
   "x-parser-spec-parsed": true,

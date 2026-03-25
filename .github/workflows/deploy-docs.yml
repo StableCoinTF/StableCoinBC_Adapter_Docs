@@ -33,7 +33,7 @@ jobs:
       - name: Generate HTML from AsyncAPI
         run: npx -y @asyncapi/generator asyncapi.yaml @asyncapi/html-template -o docs --force-write
 
-      - name: Replace sidebar English to Korean
+      - name: Replace English to Korean
         run: |
           sed -i \
             -e 's/>receiveAccountCreate</>계정 생성 요청 수신</g' \
@@ -52,6 +52,21 @@ jobs:
             -e 's/>receiveConfigRegister</>토큰 설정 등록 요청 수신</g' \
             -e 's/>sendDepositDetected</>입금 감지 이벤트 발행</g' \
             -e 's/>TransactionStatus</>트랜잭션 상태</g' \
+            -e 's|font-mono text-base">adapter.account.create<|font-mono text-base">계정 생성 요청 (adapter.account.create)<|g' \
+            -e 's|font-mono text-base">adapter.account.created<|font-mono text-base">계정 생성 결과 (adapter.account.created)<|g' \
+            -e 's|font-mono text-base">adapter.account.deploy<|font-mono text-base">계정 배포 요청 (adapter.account.deploy)<|g' \
+            -e 's|font-mono text-base">adapter.account.deployed<|font-mono text-base">계정 배포 결과 (adapter.account.deployed)<|g' \
+            -e 's|font-mono text-base">adapter.account.delete<|font-mono text-base">계정 삭제 요청 (adapter.account.delete)<|g' \
+            -e 's|font-mono text-base">adapter.withdraw.request<|font-mono text-base">출금 요청 (adapter.withdraw.request)<|g' \
+            -e 's|font-mono text-base">adapter.withdraw.result<|font-mono text-base">출금 결과 (adapter.withdraw.result)<|g' \
+            -e 's|font-mono text-base">adapter.payment.request<|font-mono text-base">결제 요청 (adapter.payment.request)<|g' \
+            -e 's|font-mono text-base">adapter.payment.result<|font-mono text-base">결제 결과 (adapter.payment.result)<|g' \
+            -e 's|font-mono text-base">adapter.common.confirm<|font-mono text-base">트랜잭션 컨펌 요청 (adapter.common.confirm)<|g' \
+            -e 's|font-mono text-base">adapter.common.confirmed<|font-mono text-base">트랜잭션 컨펌 결과 (adapter.common.confirmed)<|g' \
+            -e 's|font-mono text-base">adapter.balance.inquiry<|font-mono text-base">잔액 조회 요청 (adapter.balance.inquiry)<|g' \
+            -e 's|font-mono text-base">adapter.balance.result<|font-mono text-base">잔액 조회 결과 (adapter.balance.result)<|g' \
+            -e 's|font-mono text-base">adapter.config.register<|font-mono text-base">토큰 설정 등록 (adapter.config.register)<|g' \
+            -e 's|font-mono text-base">adapter.deposit.detected<|font-mono text-base">입금 감지 이벤트 (adapter.deposit.detected)<|g' \
             docs/index.html
 
       - uses: actions/upload-pages-artifact@v3
