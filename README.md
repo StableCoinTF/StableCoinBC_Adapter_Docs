@@ -95,10 +95,13 @@ operations:
 -e 's/sendMyNewResult/새 기능 결과 발행/g' \
 ```
 
-### 4. push하면 자동 배포
+### 4. PR 생성 후 머지하면 자동 배포
 
 ```bash
+git checkout -b feature/새-기능-토픽-추가
 git add asyncapi.yaml .github/workflows/deploy-docs.yml
 git commit -m "새 기능 토픽 추가"
-git push origin main
+git push origin feature/새-기능-토픽-추가
 ```
+
+GitHub에서 `main` 브랜치로 PR 생성 → 리뷰 → 머지 시 자동 배포됩니다.
