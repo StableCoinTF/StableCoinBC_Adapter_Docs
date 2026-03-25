@@ -26,13 +26,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Generate HTML from AsyncAPI
-        run: |
-          docker run --rm -u 0 \
-            -v ${{ github.workspace }}:/app -w /app \
-            asyncapi/cli generate fromTemplate asyncapi.yaml \
-            @asyncapi/html-template -o docs --force-write
-          sudo chown -R $(id -u):$(id -g) docs
+        run: npx -y @asyncapi/generator asyncapi.yaml @asyncapi/html-template -o docs --force-write
 
       - uses: actions/upload-pages-artifact@v3
         with:
