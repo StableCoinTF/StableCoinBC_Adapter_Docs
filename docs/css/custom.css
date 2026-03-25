@@ -1,0 +1,132 @@
+/* REPLY INFORMATION 블록 제거 */
+.panel-item--center > .font-mono.px-8.py-4 { display: none !important; }
+
+/* Operation ID 블록 제거 */
+.border.bg-gray-100.rounded.px-4.py-2.mt-2 { display: none !important; }
+
+/* Operation 설명 텍스트 크기 키우기 */
+.panel-item--center > p.text-gray-600.text-sm.mt-2 { font-size: 1.05rem !important; }
+
+/* === ReDoc 스타일 사이드바: 화이트, 미니멀 === */
+.sidebar {
+  display: block !important;
+  position: fixed !important;
+  top: 0; left: 0;
+  width: 260px !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  background: #fafafa !important;
+  border-right: 1px solid #e5e7eb !important;
+  box-shadow: none !important;
+  z-index: 40 !important;
+  overflow-y: auto !important;
+}
+.sidebar > div {
+  background: #fafafa !important;
+  padding: 20px 14px 40px !important;
+}
+.sidebar h1 {
+  color: #1a1a1a !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
+  margin-bottom: 10px;
+}
+
+/* Introduction 등 일반 링크 */
+.sidebar a {
+  color: #333 !important;
+  font-size: 0.8rem !important;
+  text-decoration: none !important;
+}
+.sidebar a:hover {
+  color: #4f46e5 !important;
+}
+
+/* Operation 링크: 뱃지 + 메뉴명 한 줄 */
+.sidebar a.flex {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  margin-bottom: 2px !important;
+  padding: 3px 0 !important;
+  line-height: 1.3 !important;
+}
+
+/* 뱃지 */
+.sidebar a.flex strong.text-white {
+  font-size: 0.45rem !important;
+  padding: 2px 4px !important;
+  margin: 0 4px 0 0 !important;
+  color: rgba(255,255,255,0.95) !important;
+  border-radius: 2px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  height: 16px !important;
+  min-width: 32px !important;
+  text-align: center !important;
+}
+.sidebar a.flex:hover strong.text-white,
+.sidebar a.flex.active strong.text-white {
+  color: #fff !important;
+}
+.sidebar .bg-orange-600 { background: #6366f1 !important; }
+.sidebar .bg-blue-600   { background: #3b82f6 !important; }
+.sidebar .bg-green-600  { background: #10b981 !important; }
+
+/* 메뉴명 텍스트 */
+.sidebar a.flex span {
+  font-size: 0.9rem !important;
+  color: #666 !important;
+  line-height: 1.3 !important;
+}
+.sidebar a.flex:hover span,
+.sidebar a.flex.active span {
+  color: #312e81 !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+}
+.sidebar a.flex:hover,
+.sidebar a.flex.active {
+  background: rgba(79, 70, 229, 0.08) !important;
+  border-radius: 4px !important;
+  padding-left: 4px !important;
+}
+/* 섹션 헤더 (OPERATIONS, SCHEMAS) */
+.sidebar .text-xs.uppercase {
+  color: #999 !important;
+  font-weight: 600 !important;
+  font-size: 0.6rem !important;
+  letter-spacing: 0.1em;
+  margin-top: 14px;
+}
+
+/* li 간격 줄이기 */
+.sidebar li { margin-bottom: 0 !important; }
+.sidebar li.mb-3 { margin-bottom: 4px !important; }
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
+
+/* 햄버거 숨김 */
+.burger-menu { display: none !important; }
+
+/* 본문 사이드바만큼 밀기 */
+.panel--center {
+  margin-left: 260px !important;
+  padding: 32px 48px !important;
+}
+
+/* 모바일: 사이드바 숨기고 햄버거 복원 */
+@media (max-width: 768px) {
+  .sidebar { display: none !important; }
+  .burger-menu { display: flex !important; }
+  .panel--center { margin-left: 0 !important; padding: 20px 16px !important; }
+}

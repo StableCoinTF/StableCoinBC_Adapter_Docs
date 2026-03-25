@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - "asyncapi.yaml"
+      - "custom.css"
+      - "custom.js"
       - ".github/workflows/deploy-docs.yml"
   workflow_dispatch:
 
@@ -86,6 +88,9 @@ jobs:
             -e 's/sendDepositDetected/입금 감지 이벤트 발행/g' \
             -e 's/TransactionStatus/트랜잭션 상태/g' \
             docs/js/app.js
+          cp custom.css docs/css/custom.css
+          cp custom.js docs/js/custom.js
+          sed -i 's|</head>|<link href="css/custom.css" rel="stylesheet"><script src="js/custom.js" defer></script></head>|' docs/index.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
