@@ -51,7 +51,11 @@ jobs:
             -e 's/>sendConfirmed</>트랜잭션 컨펌 결과 발행</g' \
             -e 's/>receiveBalanceInquiry</>잔액 조회 요청 수신</g' \
             -e 's/>sendBalanceResult</>잔액 조회 결과 발행</g' \
-            -e 's/>receiveConfigRegister</>토큰 설정 등록 요청 수신</g' \
+            -e 's/>receiveSettlementRequest</>정산 요청 수신</g' \
+            -e 's/>sendSettlementResult</>정산 결과 발행</g' \
+            -e 's/>receiveReconciliationInquiry</>대사 조회 요청 수신</g' \
+            -e 's/>sendReconciliationResult</>대사 조회 결과 발행</g' \
+            -e 's/>receiveConfigCreate</>설정 등록 요청 수신</g' \
             -e 's/>sendDepositDetected</>입금 감지 이벤트 발행</g' \
             -e 's/>TransactionStatus</>트랜잭션 상태</g' \
             -e 's|font-mono text-base">adapter.account.create<|font-mono text-base">계정 생성 요청 (adapter.account.create)<|g' \
@@ -67,7 +71,11 @@ jobs:
             -e 's|font-mono text-base">adapter.common.confirmed<|font-mono text-base">트랜잭션 컨펌 결과 (adapter.common.confirmed)<|g' \
             -e 's|font-mono text-base">adapter.balance.inquiry<|font-mono text-base">잔액 조회 요청 (adapter.balance.inquiry)<|g' \
             -e 's|font-mono text-base">adapter.balance.result<|font-mono text-base">잔액 조회 결과 (adapter.balance.result)<|g' \
-            -e 's|font-mono text-base">adapter.config.register<|font-mono text-base">토큰 설정 등록 (adapter.config.register)<|g' \
+            -e 's|font-mono text-base">adapter.settlement.request<|font-mono text-base">정산 요청 (adapter.settlement.request)<|g' \
+            -e 's|font-mono text-base">adapter.settlement.result<|font-mono text-base">정산 결과 (adapter.settlement.result)<|g' \
+            -e 's|font-mono text-base">adapter.reconciliation.inquiry<|font-mono text-base">대사 조회 요청 (adapter.reconciliation.inquiry)<|g' \
+            -e 's|font-mono text-base">adapter.reconciliation.result<|font-mono text-base">대사 조회 결과 (adapter.reconciliation.result)<|g' \
+            -e 's|font-mono text-base">adapter.config.create<|font-mono text-base">설정 등록 (adapter.config.create)<|g' \
             -e 's|font-mono text-base">adapter.deposit.detected<|font-mono text-base">입금 감지 이벤트 (adapter.deposit.detected)<|g' \
             docs/index.html
           sed -i \
@@ -84,7 +92,11 @@ jobs:
             -e 's/sendConfirmed/트랜잭션 컨펌 결과 발행/g' \
             -e 's/receiveBalanceInquiry/잔액 조회 요청 수신/g' \
             -e 's/sendBalanceResult/잔액 조회 결과 발행/g' \
-            -e 's/receiveConfigRegister/토큰 설정 등록 요청 수신/g' \
+            -e 's/receiveSettlementRequest/정산 요청 수신/g' \
+            -e 's/sendSettlementResult/정산 결과 발행/g' \
+            -e 's/receiveReconciliationInquiry/대사 조회 요청 수신/g' \
+            -e 's/sendReconciliationResult/대사 조회 결과 발행/g' \
+            -e 's/receiveConfigCreate/설정 등록 요청 수신/g' \
             -e 's/sendDepositDetected/입금 감지 이벤트 발행/g' \
             -e 's/TransactionStatus/트랜잭션 상태/g' \
             docs/js/app.js

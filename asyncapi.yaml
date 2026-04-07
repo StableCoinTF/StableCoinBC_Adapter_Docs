@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: |
     StableCoin 블록체인 어댑터의 Kafka 메시지 스펙.
-    계정 생성/배포, 출금, 결제, 잔액 조회, 입금 감지 등의 블록체인 연동 기능을 제공합니다.
+    계정 생성/배포, 출금, 결제, 정산, 잔액 조회, 대사, 입금 감지 등의 블록체인 연동 기능을 제공합니다.
 
 defaultContentType: application/json
 
@@ -589,7 +589,6 @@ channels:
           type: object
           required:
             - requestId
-            - chainId
             - address
           properties:
             requestId:
@@ -597,11 +596,6 @@ channels:
               description: 요청 고유 ID
               examples:
                 - "B123456789"
-            chainId:
-              type: string
-              description: 체인 ID
-              examples:
-                - "11155111"
             address:
               type: string
               description: 조회할 주소
@@ -612,7 +606,6 @@ channels:
           - name: 잔액 조회 요청 예시
             payload:
               requestId: "B123456789"
-              chainId: "11155111"
               address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
 
   balanceResult:
@@ -627,61 +620,85 @@ channels:
           type: object
           required:
             - requestId
+            - result
           properties:
             requestId:
               type: string
               description: 요청 고유 ID
               examples:
                 - "B123456789"
-            chainId:
+            result:
+              type: array
+              description: 체인/토큰별 잔액 목록
+              items:
+                type: object
+                required:
+                  - chainId
+                  - symbol
+                  - address
+                  - balance
+                properties:
+                  chainId:
+                    type: string
+                    description: 체인 ID
+                    examples:
+                      - "11155111"
+                  symbol:
+                    type: string
+                    description: 토큰 심볼
+                    examples:
+                      - "USDC"
+                  address:
+                    type: string
+                    description: 조회한 주소
+                    pattern: "^0x[a-fA-F0-9]{40}$"
+                    examples:
+                      - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+                  balance:
+                    type: string
+                    description: 잔액 (decimal string)
+                    examples:
+                      - "250.0"
+            message:
               type: string
-              description: 체인 ID (실패 시 null)
+              description: 에러 메시지 (성공 시 null)
               nullable: true
               examples:
-                - "11155111"
-            address:
-              type: string
-              description: 조회한 주소 (실패 시 null)
-              pattern: "^0x[a-fA-F0-9]{40}$"
-              nullable: true
-              examples:
-                - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
-            balance:
-              type: string
-              description: 잔액 (decimal string, 실패 시 null)
-              nullable: true
-              examples:
-                - "250000000000000000000"
+                - null
         examples:
           - name: 잔액 조회 성공
             payload:
               requestId: "B123456789"
-              chainId: "11155111"
-              address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
-              balance: "250000000000000000000"
+              result:
+                - chainId: "11155111"
+                  symbol: "USDC"
+                  address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+                  balance: "250.0"
+                - chainId: "11155111"
+                  symbol: "ETH"
+                  address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+                  balance: "1.5"
+              message: null
           - name: 잔액 조회 실패
             payload:
               requestId: "B123456789"
-              chainId: null
-              address: null
-              balance: null
+              result: []
+              message: "ACCOUNT_NOT_FOUND"
 
-  configRegister:
-    address: adapter.config.register
-    title: 토큰 설정 등록
+  configCreate:
+    address: adapter.config.create
+    title: 설정 등록
     description: Core → Adapter (응답 없음)
     messages:
       ConfigRegisterRequest:
         name: ConfigRegisterRequest
-        title: 토큰 설정 등록 요청 (NoReply)
+        title: 설정 등록 요청 (NoReply)
         payload:
           type: object
           required:
             - requestId
             - chainId
             - contractAddress
-            - symbol
-            - decimals
           properties:
             requestId:
               type: string
@@ -699,32 +716,261 @@ channels:
               pattern: "^0x[a-fA-F0-9]{40}$"
               examples:
                 - "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        examples:
+          - name: 토큰 설정 등록
+            payload:
+              requestId: "C123456789"
+              chainId: "43114"
+              contractAddress: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+
+  settlementRequest:
+    address: adapter.settlement.request
+    title: 정산 요청
+    description: Core → Adapter
+    messages:
+      SettlementRequest:
+        name: SettlementRequest
+        title: 정산 요청
+        payload:
+          type: object
+          required:
+            - requestId
+            - symbol
+            - amount
+            - fee
+            - merchantAddress
+          properties:
+            requestId:
+              type: string
+              description: 요청 고유 ID
+              examples:
+                - "ST-20260407-000001"
             symbol:
               type: string
               description: 토큰 심볼 (1-20자)
               examples:
                 - "USDC"
-            decimals:
-              type: integer
-              description: 토큰 소수점 자릿수
-              minimum: 0
+            amount:
+              type: string
+              description: 정산 금액 (decimal string)
+              pattern: "^\\d+(\\.\\d+)?$"
               examples:
-                - 6
+                - "100.00"
+            fee:
+              type: string
+              description: 수수료 (decimal string)
+              pattern: "^\\d+(\\.\\d+)?$"
+              examples:
+                - "1.50"
+            merchantAddress:
+              type: string
+              description: 가맹점 주소
+              pattern: "^0x[a-fA-F0-9]{40}$"
+              examples:
+                - "0xCBdAbfa3d691211f337e1f415D4Ee64979C7ee00"
         examples:
-          - name: USDC 토큰 설정 등록
+          - name: USDC 정산 요청
             payload:
-              requestId: "C123456789"
-              chainId: "43114"
-              contractAddress: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+              requestId: "ST-20260407-000001"
               symbol: "USDC"
-              decimals: 6
-          - name: USDT 토큰 설정 등록
+              amount: "100.00"
+              fee: "1.50"
+              merchantAddress: "0xCBdAbfa3d691211f337e1f415D4Ee64979C7ee00"
+
+  settlementResult:
+    address: adapter.settlement.result
+    title: 정산 결과
+    description: Adapter → Core
+    messages:
+      SettlementResponse:
+        name: SettlementResponse
+        title: 정산 결과
+        payload:
+          type: object
+          required:
+            - requestId
+            - chainId
+            - status
+          properties:
+            requestId:
+              type: string
+              description: 요청 고유 ID
+              examples:
+                - "ST-20260407-000001"
+            chainId:
+              type: string
+              description: 체인 ID
+              examples:
+                - "56357"
+            status:
+              $ref: "#/components/schemas/TransactionStatus"
+            txHash:
+              type: string
+              description: 트랜잭션 해시 (실패 시 null)
+              pattern: "^0x[a-fA-F0-9]{64}$"
+              nullable: true
+              examples:
+                - "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
+            completeDatetime:
+              type: string
+              description: 완료 일시 (yyyyMMddHHmmss, 실패 시 null)
+              nullable: true
+              examples:
+                - "20260407143015"
+            amount:
+              type: string
+              description: 정산 금액 (실패 시 null)
+              nullable: true
+              examples:
+                - "100.00"
+            gasFee:
+              type: string
+              description: 가스 수수료 (실패 시 null)
+              nullable: true
+              examples:
+                - "21000"
+            message:
+              type: string
+              description: 에러 메시지 (성공 시 null)
+              nullable: true
+              examples:
+                - null
+        examples:
+          - name: 정산 성공
             payload:
-              requestId: "C123456790"
-              chainId: "43114"
-              contractAddress: "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7"
-              symbol: "USDT"
-              decimals: 6
+              requestId: "ST-20260407-000001"
+              chainId: "56357"
+              status: "TXCF"
+              txHash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
+              completeDatetime: "20260407143015"
+              amount: "100.00"
+              gasFee: "21000"
+              message: null
+          - name: 정산 실패
+            payload:
+              requestId: "ST-20260407-000001"
+              chainId: "56357"
+              status: "TXFA"
+              txHash: null
+              completeDatetime: null
+              amount: null
+              gasFee: null
+              message: "INSUFFICIENT_BALANCE"
+
+  reconciliationInquiry:
+    address: adapter.reconciliation.inquiry
+    title: 대사 조회 요청
+    description: Core → Adapter
+    messages:
+      ReconciliationRequest:
+        name: ReconciliationRequest
+        title: 대사 조회 요청
+        payload:
+          type: object
+          required:
+            - requestId
+            - targetDt
+          properties:
+            requestId:
+              type: string
+              description: 요청 고유 ID
+              examples:
+                - "RC-20260407-000001"
+            targetDt:
+              type: string
+              description: 대사 기준 일시 (yyyyMMddHHmmss)
+              pattern: "^\\d{14}$"
+              examples:
+                - "20260407000000"
+        examples:
+          - name: 대사 조회 요청 예시
+            payload:
+              requestId: "RC-20260407-000001"
+              targetDt: "20260407000000"
+
+  reconciliationResult:
+    address: adapter.reconciliation.result
+    title: 대사 조회 결과
+    description: Adapter → Core
+    messages:
+      ReconciliationResponse:
+        name: ReconciliationResponse
+        title: 대사 조회 결과
+        payload:
+          type: object
+          required:
+            - requestId
+            - result
+          properties:
+            requestId:
+              type: string
+              description: 요청 고유 ID
+              examples:
+                - "RC-20260407-000001"
+            result:
+              type: array
+              description: 토큰별 대사 결과 목록
+              items:
+                type: object
+                required:
+                  - symbol
+                  - userOnTotal
+                  - platformOnTotal
+                  - reserveOnTotal
+                  - notDeployUserOnTotal
+                properties:
+                  symbol:
+                    type: string
+                    description: 토큰 심볼
+                    examples:
+                      - "USDC"
+                  userOnTotal:
+                    type: string
+                    description: 사용자 온체인 잔액 합계 (decimal string)
+                    examples:
+                      - "50000.00"
+                  platformOnTotal:
+                    type: string
+                    description: 플랫폼 온체인 잔액 합계 (decimal string)
+                    examples:
+                      - "10000.00"
+                  reserveOnTotal:
+                    type: string
+                    description: 리저브 온체인 잔액 합계 (decimal string)
+                    examples:
+                      - "0"
+                  notDeployUserOnTotal:
+                    type: string
+                    description: 미배포 사용자 온체인 잔액 합계 (decimal string)
+                    examples:
+                      - "500.00"
+            message:
+              type: string
+              description: 에러 메시지 (성공 시 null)
+              nullable: true
+              examples:
+                - null
+        examples:
+          - name: 대사 조회 성공
+            payload:
+              requestId: "RC-20260407-000001"
+              result:
+                - symbol: "USDC"
+                  userOnTotal: "50000.00"
+                  platformOnTotal: "10000.00"
+                  reserveOnTotal: "0"
+                  notDeployUserOnTotal: "500.00"
+                - symbol: "USDT"
+                  userOnTotal: "30000.00"
+                  platformOnTotal: "5000.00"
+                  reserveOnTotal: "0"
+                  notDeployUserOnTotal: "200.00"
+              message: null
+          - name: 대사 조회 실패
+            payload:
+              requestId: "RC-20260407-000001"
+              result: []
+              message: "VALIDATION_ERROR"
 
   depositDetected:
     address: adapter.deposit.detected
@@ -930,12 +1176,46 @@ operations:
     title: 잔액 조회 결과 발행
     summary: 잔액 조회 결과 발행
 
-  receiveConfigRegister:
+  receiveSettlementRequest:
     action: receive
     channel:
-      $ref: "#/channels/configRegister"
-    title: 토큰 설정 등록 요청 수신
-    summary: 토큰 설정 등록 요청 수신 (응답 없음)
+      $ref: "#/channels/settlementRequest"
+    title: 정산 요청 수신
+    summary: 정산 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/settlementResult"
+
+  sendSettlementResult:
+    action: send
+    channel:
+      $ref: "#/channels/settlementResult"
+    title: 정산 결과 발행
+    summary: 정산 결과 발행
+
+  receiveReconciliationInquiry:
+    action: receive
+    channel:
+      $ref: "#/channels/reconciliationInquiry"
+    title: 대사 조회 요청 수신
+    summary: 대사 조회 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/reconciliationResult"
+
+  sendReconciliationResult:
+    action: send
+    channel:
+      $ref: "#/channels/reconciliationResult"
+    title: 대사 조회 결과 발행
+    summary: 대사 조회 결과 발행
+
+  receiveConfigCreate:
+    action: receive
+    channel:
+      $ref: "#/channels/configCreate"
+    title: 설정 등록 요청 수신
+    summary: 설정 등록 요청 수신 (응답 없음)
 
   sendDepositDetected:
     action: send
