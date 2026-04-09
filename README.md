@@ -1,5 +1,7 @@
 # StableCoin BC Adapter - Kafka API 문서
 
+> **⚠️ 이 저장소는 다른 프로젝트와 동일하게 로컬에서 commit & push 로 관리합니다. GitHub 웹 UI에서 직접 편집 ❌**
+
 ## 토픽 추가 가이드
 
 ### 1. `asyncapi.yaml`에 channel 추가
