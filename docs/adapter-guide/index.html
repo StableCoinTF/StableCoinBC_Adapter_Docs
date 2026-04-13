@@ -2207,6 +2207,13 @@ const TOKENS = {
   }),
 };
 
+// DB 기준: 네트워크별 사용 가능한 토큰 목록
+const TOKENS_BY_NETWORK = {
+  'FUJI':        ['Native','USDC','USDT'],
+  'ETH Sepolia': ['Native','USDC','USDT'],
+  'K-Mainnet':   ['Native','USDC','USDT','ETH','AVAX'],
+};
+
 function buildPreset(network, token) {
   const net = NETWORKS[network];
   const tok = TOKENS[token](network);
@@ -3018,7 +3025,12 @@ function updateTokenOptions(sc) {
   const network = selNet.value;
   const currentToken = selTok.value;
 
-  selTok.innerHTML = (sc || SCENARIOS[currentScenario]).tokens.map(t => {
+  // 시나리오 토큰과 네트워크별 가용 토큰의 교집합
+  const scenarioTokens = (sc || SCENARIOS[currentScenario]).tokens;
+  const availableTokens = TOKENS_BY_NETWORK[network] || scenarioTokens;
+  const filtered = scenarioTokens.filter(t => availableTokens.includes(t));
+
+  selTok.innerHTML = filtered.map(t => {
     const tok = TOKENS[t](network);
     const label = t === 'Native' ? `${tok.symbol} (Native)` : t;
     return `<option value="${t}" ${t===currentToken?'selected':''}>${label}</option>`;
