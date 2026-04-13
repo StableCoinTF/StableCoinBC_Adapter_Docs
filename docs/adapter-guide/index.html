@@ -2164,28 +2164,24 @@ function stepHtml(step) {
 
 // ─── Network & Token Data ───
 const NETWORKS = {
-  'K-Mainnet':    { chainId:'56357', chainSymbol:'KRW', icon:'🇰🇷', blockNumber:1000000, rpcUrl:'https://rpc.kcp.network' },
-  'Ethereum':     { chainId:'1', chainSymbol:'ETH', icon:'🔷', blockNumber:19800500, rpcUrl:'https://mainnet.infura.io/v3/...' },
-  'ETH Sepolia':  { chainId:'11155111', chainSymbol:'ETH', icon:'🔹', blockNumber:5800000, rpcUrl:'https://sepolia.infura.io/v3/...' },
-  'Avalanche':    { chainId:'43114', chainSymbol:'AVAX', icon:'🔺', blockNumber:42100000, rpcUrl:'https://api.avax.network/ext/bc/C/rpc' },
-  'FUJI':         { chainId:'43113', chainSymbol:'AVAX', icon:'🧪', blockNumber:28450000, rpcUrl:'https://api.avax-test.network/ext/bc/C/rpc' },
+  'K-Mainnet':    { chainId:'56357', chainSymbol:'KRW', icon:'🇰🇷', blockNumber:1000000, rpcUrl:'https://rpc.kcp.network', confirmBlocks:1 },
+  'ETH Sepolia':  { chainId:'11155111', chainSymbol:'ETH', icon:'🔹', blockNumber:5800000, rpcUrl:'https://sepolia.infura.io/v3/...', confirmBlocks:12 },
+  'FUJI':         { chainId:'43113', chainSymbol:'AVAX', icon:'🧪', blockNumber:28450000, rpcUrl:'https://api.avax-test.network/ext/bc/C/rpc', confirmBlocks:1 },
 };
 
 const TOKENS = {
   'Native': (net) => ({
     symbol: NETWORKS[net].chainSymbol,
     isNative: true, tokenAddress: null,
-    decimals: net==='K-Mainnet' ? 0 : 18,
-    amount:   net==='K-Mainnet' ? '10000' : '100000000000000000',
-    display:  net==='K-Mainnet' ? '10,000 KRW' : `0.1 ${NETWORKS[net].chainSymbol}`,
+    decimals: 18,
+    amount: '100000000000000000',
+    display: `0.1 ${NETWORKS[net].chainSymbol}`,
   }),
   'USDC': (net) => ({
     symbol:'USDC', isNative:false, decimals:6, amount:'500000', display:'0.5 USDC',
     tokenAddress: {
       'K-Mainnet':'0xKRWToken234567890abcdef1234567890abcdef00',
-      'Ethereum':'0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       'ETH Sepolia':'0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238',
-      'Avalanche':'0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
       'FUJI':'0x5425890298aed601595a70AB815c96711a31Bc65',
     }[net] || addr(),
   }),
@@ -2193,10 +2189,20 @@ const TOKENS = {
     symbol:'USDT', isNative:false, decimals:6, amount:'1000000', display:'1 USDT',
     tokenAddress: {
       'K-Mainnet':'0xKRWUSDT34567890abcdef1234567890abcdef00',
-      'Ethereum':'0xdAC17F958D2ee523a2206206994597C13D831ec7',
       'ETH Sepolia':'0x7169D38820dfd117C3FA1f22a697dBA58d90BA06',
-      'Avalanche':'0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7',
       'FUJI':'0x134Dc38AE8C853D1aa2103d5047591acDAa16682',
+    }[net] || addr(),
+  }),
+  'ETH': (net) => ({
+    symbol:'ETH', isNative:false, decimals:18, amount:'10000000000000000', display:'0.01 ETH',
+    tokenAddress: {
+      'K-Mainnet':'0xKRWETH234567890abcdef1234567890abcdef0000',
+    }[net] || addr(),
+  }),
+  'AVAX': (net) => ({
+    symbol:'AVAX', isNative:false, decimals:18, amount:'50000000000000000', display:'0.05 AVAX',
+    tokenAddress: {
+      'K-Mainnet':'0xKRWAVAX34567890abcdef1234567890abcdef0000',
     }[net] || addr(),
   }),
 };
@@ -2221,7 +2227,7 @@ const SCENARIOS = {
   'account-create': {
     title: (p) => `🆕 계정 생성 시뮬레이션`,
     subtitle: (p) => `CREATE2로 ${p.chainName}(${p.chainId}) 결정론적 주소를 계산합니다`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2269,7 +2275,7 @@ const SCENARIOS = {
   'account-deploy': {
     title: (p) => `🚀 계정 배포 시뮬레이션`,
     subtitle: (p) => `${p.chainName}(${p.chainId})에 CREATE2 프록시 스마트 계정을 배포합니다`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2374,7 +2380,7 @@ const SCENARIOS = {
   'deposit': {
     title: (p) => `💰 입금 감지 시뮬레이션`,
     subtitle: (p) => `${p.chainName} ${p.symbol} ${p.isNative?'(Native)':'(ERC-20)'} 입금 이벤트 처리`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2436,7 +2442,7 @@ const SCENARIOS = {
     subtitle: (p) => p.isNative
       ? `${p.chainName} ${p.symbol} Native 코인 전송 → sendNativeTransfer`
       : `${p.chainName} ${p.symbol} ERC-20 토큰 전송 → sendErc20Transfer`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2509,7 +2515,7 @@ const SCENARIOS = {
   'withdraw-fail': {
     title: (p) => `📤 출금 (Nonce 충돌 재시도)`,
     subtitle: (p) => `${p.chainName} ${p.symbol} — Bundler Nonce 충돌 발생 시 1회 자동 재시도`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 재시도 성공', desc:'' },
@@ -2560,7 +2566,7 @@ const SCENARIOS = {
   'payment': {
     title: (p) => `💳 결제 시뮬레이션`,
     subtitle: (p) => `HotWallet → Settlement 주소로 ${p.symbol} 전송 (${p.chainName} 결제 체인)`,
-    networks: ['K-Mainnet','Ethereum','ETH Sepolia','FUJI','Avalanche'], tokens: ['Native','USDC','USDT'],
+    networks: ['K-Mainnet','ETH Sepolia','FUJI'], tokens: ['Native','USDC','USDT','ETH','AVAX'],
     defaultNetwork: 'K-Mainnet', defaultToken: 'Native',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2619,7 +2625,7 @@ const SCENARIOS = {
   'confirm': {
     title: (p) => `✅ 컨펌 조회 시뮬레이션`,
     subtitle: (p) => `${p.chainName} 트랜잭션 컨펌 수 계산 및 TXCF/TXPD 판정`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 (TXCF)', desc:'' },
@@ -2667,7 +2673,7 @@ const SCENARIOS = {
   'balance': {
     title: (p) => `💎 잔액 조회 시뮬레이션`,
     subtitle: (p) => `${p.chainName} ${p.chainSymbol}(Native) + ${p.symbol}(ERC-20) 병렬 조회`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2719,7 +2725,7 @@ const SCENARIOS = {
   'settlement': {
     title: (p) => `🏦 정산 시뮬레이션 (EOFS Split)`,
     subtitle: (p) => `${p.chainName} ${p.symbol} — EOFS Split 가맹점+수수료 동시 분배`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche'], tokens: ['USDC','USDT'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2779,7 +2785,7 @@ const SCENARIOS = {
   'settlement-collect': {
     title: (p) => `📥 정산 집금 시뮬레이션`,
     subtitle: (p) => `외부 주소 → HotWallet으로 ${p.symbol} 회수 (${p.chainName})`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche'], tokens: ['USDC','USDT'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2832,7 +2838,7 @@ const SCENARIOS = {
   'collection': {
     title: (p) => `🗂️ 집금 시뮬레이션`,
     subtitle: (p) => `입금 감지 후 ${p.chainName} ${p.symbol} 토큰을 HotWallet로 자동 집금`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2886,7 +2892,7 @@ const SCENARIOS = {
   'config-register': {
     title: (p) => `⚙️ 설정 등록 시뮬레이션`,
     subtitle: (p) => `${p.chainName}(${p.chainId}) + ${p.symbol} 설정을 RPC 자동 조회 후 DB 저장`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche','K-Mainnet'], tokens: ['USDC','USDT','Native'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT','Native','ETH','AVAX'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
@@ -2938,7 +2944,7 @@ const SCENARIOS = {
   'reconciliation': {
     title: (p) => `📊 대사 시뮬레이션`,
     subtitle: (p) => `${p.chainName} 특정 시점 온체인 잔액 집계 (별도 Worker)`,
-    networks: ['FUJI','Ethereum','ETH Sepolia','Avalanche'], tokens: ['USDC','USDT'],
+    networks: ['FUJI','ETH Sepolia','K-Mainnet'], tokens: ['USDC','USDT'],
     defaultNetwork: 'FUJI', defaultToken: 'USDC',
     errorCases: [
       { key:'none', label:'✅ 정상 처리', desc:'' },
