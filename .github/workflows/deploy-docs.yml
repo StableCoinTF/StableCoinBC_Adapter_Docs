@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "asyncapi.yaml"
+      - "channels.yaml"
       - "custom.css"
       - "custom.js"
       - ".github/workflows/deploy-docs.yml"

@@ -4,7 +4,7 @@
   "info": {
     "title": "StableCoin BC Adapter",
     "version": "1.0.0",
-    "description": "StableCoin 블록체인 어댑터의 Kafka 메시지 스펙.\n계정 생성/배포, 출금, 결제, 잔액 조회, 입금 감지 등의 블록체인 연동 기능을 제공합니다.\n"
+    "description": "StableCoin 블록체인 어댑터의 Kafka 메시지 스펙.\n계정 생성/배포, 출금, 결제, 정산, 잔액 조회, 대사, 입금 감지 등의 블록체인 연동 기능을 제공합니다.\n"
   },
   "defaultContentType": "application/json",
   "channels": {
@@ -12,6 +12,8 @@
       "address": "adapter.account.create",
       "title": "계정 생성 요청",
       "description": "Core → Adapter",
+      "x-group": "계정 관리",
+      "x-icon": "🆕",
       "messages": {
         "AccountCreateRequest": {
           "name": "AccountCreateRequest",
@@ -140,6 +142,8 @@
       "address": "adapter.account.deploy",
       "title": "계정 배포 요청",
       "description": "Core → Adapter",
+      "x-group": "계정 관리",
+      "x-icon": "🚀",
       "messages": {
         "AccountDeployRequest": {
           "name": "AccountDeployRequest",
@@ -229,7 +233,7 @@
                   "TXFA"
                 ],
                 "description": "트랜잭션 상태:\n- TXPD: Pending (제출됨, 컨펌 대기 중)\n- TXCF: Confirmed (블록 컨펌 완료)\n- TXFA: Failed (트랜잭션 실패)\n",
-                "x-parser-schema-id": "트랜잭션 상태"
+                "x-parser-schema-id": "TransactionStatus"
               },
               "txHash": {
                 "type": "string",
@@ -293,6 +297,8 @@
       "address": "adapter.account.delete",
       "title": "계정 삭제 요청",
       "description": "Core → Adapter (응답 없음)",
+      "x-group": "계정 관리",
+      "x-icon": "🗑️",
       "messages": {
         "AccountDeleteRequest": {
           "name": "AccountDeleteRequest",
@@ -342,6 +348,8 @@
       "address": "adapter.withdraw.request",
       "title": "출금 요청",
       "description": "Core → Adapter",
+      "x-group": "거래",
+      "x-icon": "📤",
       "messages": {
         "WithdrawRequest": {
           "name": "WithdrawRequest",
@@ -537,6 +545,8 @@
       "address": "adapter.payment.request",
       "title": "결제 요청",
       "description": "Core → Adapter",
+      "x-group": "거래",
+      "x-icon": "💳",
       "messages": {
         "PaymentRequest": {
           "name": "PaymentRequest",
@@ -711,6 +721,8 @@
       "address": "adapter.common.confirm",
       "title": "트랜잭션 컨펌 요청",
       "description": "Core → Adapter",
+      "x-group": "거래",
+      "x-icon": "✅",
       "messages": {
         "ConfirmRequest": {
           "name": "ConfirmRequest",
@@ -871,6 +883,8 @@
       "address": "adapter.balance.inquiry",
       "title": "잔액 조회 요청",
       "description": "Core → Adapter",
+      "x-group": "조회 & 대사",
+      "x-icon": "💎",
       "messages": {
         "BalanceRequest": {
           "name": "BalanceRequest",
@@ -878,26 +892,17 @@
           "payload": {
             "type": "object",
             "required": [
-              "chainId",
-              "symbol",
+              "requestId",
               "address"
             ],
             "properties": {
-              "chainId": {
+              "requestId": {
                 "type": "string",
-                "description": "체인 ID",
+                "description": "요청 고유 ID",
                 "examples": [
-                  "11155111"
+                  "B123456789"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-58>"
-              },
-              "symbol": {
-                "type": "string",
-                "description": "토큰 심볼",
-                "examples": [
-                  "ETH, USDT, USDC..."
-                ],
-                "x-parser-schema-id": "<anonymous-schema-58>"
+                "x-parser-schema-id": "<anonymous-schema-57>"
               },
               "address": {
                 "type": "string",
@@ -906,7 +911,7 @@
                 "examples": [
                   "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-59>"
+                "x-parser-schema-id": "<anonymous-schema-58>"
               }
             },
             "x-parser-schema-id": "<anonymous-schema-56>"
@@ -915,8 +920,7 @@
             {
               "name": "잔액 조회 요청 예시",
               "payload": {
-                "chainId": "11155111",
-                "symbol": "ETH",
+                "requestId": "B123456789",
                 "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
               }
             }
@@ -937,76 +941,108 @@
           "payload": {
             "type": "object",
             "required": [
-              "requestId"
+              "requestId",
+              "result"
             ],
             "properties": {
               "requestId": {
                 "type": "string",
-                "description": "응답 시간",
+                "description": "요청 고유 ID",
                 "examples": [
-                  "2026-03-26T00:23:52.480Z"
+                  "B123456789"
                 ],
+                "x-parser-schema-id": "<anonymous-schema-60>"
+              },
+              "result": {
+                "type": "array",
+                "description": "체인/토큰별 잔액 목록",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "chainId",
+                    "symbol",
+                    "address",
+                    "balance"
+                  ],
+                  "properties": {
+                    "chainId": {
+                      "type": "string",
+                      "description": "체인 ID",
+                      "examples": [
+                        "11155111"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-63>"
+                    },
+                    "symbol": {
+                      "type": "string",
+                      "description": "토큰 심볼",
+                      "examples": [
+                        "USDC"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-64>"
+                    },
+                    "address": {
+                      "type": "string",
+                      "description": "조회한 주소",
+                      "pattern": "^0x[a-fA-F0-9]{40}$",
+                      "examples": [
+                        "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-65>"
+                    },
+                    "balance": {
+                      "type": "string",
+                      "description": "잔액 (decimal string)",
+                      "examples": [
+                        "250.0"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-66>"
+                    }
+                  },
+                  "x-parser-schema-id": "<anonymous-schema-62>"
+                },
                 "x-parser-schema-id": "<anonymous-schema-61>"
               },
-              "chainId": {
+              "message": {
                 "type": "string",
-                "description": "체인 ID (실패 시 null)",
+                "description": "에러 메시지 (성공 시 null)",
                 "nullable": true,
                 "examples": [
-                  "11155111"
+                  null
                 ],
-                "x-parser-schema-id": "<anonymous-schema-62>"
-              },
-              "address": {
-                "type": "string",
-                "description": "조회한 주소 (실패 시 null)",
-                "pattern": "^0x[a-fA-F0-9]{40}$",
-                "nullable": true,
-                "examples": [
-                  "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
-                ],
-                "x-parser-schema-id": "<anonymous-schema-63>"
-              },
-              "symbol": {
-                "type": "string",
-                "description": "조회한 토큰 심볼 (실패 시 null)",
-                "nullable": true,
-                "examples": [
-                  "ETH"
-                ],
-                "x-parser-schema-id": "<anonymous-schema-63>"
-              },
-              "balance": {
-                "type": "string",
-                "description": "잔액 (decimal string, 실패 시 null)",
-                "nullable": true,
-                "examples": [
-                  "2.5"
-                ],
-                "x-parser-schema-id": "<anonymous-schema-64>"
+                "x-parser-schema-id": "<anonymous-schema-67>"
               }
             },
-            "x-parser-schema-id": "<anonymous-schema-60>"
+            "x-parser-schema-id": "<anonymous-schema-59>"
           },
           "examples": [
             {
               "name": "잔액 조회 성공",
               "payload": {
-                "requestId": "2026-03-26T00:23:52.480Z",
-                "chainId": "11155111",
-                "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18",
-                "balance": "2.5"
+                "requestId": "B123456789",
+                "result": [
+                  {
+                    "chainId": "11155111",
+                    "symbol": "USDC",
+                    "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18",
+                    "balance": "250.0"
+                  },
+                  {
+                    "chainId": "11155111",
+                    "symbol": "ETH",
+                    "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18",
+                    "balance": "1.5"
+                  }
+                ],
+                "message": null
               }
             },
             {
               "name": "잔액 조회 실패",
               "payload": {
-                "requestId": "2026-03-26T00:23:52.480Z",
-                "message": "RPC URL is not configured",
-                "symbol": null,
-                "chainId": null,
-                "address": null,
-                "balance": null
+                "requestId": "B123456789",
+                "result": [],
+                "message": "ACCOUNT_NOT_FOUND"
               }
             }
           ],
@@ -1015,22 +1051,22 @@
       },
       "x-parser-unique-object-id": "balanceResult"
     },
-    "configRegister": {
-      "address": "adapter.config.register",
-      "title": "토큰 설정 등록",
+    "configCreate": {
+      "address": "adapter.config.create",
+      "title": "설정 등록",
       "description": "Core → Adapter (응답 없음)",
+      "x-group": "설정 & 이벤트",
+      "x-icon": "⚙️",
       "messages": {
         "ConfigRegisterRequest": {
           "name": "ConfigRegisterRequest",
-          "title": "토큰 설정 등록 요청 (NoReply)",
+          "title": "설정 등록 요청 (NoReply)",
           "payload": {
             "type": "object",
             "required": [
               "requestId",
               "chainId",
-              "contractAddress",
-              "symbol",
-              "decimals"
+              "contractAddress"
             ],
             "properties": {
               "requestId": {
@@ -1039,7 +1075,7 @@
                 "examples": [
                   "C123456789"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-66>"
+                "x-parser-schema-id": "<anonymous-schema-69>"
               },
               "chainId": {
                 "type": "string",
@@ -1047,7 +1083,7 @@
                 "examples": [
                   "43114"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-67>"
+                "x-parser-schema-id": "<anonymous-schema-70>"
               },
               "contractAddress": {
                 "type": "string",
@@ -1056,7 +1092,53 @@
                 "examples": [
                   "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-68>"
+                "x-parser-schema-id": "<anonymous-schema-71>"
+              }
+            },
+            "x-parser-schema-id": "<anonymous-schema-68>"
+          },
+          "examples": [
+            {
+              "name": "토큰 설정 등록",
+              "payload": {
+                "requestId": "C123456789",
+                "chainId": "43114",
+                "contractAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+              }
+            }
+          ],
+          "x-parser-unique-object-id": "ConfigRegisterRequest"
+        }
+      },
+      "x-parser-unique-object-id": "configCreate"
+    },
+    "settlementRequest": {
+      "address": "adapter.settlement.request",
+      "title": "정산 요청",
+      "description": "Core → Adapter",
+      "x-group": "설정 & 이벤트",
+      "x-icon": "🏦",
+      "messages": {
+        "SettlementRequest": {
+          "name": "SettlementRequest",
+          "title": "정산 요청",
+          "payload": {
+            "type": "object",
+            "required": [
+              "requestId",
+              "symbol",
+              "amount",
+              "fee",
+              "merchantAddress"
+            ],
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "description": "요청 고유 ID",
+                "examples": [
+                  "ST-20260407-000001"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-73>"
               },
               "symbol": {
                 "type": "string",
@@ -1064,51 +1146,358 @@
                 "examples": [
                   "USDC"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-69>"
+                "x-parser-schema-id": "<anonymous-schema-74>"
               },
-              "decimals": {
-                "type": "integer",
-                "description": "토큰 소수점 자릿수",
-                "minimum": 0,
+              "amount": {
+                "type": "string",
+                "description": "정산 금액 (decimal string)",
+                "pattern": "^\\d+(\\.\\d+)?$",
                 "examples": [
-                  6
+                  "100.00"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-70>"
+                "x-parser-schema-id": "<anonymous-schema-75>"
+              },
+              "fee": {
+                "type": "string",
+                "description": "수수료 (decimal string)",
+                "pattern": "^\\d+(\\.\\d+)?$",
+                "examples": [
+                  "1.50"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-76>"
+              },
+              "merchantAddress": {
+                "type": "string",
+                "description": "가맹점 주소",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "examples": [
+                  "0xCBdAbfa3d691211f337e1f415D4Ee64979C7ee00"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-77>"
               }
             },
-            "x-parser-schema-id": "<anonymous-schema-65>"
+            "x-parser-schema-id": "<anonymous-schema-72>"
           },
           "examples": [
             {
-              "name": "USDC 토큰 설정 등록",
+              "name": "USDC 정산 요청",
               "payload": {
-                "requestId": "C123456789",
-                "chainId": "43114",
-                "contractAddress": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+                "requestId": "ST-20260407-000001",
                 "symbol": "USDC",
-                "decimals": 6
-              }
-            },
-            {
-              "name": "USDT 토큰 설정 등록",
-              "payload": {
-                "requestId": "C123456790",
-                "chainId": "43114",
-                "contractAddress": "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
-                "symbol": "USDT",
-                "decimals": 6
+                "amount": "100.00",
+                "fee": "1.50",
+                "merchantAddress": "0xCBdAbfa3d691211f337e1f415D4Ee64979C7ee00"
               }
             }
           ],
-          "x-parser-unique-object-id": "ConfigRegisterRequest"
+          "x-parser-unique-object-id": "SettlementRequest"
         }
       },
-      "x-parser-unique-object-id": "configRegister"
+      "x-parser-unique-object-id": "settlementRequest"
+    },
+    "settlementResult": {
+      "address": "adapter.settlement.result",
+      "title": "정산 결과",
+      "description": "Adapter → Core",
+      "messages": {
+        "SettlementResponse": {
+          "name": "SettlementResponse",
+          "title": "정산 결과",
+          "payload": {
+            "type": "object",
+            "required": [
+              "requestId",
+              "chainId",
+              "status"
+            ],
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "description": "요청 고유 ID",
+                "examples": [
+                  "ST-20260407-000001"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-79>"
+              },
+              "chainId": {
+                "type": "string",
+                "description": "체인 ID",
+                "examples": [
+                  "56357"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-80>"
+              },
+              "status": "$ref:$.channels.accountDeployed.messages.AccountDeployResponse.payload.properties.status",
+              "txHash": {
+                "type": "string",
+                "description": "트랜잭션 해시 (실패 시 null)",
+                "pattern": "^0x[a-fA-F0-9]{64}$",
+                "nullable": true,
+                "examples": [
+                  "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-81>"
+              },
+              "completeDatetime": {
+                "type": "string",
+                "description": "완료 일시 (yyyyMMddHHmmss, 실패 시 null)",
+                "nullable": true,
+                "examples": [
+                  "20260407143015"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-82>"
+              },
+              "amount": {
+                "type": "string",
+                "description": "정산 금액 (실패 시 null)",
+                "nullable": true,
+                "examples": [
+                  "100.00"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-83>"
+              },
+              "gasFee": {
+                "type": "string",
+                "description": "가스 수수료 (실패 시 null)",
+                "nullable": true,
+                "examples": [
+                  "21000"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-84>"
+              },
+              "message": {
+                "type": "string",
+                "description": "에러 메시지 (성공 시 null)",
+                "nullable": true,
+                "examples": [
+                  null
+                ],
+                "x-parser-schema-id": "<anonymous-schema-85>"
+              }
+            },
+            "x-parser-schema-id": "<anonymous-schema-78>"
+          },
+          "examples": [
+            {
+              "name": "정산 성공",
+              "payload": {
+                "requestId": "ST-20260407-000001",
+                "chainId": "56357",
+                "status": "TXCF",
+                "txHash": "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890",
+                "completeDatetime": "20260407143015",
+                "amount": "100.00",
+                "gasFee": "21000",
+                "message": null
+              }
+            },
+            {
+              "name": "정산 실패",
+              "payload": {
+                "requestId": "ST-20260407-000001",
+                "chainId": "56357",
+                "status": "TXFA",
+                "txHash": null,
+                "completeDatetime": null,
+                "amount": null,
+                "gasFee": null,
+                "message": "INSUFFICIENT_BALANCE"
+              }
+            }
+          ],
+          "x-parser-unique-object-id": "SettlementResponse"
+        }
+      },
+      "x-parser-unique-object-id": "settlementResult"
+    },
+    "reconciliationInquiry": {
+      "address": "adapter.reconciliation.inquiry",
+      "title": "대사 조회 요청",
+      "description": "Core → Adapter",
+      "x-group": "조회 & 대사",
+      "x-icon": "📊",
+      "messages": {
+        "ReconciliationRequest": {
+          "name": "ReconciliationRequest",
+          "title": "대사 조회 요청",
+          "payload": {
+            "type": "object",
+            "required": [
+              "requestId",
+              "targetDt"
+            ],
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "description": "요청 고유 ID",
+                "examples": [
+                  "RC-20260407-000001"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-87>"
+              },
+              "targetDt": {
+                "type": "string",
+                "description": "대사 기준 일시 (yyyyMMddHHmmss)",
+                "pattern": "^\\d{14}$",
+                "examples": [
+                  "20260407000000"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-88>"
+              }
+            },
+            "x-parser-schema-id": "<anonymous-schema-86>"
+          },
+          "examples": [
+            {
+              "name": "대사 조회 요청 예시",
+              "payload": {
+                "requestId": "RC-20260407-000001",
+                "targetDt": "20260407000000"
+              }
+            }
+          ],
+          "x-parser-unique-object-id": "ReconciliationRequest"
+        }
+      },
+      "x-parser-unique-object-id": "reconciliationInquiry"
+    },
+    "reconciliationResult": {
+      "address": "adapter.reconciliation.result",
+      "title": "대사 조회 결과",
+      "description": "Adapter → Core",
+      "messages": {
+        "ReconciliationResponse": {
+          "name": "ReconciliationResponse",
+          "title": "대사 조회 결과",
+          "payload": {
+            "type": "object",
+            "required": [
+              "requestId",
+              "result"
+            ],
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "description": "요청 고유 ID",
+                "examples": [
+                  "RC-20260407-000001"
+                ],
+                "x-parser-schema-id": "<anonymous-schema-90>"
+              },
+              "result": {
+                "type": "array",
+                "description": "토큰별 대사 결과 목록",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "symbol",
+                    "userOnTotal",
+                    "platformOnTotal",
+                    "reserveOnTotal",
+                    "notDeployUserOnTotal"
+                  ],
+                  "properties": {
+                    "symbol": {
+                      "type": "string",
+                      "description": "토큰 심볼",
+                      "examples": [
+                        "USDC"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-93>"
+                    },
+                    "userOnTotal": {
+                      "type": "string",
+                      "description": "사용자 온체인 잔액 합계 (decimal string)",
+                      "examples": [
+                        "50000.00"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-94>"
+                    },
+                    "platformOnTotal": {
+                      "type": "string",
+                      "description": "플랫폼 온체인 잔액 합계 (decimal string)",
+                      "examples": [
+                        "10000.00"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-95>"
+                    },
+                    "reserveOnTotal": {
+                      "type": "string",
+                      "description": "리저브 온체인 잔액 합계 (decimal string)",
+                      "examples": [
+                        "0"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-96>"
+                    },
+                    "notDeployUserOnTotal": {
+                      "type": "string",
+                      "description": "미배포 사용자 온체인 잔액 합계 (decimal string)",
+                      "examples": [
+                        "500.00"
+                      ],
+                      "x-parser-schema-id": "<anonymous-schema-97>"
+                    }
+                  },
+                  "x-parser-schema-id": "<anonymous-schema-92>"
+                },
+                "x-parser-schema-id": "<anonymous-schema-91>"
+              },
+              "message": {
+                "type": "string",
+                "description": "에러 메시지 (성공 시 null)",
+                "nullable": true,
+                "examples": [
+                  null
+                ],
+                "x-parser-schema-id": "<anonymous-schema-98>"
+              }
+            },
+            "x-parser-schema-id": "<anonymous-schema-89>"
+          },
+          "examples": [
+            {
+              "name": "대사 조회 성공",
+              "payload": {
+                "requestId": "RC-20260407-000001",
+                "result": [
+                  {
+                    "symbol": "USDC",
+                    "userOnTotal": "50000.00",
+                    "platformOnTotal": "10000.00",
+                    "reserveOnTotal": "0",
+                    "notDeployUserOnTotal": "500.00"
+                  },
+                  {
+                    "symbol": "USDT",
+                    "userOnTotal": "30000.00",
+                    "platformOnTotal": "5000.00",
+                    "reserveOnTotal": "0",
+                    "notDeployUserOnTotal": "200.00"
+                  }
+                ],
+                "message": null
+              }
+            },
+            {
+              "name": "대사 조회 실패",
+              "payload": {
+                "requestId": "RC-20260407-000001",
+                "result": [],
+                "message": "VALIDATION_ERROR"
+              }
+            }
+          ],
+          "x-parser-unique-object-id": "ReconciliationResponse"
+        }
+      },
+      "x-parser-unique-object-id": "reconciliationResult"
     },
     "depositDetected": {
       "address": "adapter.deposit.detected",
       "title": "입금 감지 이벤트",
       "description": "Adapter → Core (WebSocket 감지)",
+      "x-group": "설정 & 이벤트",
+      "x-icon": "💰",
       "messages": {
         "DepositEvent": {
           "name": "DepositEvent",
@@ -1134,7 +1523,7 @@
                 "examples": [
                   "11155111"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-72>"
+                "x-parser-schema-id": "<anonymous-schema-100>"
               },
               "txHash": {
                 "type": "string",
@@ -1143,7 +1532,7 @@
                 "examples": [
                   "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-73>"
+                "x-parser-schema-id": "<anonymous-schema-101>"
               },
               "fromAddress": {
                 "type": "string",
@@ -1152,7 +1541,7 @@
                 "examples": [
                   "0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-74>"
+                "x-parser-schema-id": "<anonymous-schema-102>"
               },
               "toAddress": {
                 "type": "string",
@@ -1161,7 +1550,7 @@
                 "examples": [
                   "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-75>"
+                "x-parser-schema-id": "<anonymous-schema-103>"
               },
               "amount": {
                 "type": "string",
@@ -1169,7 +1558,7 @@
                 "examples": [
                   "10000000000"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-76>"
+                "x-parser-schema-id": "<anonymous-schema-104>"
               },
               "confirmCount": {
                 "type": "integer",
@@ -1177,7 +1566,7 @@
                 "examples": [
                   10
                 ],
-                "x-parser-schema-id": "<anonymous-schema-77>"
+                "x-parser-schema-id": "<anonymous-schema-105>"
               },
               "symbol": {
                 "type": "string",
@@ -1185,7 +1574,7 @@
                 "examples": [
                   "USDT"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-78>"
+                "x-parser-schema-id": "<anonymous-schema-106>"
               },
               "status": {
                 "type": "string",
@@ -1193,7 +1582,7 @@
                 "examples": [
                   "TXCF"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-79>"
+                "x-parser-schema-id": "<anonymous-schema-107>"
               },
               "transactionDatetime": {
                 "type": "string",
@@ -1201,10 +1590,10 @@
                 "examples": [
                   "20260325122100"
                 ],
-                "x-parser-schema-id": "<anonymous-schema-80>"
+                "x-parser-schema-id": "<anonymous-schema-108>"
               }
             },
-            "x-parser-schema-id": "<anonymous-schema-71>"
+            "x-parser-schema-id": "<anonymous-schema-99>"
           },
           "examples": [
             {
@@ -1243,7 +1632,7 @@
     }
   },
   "operations": {
-    "계정 생성 요청 수신": {
+    "receiveAccountCreate": {
       "action": "receive",
       "channel": "$ref:$.channels.accountCreate",
       "title": "계정 생성 요청 수신",
@@ -1251,16 +1640,16 @@
       "reply": {
         "channel": "$ref:$.channels.accountCreated"
       },
-      "x-parser-unique-object-id": "계정 생성 요청 수신"
+      "x-parser-unique-object-id": "receiveAccountCreate"
     },
-    "계정 생성 결과 발행": {
+    "sendAccountCreated": {
       "action": "send",
       "channel": "$ref:$.channels.accountCreated",
       "title": "계정 생성 결과 발행",
       "summary": "계정 생성 결과 발행",
-      "x-parser-unique-object-id": "계정 생성 결과 발행"
+      "x-parser-unique-object-id": "sendAccountCreated"
     },
-    "계정 배포 요청 수신": {
+    "receiveAccountDeploy": {
       "action": "receive",
       "channel": "$ref:$.channels.accountDeploy",
       "title": "계정 배포 요청 수신",
@@ -1268,23 +1657,23 @@
       "reply": {
         "channel": "$ref:$.channels.accountDeployed"
       },
-      "x-parser-unique-object-id": "계정 배포 요청 수신"
+      "x-parser-unique-object-id": "receiveAccountDeploy"
     },
-    "계정 배포 결과 발행": {
+    "sendAccountDeployed": {
       "action": "send",
       "channel": "$ref:$.channels.accountDeployed",
       "title": "계정 배포 결과 발행",
       "summary": "계정 배포 결과 발행",
-      "x-parser-unique-object-id": "계정 배포 결과 발행"
+      "x-parser-unique-object-id": "sendAccountDeployed"
     },
-    "계정 삭제 요청 수신": {
+    "receiveAccountDelete": {
       "action": "receive",
       "channel": "$ref:$.channels.accountDelete",
       "title": "계정 삭제 요청 수신",
       "summary": "계정 삭제 요청 수신 (응답 없음)",
-      "x-parser-unique-object-id": "계정 삭제 요청 수신"
+      "x-parser-unique-object-id": "receiveAccountDelete"
     },
-    "출금 요청 수신": {
+    "receiveWithdrawRequest": {
       "action": "receive",
       "channel": "$ref:$.channels.withdrawRequest",
       "title": "출금 요청 수신",
@@ -1292,16 +1681,16 @@
       "reply": {
         "channel": "$ref:$.channels.withdrawResult"
       },
-      "x-parser-unique-object-id": "출금 요청 수신"
+      "x-parser-unique-object-id": "receiveWithdrawRequest"
     },
-    "출금 결과 발행": {
+    "sendWithdrawResult": {
       "action": "send",
       "channel": "$ref:$.channels.withdrawResult",
       "title": "출금 결과 발행",
       "summary": "출금 결과 발행",
-      "x-parser-unique-object-id": "출금 결과 발행"
+      "x-parser-unique-object-id": "sendWithdrawResult"
     },
-    "결제 요청 수신": {
+    "receivePaymentRequest": {
       "action": "receive",
       "channel": "$ref:$.channels.paymentRequest",
       "title": "결제 요청 수신",
@@ -1309,16 +1698,16 @@
       "reply": {
         "channel": "$ref:$.channels.paymentResult"
       },
-      "x-parser-unique-object-id": "결제 요청 수신"
+      "x-parser-unique-object-id": "receivePaymentRequest"
     },
-    "결제 결과 발행": {
+    "sendPaymentResult": {
       "action": "send",
       "channel": "$ref:$.channels.paymentResult",
       "title": "결제 결과 발행",
       "summary": "결제 결과 발행",
-      "x-parser-unique-object-id": "결제 결과 발행"
+      "x-parser-unique-object-id": "sendPaymentResult"
     },
-    "트랜잭션 컨펌 요청 수신": {
+    "receiveConfirm": {
       "action": "receive",
       "channel": "$ref:$.channels.commonConfirm",
       "title": "트랜잭션 컨펌 요청 수신",
@@ -1326,16 +1715,16 @@
       "reply": {
         "channel": "$ref:$.channels.commonConfirmed"
       },
-      "x-parser-unique-object-id": "트랜잭션 컨펌 요청 수신"
+      "x-parser-unique-object-id": "receiveConfirm"
     },
-    "트랜잭션 컨펌 결과 발행": {
+    "sendConfirmed": {
       "action": "send",
       "channel": "$ref:$.channels.commonConfirmed",
       "title": "트랜잭션 컨펌 결과 발행",
       "summary": "트랜잭션 컨펌 결과 발행",
-      "x-parser-unique-object-id": "트랜잭션 컨펌 결과 발행"
+      "x-parser-unique-object-id": "sendConfirmed"
     },
-    "잔액 조회 요청 수신": {
+    "receiveBalanceInquiry": {
       "action": "receive",
       "channel": "$ref:$.channels.balanceInquiry",
       "title": "잔액 조회 요청 수신",
@@ -1343,33 +1732,67 @@
       "reply": {
         "channel": "$ref:$.channels.balanceResult"
       },
-      "x-parser-unique-object-id": "잔액 조회 요청 수신"
+      "x-parser-unique-object-id": "receiveBalanceInquiry"
     },
-    "잔액 조회 결과 발행": {
+    "sendBalanceResult": {
       "action": "send",
       "channel": "$ref:$.channels.balanceResult",
       "title": "잔액 조회 결과 발행",
       "summary": "잔액 조회 결과 발행",
-      "x-parser-unique-object-id": "잔액 조회 결과 발행"
+      "x-parser-unique-object-id": "sendBalanceResult"
     },
-    "토큰 설정 등록 요청 수신": {
+    "receiveSettlementRequest": {
       "action": "receive",
-      "channel": "$ref:$.channels.configRegister",
-      "title": "토큰 설정 등록 요청 수신",
-      "summary": "토큰 설정 등록 요청 수신 (응답 없음)",
-      "x-parser-unique-object-id": "토큰 설정 등록 요청 수신"
+      "channel": "$ref:$.channels.settlementRequest",
+      "title": "정산 요청 수신",
+      "summary": "정산 요청 수신",
+      "reply": {
+        "channel": "$ref:$.channels.settlementResult"
+      },
+      "x-parser-unique-object-id": "receiveSettlementRequest"
     },
-    "입금 감지 이벤트 발행": {
+    "sendSettlementResult": {
+      "action": "send",
+      "channel": "$ref:$.channels.settlementResult",
+      "title": "정산 결과 발행",
+      "summary": "정산 결과 발행",
+      "x-parser-unique-object-id": "sendSettlementResult"
+    },
+    "receiveReconciliationInquiry": {
+      "action": "receive",
+      "channel": "$ref:$.channels.reconciliationInquiry",
+      "title": "대사 조회 요청 수신",
+      "summary": "대사 조회 요청 수신",
+      "reply": {
+        "channel": "$ref:$.channels.reconciliationResult"
+      },
+      "x-parser-unique-object-id": "receiveReconciliationInquiry"
+    },
+    "sendReconciliationResult": {
+      "action": "send",
+      "channel": "$ref:$.channels.reconciliationResult",
+      "title": "대사 조회 결과 발행",
+      "summary": "대사 조회 결과 발행",
+      "x-parser-unique-object-id": "sendReconciliationResult"
+    },
+    "receiveConfigCreate": {
+      "action": "receive",
+      "channel": "$ref:$.channels.configCreate",
+      "title": "설정 등록 요청 수신",
+      "summary": "설정 등록 요청 수신 (응답 없음)",
+      "x-parser-unique-object-id": "receiveConfigCreate"
+    },
+    "sendDepositDetected": {
       "action": "send",
       "channel": "$ref:$.channels.depositDetected",
       "title": "입금 감지 이벤트 발행",
       "summary": "입금 감지 이벤트 발행 (WebSocket → Kafka)",
-      "x-parser-unique-object-id": "입금 감지 이벤트 발행"
+      "x-parser-unique-object-id": "sendDepositDetected"
     }
   },
   "components": {
     "schemas": {
-      "트랜잭션 상태": "$ref:$.channels.accountDeployed.messages.AccountDeployResponse.payload.properties.status"
+      "TransactionStatus": "$ref:$.channels.accountDeployed.messages.AccountDeployResponse.payload.properties.status"
     }
   },
   "x-parser-spec-parsed": true,
