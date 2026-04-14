@@ -77,11 +77,17 @@ h3{font-size:17px;font-weight:700;color:var(--gray-900);margin:24px 0 12px;displ
 
 .table-wrap{overflow-x:auto;margin:12px 0 16px;border-radius:var(--radius);border:1px solid var(--gray-200)}
 table{width:100%;border-collapse:collapse;font-size:13.5px;table-layout:fixed}
-colgroup .col-field{width:18%}colgroup .col-type{width:14%}colgroup .col-req{width:8%}colgroup .col-desc{width:40%}colgroup .col-ex{width:20%}
+colgroup .col-field{width:20%}colgroup .col-type{width:14%}colgroup .col-req{width:12%}colgroup .col-desc{width:30%}colgroup .col-ex{width:24%}
 th{background:var(--gray-100);padding:10px 14px;text-align:left;font-weight:700;color:var(--gray-700);font-size:12px;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--gray-200)}
 td{padding:10px 14px;border-bottom:1px solid var(--gray-100)}
 tr:hover td{background:var(--gray-50)}
 tr.nested td{color:var(--gray-500)}
+tr.nested-hidden{display:none}
+.nested-table-wrap{padding:0 0 0 4px;border-left:2px solid var(--primary-light)}
+.nested-table-wrap table{border:none;margin:0;table-layout:fixed}
+.nested-table-wrap td{border-bottom:1px solid var(--gray-100);overflow:hidden;text-overflow:ellipsis;word-break:break-word;padding:4px 10px}
+.prop-toggle{cursor:pointer;font-size:10px;color:var(--primary);margin-right:2px;user-select:none}
+td{overflow:hidden;text-overflow:ellipsis;word-break:break-word}
 td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--primary-dark);font-family:'JetBrains Mono',monospace}
 
 .tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:4px}
@@ -131,7 +137,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 조회 &amp; 대사</div>
       <div class="nav-group-items"><a href="#receiveReconciliationInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 대사 조회 요청</a><a href="#sendReconciliationResult" class="nav-link"><span class="badge send">SEND</span> 대사 조회 결과</a></div></div><div class="nav-group collapsed">
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 모니터링</div>
-      <div class="nav-group-items"><a href="#receiveMonitorEntrypointTransfer" class="nav-link"><span class="badge receive">RECEIVE</span> EntryPoint 자금 관리 요청</a><a href="#sendMonitorEntrypointTransferred" class="nav-link"><span class="badge send">SEND</span> EntryPoint 자금 관리 결과</a><a href="#receiveMonitorContractInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</a><a href="#sendMonitorContractResult" class="nav-link"><span class="badge send">SEND</span> 컨트랙트 목록/상태 조회 결과</a><a href="#receiveMonitorNetworkInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 네트워크 조회 요청</a><a href="#sendMonitorNetworkResult" class="nav-link"><span class="badge send">SEND</span> 네트워크 조회 결과</a><a href="#receiveMonitorInfraInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 인프라 조회 요청</a><a href="#sendMonitorInfraResult" class="nav-link"><span class="badge send">SEND</span> 인프라 조회 결과</a></div></div><div class="nav-group collapsed">
+      <div class="nav-group-items"><a href="#receiveMonitorEntrypointTransfer" class="nav-link"><span class="badge receive">RECEIVE</span> EntryPoint 자금 관리 요청</a><a href="#sendMonitorEntrypointTransferred" class="nav-link"><span class="badge send">SEND</span> EntryPoint 자금 관리 결과</a><a href="#receiveMonitorContractInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</a><a href="#sendMonitorContractResult" class="nav-link"><span class="badge send">SEND</span> 컨트랙트 목록/상태 결과</a><a href="#receiveMonitorNetworkInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 네트워크 조회 요청</a><a href="#sendMonitorNetworkResult" class="nav-link"><span class="badge send">SEND</span> 네트워크 조회 결과</a><a href="#receiveMonitorInfraInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 인프라 조회 요청</a><a href="#sendMonitorInfraResult" class="nav-link"><span class="badge send">SEND</span> 인프라 조회 결과</a></div></div><div class="nav-group collapsed">
     <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 공통 스키마</div>
     <div class="nav-group-items">
       <a href="#TransactionStatus" class="nav-link">📌 TransactionStatus</a>
@@ -335,11 +341,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>status</code></td>
       <td><code>TXPD</code> | <code>TXCF</code> | <code>TXFA</code> </td>
       <td><span class="tag required">required</span></td>
-      <td>트랜잭션 상태:
-- TXPD: Pending (제출됨, 컨펌 대기 중)
-- TXCF: Confirmed (블록 컨펌 완료)
-- TXFA: Failed (트랜잭션 실패)
-</td>
+      <td></td>
       <td></td>
     </tr><tr>
       <td><code>tx_hash</code></td>
@@ -536,11 +538,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>status</code></td>
       <td><code>TXPD</code> | <code>TXCF</code> | <code>TXFA</code> </td>
       <td><span class="tag required">required</span></td>
-      <td>트랜잭션 상태:
-- TXPD: Pending (제출됨, 컨펌 대기 중)
-- TXCF: Confirmed (블록 컨펌 완료)
-- TXFA: Failed (트랜잭션 실패)
-</td>
+      <td></td>
       <td></td>
     </tr><tr>
       <td><code>tx_hash</code></td>
@@ -690,11 +688,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>status</code></td>
       <td><code>TXPD</code> | <code>TXCF</code> | <code>TXFA</code> </td>
       <td><span class="tag required">required</span></td>
-      <td>트랜잭션 상태:
-- TXPD: Pending (제출됨, 컨펌 대기 중)
-- TXCF: Confirmed (블록 컨펌 완료)
-- TXFA: Failed (트랜잭션 실패)
-</td>
+      <td></td>
       <td></td>
     </tr><tr>
       <td><code>tx_hash</code></td>
@@ -854,11 +848,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>status</code></td>
       <td><code>TXPD</code> | <code>TXCF</code> | <code>TXFA</code> </td>
       <td><span class="tag required">required</span></td>
-      <td>트랜잭션 상태:
-- TXPD: Pending (제출됨, 컨펌 대기 중)
-- TXCF: Confirmed (블록 컨펌 완료)
-- TXFA: Failed (트랜잭션 실패)
-</td>
+      <td></td>
       <td></td>
     </tr><tr>
       <td><code>chain_id</code></td>
@@ -1008,11 +998,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>status</code></td>
       <td><code>TXPD</code> | <code>TXCF</code> | <code>TXFA</code> </td>
       <td><span class="tag required">required</span></td>
-      <td>트랜잭션 상태:
-- TXPD: Pending (제출됨, 컨펌 대기 중)
-- TXCF: Confirmed (블록 컨펌 완료)
-- TXFA: Failed (트랜잭션 실패)
-</td>
+      <td></td>
       <td></td>
     </tr><tr>
       <td><code>tx_hash</code></td>
@@ -1422,10 +1408,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>action</code></td>
       <td><code>DEPOSIT</code> | <code>WITHDRAW</code> </td>
       <td><span class="tag required">required</span></td>
-      <td>EntryPoint 자금 이동 방향:
-- DEPOSIT: 핫월렛 → EntryPoint 충전 (depositTo)
-- WITHDRAW: EntryPoint → 핫월렛 인출 (withdrawTo)
-</td>
+      <td></td>
       <td></td>
     </tr><tr>
       <td><code>address</code></td>
@@ -1495,10 +1478,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>action</code></td>
       <td><code>DEPOSIT</code> | <code>WITHDRAW</code> </td>
       <td><span class="tag required">required</span></td>
-      <td>EntryPoint 자금 이동 방향:
-- DEPOSIT: 핫월렛 → EntryPoint 충전 (depositTo)
-- WITHDRAW: EntryPoint → 핫월렛 인출 (withdrawTo)
-</td>
+      <td></td>
       <td></td>
     </tr><tr>
       <td><code>address</code></td>
@@ -1618,7 +1598,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <section class="section" id="sendMonitorContractResult">
   <div class="sec-row">
     <div class="sec-left">
-      <h2 class="section-title"><span class="badge-lg send">SEND</span> 컨트랙트 목록/상태 조회 결과</h2>
+      <h2 class="section-title"><span class="badge-lg send">SEND</span> 컨트랙트 목록/상태 결과</h2>
       <p class="section-desc">Adapter → Core</p>
       <div class="topic-info">
         <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.contract.result</code></div>
@@ -1629,7 +1609,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 
   <div class="sec-row">
     <div class="sec-left">
-      <h3>메시지 스키마 — 컨트랙트 목록/상태 조회 결과</h3>
+      <h3>메시지 스키마 — 컨트랙트 목록/상태 결과</h3>
       <div class="table-wrap"><table>
         <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
         <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
@@ -1682,18 +1662,48 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
           <td>일시정지 여부 (RPC paused())</td>
           <td><code>false</code></td>
         </tr><tr>
-      <td><code>circuit_breaker</code></td>
+      <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> circuit_breaker</code></td>
       <td>object </td>
       <td><span class="tag required">required</span></td>
       <td>Circuit Breaker 상태 (Redis)</td>
       <td></td>
-    </tr><tr>
-      <td><code>skm</code></td>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;enabled</code></td>
+      <td>boolean </td>
+      <td><span class="tag required">required</span></td>
+      <td>Circuit Breaker 활성 여부</td>
+      <td><code>true</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;threshold</code></td>
+      <td>number </td>
+      <td><span class="tag required">required</span></td>
+      <td>임계값</td>
+      <td><code>5</code></td>
+    </tr></tbody>
+      </table></div></td></tr><tr>
+      <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> kms</code></td>
       <td>object </td>
       <td><span class="tag required">required</span></td>
-      <td>NHN Cloud SKM 상태</td>
+      <td>NHN Cloud KMS 상태</td>
       <td></td>
-    </tr><tr>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;connected</code></td>
+      <td>boolean </td>
+      <td><span class="tag required">required</span></td>
+      <td>KMS 연결 상태 (KMS API)</td>
+      <td><code>true</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;key_count</code></td>
+      <td>number </td>
+      <td><span class="tag required">required</span></td>
+      <td>등록된 키 수 (KMS API)</td>
+      <td><code>3</code></td>
+    </tr></tbody>
+      </table></div></td></tr><tr>
       <td><code>message</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
@@ -1743,7 +1753,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <span class="key">"enabled"</span>: <span class="lit">true</span>,
     <span class="key">"threshold"</span>: <span class="num">5</span>
   },
-  <span class="key">"skm"</span>: {
+  <span class="key">"kms"</span>: {
     <span class="key">"connected"</span>: <span class="lit">true</span>,
     <span class="key">"key_count"</span>: <span class="num">3</span>
   },
@@ -1829,18 +1839,150 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>체인 ID</td>
       <td><code>8217</code></td>
     </tr><tr>
-      <td><code>block</code></td>
+      <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> block</code></td>
       <td>object </td>
       <td><span class="tag required">required</span></td>
       <td>eth_getBlockByNumber(&quot;latest&quot;, false) raw 응답</td>
       <td></td>
-    </tr><tr>
-      <td><code>tx_pool</code></td>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;number</code></td>
+      <td>string </td>
+      <td></td>
+      <td>최신 블록 높이 hex (지표 1)</td>
+      <td><code>0x498a85</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;timestamp</code></td>
+      <td>string </td>
+      <td></td>
+      <td>블록 타임스탬프 hex (지표 2 산출용)</td>
+      <td><code>0x66a1b2c3</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;hash</code></td>
+      <td>string </td>
+      <td></td>
+      <td>블록 해시</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;parent_hash</code></td>
+      <td>string </td>
+      <td></td>
+      <td>부모 블록 해시</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;nonce</code></td>
+      <td>string </td>
+      <td></td>
+      <td>블록 nonce</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;sha3_uncles</code></td>
+      <td>string </td>
+      <td></td>
+      <td>uncle 블록 해시</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;logs_bloom</code></td>
+      <td>string </td>
+      <td></td>
+      <td>로그 블룸 필터</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;transactions_root</code></td>
+      <td>string </td>
+      <td></td>
+      <td>트랜잭션 루트</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;state_root</code></td>
+      <td>string </td>
+      <td></td>
+      <td>상태 루트</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;receipts_root</code></td>
+      <td>string </td>
+      <td></td>
+      <td>영수증 루트</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;miner</code></td>
+      <td>string </td>
+      <td></td>
+      <td>채굴자 주소</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;difficulty</code></td>
+      <td>string </td>
+      <td></td>
+      <td>난이도 hex</td>
+      <td><code>0x0</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;total_difficulty</code></td>
+      <td>string </td>
+      <td></td>
+      <td>누적 난이도 hex</td>
+      <td><code>0x0</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;extra_data</code></td>
+      <td>string </td>
+      <td></td>
+      <td>추가 데이터</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;size</code></td>
+      <td>string </td>
+      <td></td>
+      <td>블록 크기 hex</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;gas_limit</code></td>
+      <td>string </td>
+      <td></td>
+      <td>가스 한도 hex</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;gas_used</code></td>
+      <td>string </td>
+      <td></td>
+      <td>사용된 가스 hex</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;base_fee_per_gas</code></td>
+      <td>string </td>
+      <td></td>
+      <td>기본 가스비 hex</td>
+      <td><code>0x...</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;transactions</code></td>
+      <td>array<object> </td>
+      <td></td>
+      <td>트랜잭션 해시 목록</td>
+      <td></td>
+    </tr></tbody>
+      </table></div></td></tr><tr>
+      <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> tx_pool</code></td>
       <td>object </td>
       <td><span class="tag required">required</span></td>
       <td>txpool_status raw 응답 (지표 5)</td>
       <td></td>
-    </tr><tr>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;pending</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>실행 대기 트랜잭션 수 hex</td>
+      <td><code>0xc</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;queued</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>nonce 대기 트랜잭션 수 hex</td>
+      <td><code>0x3</code></td>
+    </tr></tbody>
+      </table></div></td></tr><tr>
       <td><code>peer_count</code></td>
       <td>string </td>
       <td><span class="tag required">required</span></td>
@@ -1991,18 +2133,117 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>체인 ID</td>
       <td><code>8217</code></td>
     </tr><tr>
-      <td><code>health</code></td>
+      <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> health</code></td>
       <td>object </td>
       <td><span class="tag required">required</span></td>
       <td>컴포넌트별 헬스 상태</td>
       <td></td>
-    </tr><tr>
-      <td><code>polling</code></td>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> modules</code></td>
       <td>object </td>
       <td><span class="tag required">required</span></td>
-      <td>폴링 상태 (지표 4)</td>
+      <td>어댑터 모듈 상태</td>
       <td></td>
-    </tr><tr>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> bundler</code></td>
+      <td>object </td>
+      <td><span class="tag required">required</span></td>
+      <td>Bundler 상태 (HTTP 헬스체크)</td>
+      <td></td>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
+      <td><code>UP</code> | <code>DOWN</code> </td>
+      <td><span class="tag required">required</span></td>
+      <td></td>
+      <td><code>UP</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latency_ms</code></td>
+      <td>number </td>
+      <td><span class="tag required">required</span></td>
+      <td>응답 지연 (ms)</td>
+      <td><code>32</code></td>
+    </tr></tbody>
+      </table></div></td></tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> listener</code></td>
+      <td>object </td>
+      <td><span class="tag required">required</span></td>
+      <td>Listener 상태 (HTTP 헬스체크)</td>
+      <td></td>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
+      <td><code>UP</code> | <code>DOWN</code> </td>
+      <td><span class="tag required">required</span></td>
+      <td></td>
+      <td><code>UP</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latency_ms</code></td>
+      <td>number </td>
+      <td><span class="tag required">required</span></td>
+      <td>응답 지연 (ms)</td>
+      <td><code>15</code></td>
+    </tr></tbody>
+      </table></div></td></tr></tbody>
+      </table></div></td></tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> infra</code></td>
+      <td>object </td>
+      <td><span class="tag required">required</span></td>
+      <td>인프라 상태</td>
+      <td></td>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> kms</code></td>
+      <td>object </td>
+      <td><span class="tag required">required</span></td>
+      <td>NHN Cloud KMS 상태 (KMS API 호출)</td>
+      <td></td>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
+      <td><code>UP</code> | <code>DOWN</code> </td>
+      <td><span class="tag required">required</span></td>
+      <td></td>
+      <td><code>UP</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latency_ms</code></td>
+      <td>number </td>
+      <td><span class="tag required">required</span></td>
+      <td>응답 지연 (ms)</td>
+      <td><code>88</code></td>
+    </tr></tbody>
+      </table></div></td></tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> websocket</code></td>
+      <td>object </td>
+      <td><span class="tag required">required</span></td>
+      <td>WebSocket 연결 상태</td>
+      <td></td>
+    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
+      <td><code>UP</code> | <code>DOWN</code> </td>
+      <td><span class="tag required">required</span></td>
+      <td></td>
+      <td><code>UP</code></td>
+    </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;latency_ms</code></td>
+      <td>number </td>
+      <td><span class="tag required">required</span></td>
+      <td>응답 지연 (ms)</td>
+      <td><code>25</code></td>
+    </tr></tbody>
+      </table></div></td></tr></tbody>
+      </table></div></td></tr></tbody>
+      </table></div></td></tr><tr>
       <td><code>message</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
@@ -2019,35 +2260,26 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"request_id"</span>: <span class="str">"II-20260414-000001"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
   <span class="key">"health"</span>: {
-    <span class="key">"bundler_primary"</span>: {
-      <span class="key">"status"</span>: <span class="str">"UP"</span>,
-      <span class="key">"latency_ms"</span>: <span class="num">32</span>
+    <span class="key">"modules"</span>: {
+      <span class="key">"bundler"</span>: {
+        <span class="key">"status"</span>: <span class="str">"UP"</span>,
+        <span class="key">"latency_ms"</span>: <span class="num">32</span>
+      },
+      <span class="key">"listener"</span>: {
+        <span class="key">"status"</span>: <span class="str">"UP"</span>,
+        <span class="key">"latency_ms"</span>: <span class="num">15</span>
+      }
     },
-    <span class="key">"bundler_secondary"</span>: {
-      <span class="key">"status"</span>: <span class="str">"UP"</span>,
-      <span class="key">"latency_ms"</span>: <span class="num">45</span>
-    },
-    <span class="key">"rpc"</span>: {
-      <span class="key">"status"</span>: <span class="str">"UP"</span>,
-      <span class="key">"latency_ms"</span>: <span class="num">18</span>
-    },
-    <span class="key">"kafka"</span>: {
-      <span class="key">"status"</span>: <span class="str">"UP"</span>,
-      <span class="key">"latency_ms"</span>: <span class="num">12</span>
-    },
-    <span class="key">"redis"</span>: {
-      <span class="key">"status"</span>: <span class="str">"UP"</span>,
-      <span class="key">"latency_ms"</span>: <span class="num">3</span>
-    },
-    <span class="key">"skm"</span>: {
-      <span class="key">"status"</span>: <span class="str">"UP"</span>,
-      <span class="key">"latency_ms"</span>: <span class="num">88</span>
+    <span class="key">"infra"</span>: {
+      <span class="key">"kms"</span>: {
+        <span class="key">"status"</span>: <span class="str">"UP"</span>,
+        <span class="key">"latency_ms"</span>: <span class="num">88</span>
+      },
+      <span class="key">"websocket"</span>: {
+        <span class="key">"status"</span>: <span class="str">"UP"</span>,
+        <span class="key">"latency_ms"</span>: <span class="num">25</span>
+      }
     }
-  },
-  <span class="key">"polling"</span>: {
-    <span class="key">"success_rate"</span>: <span class="num">99.8</span>,
-    <span class="key">"total_count"</span>: <span class="num">1000</span>,
-    <span class="key">"fail_count"</span>: <span class="num">2</span>
   },
   <span class="key">"message"</span>: <span class="lit">null</span>
 }</pre>

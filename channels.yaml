@@ -1157,7 +1157,7 @@ monitorContractResult:
           - chain_id
           - contracts
           - circuit_breaker
-          - skm
+          - kms
         properties:
           request_id:
             type: string
@@ -1225,21 +1225,21 @@ monitorContractResult:
                 description: 임계값
                 examples:
                   - 5
-          skm:
+          kms:
             type: object
-            description: NHN Cloud SKM 상태
+            description: NHN Cloud KMS 상태
             required:
               - connected
               - key_count
             properties:
               connected:
                 type: boolean
-                description: SKM 연결 상태 (SKM API)
+                description: KMS 연결 상태 (KMS API)
                 examples:
                   - true
               key_count:
                 type: number
-                description: 등록된 키 수 (SKM API)
+                description: 등록된 키 수 (KMS API)
                 examples:
                   - 3
           message:
@@ -1277,7 +1277,7 @@ monitorContractResult:
             circuit_breaker:
               enabled: true
               threshold: 5
-            skm:
+            kms:
               connected: true
               key_count: 3
             message: null
@@ -1565,7 +1565,6 @@ monitorInfraResult:
           - request_id
           - chain_id
           - health
-          - polling
         properties:
           request_id:
             type: string
@@ -1581,132 +1580,87 @@ monitorInfraResult:
             type: object
             description: 컴포넌트별 헬스 상태
             required:
-              - bundler_primary
-              - bundler_secondary
-              - rpc
-              - kafka
-              - redis
-              - skm
+              - modules
+              - infra
             properties:
-              bundler_primary:
+              modules:
                 type: object
-                description: Bundler Primary 상태 (HTTP 헬스체크)
+                description: 어댑터 모듈 상태
                 required:
-                  - status
-                  - latency_ms
+                  - bundler
+                  - listener
                 properties:
-                  status:
-                    $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                    examples:
-                      - "UP"
-                  latency_ms:
-                    type: number
-                    description: 응답 지연 (ms)
-                    examples:
-                      - 32
-              bundler_secondary:
+                  bundler:
+                    type: object
+                    description: Bundler 상태 (HTTP 헬스체크)
+                    required:
+                      - status
+                      - latency_ms
+                    properties:
+                      status:
+                        $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
+                        examples:
+                          - "UP"
+                      latency_ms:
+                        type: number
+                        description: 응답 지연 (ms)
+                        examples:
+                          - 32
+                  listener:
+                    type: object
+                    description: Listener 상태 (HTTP 헬스체크)
+                    required:
+                      - status
+                      - latency_ms
+                    properties:
+                      status:
+                        $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
+                        examples:
+                          - "UP"
+                      latency_ms:
+                        type: number
+                        description: 응답 지연 (ms)
+                        examples:
+                          - 15
+              infra:
                 type: object
-                description: Bundler Secondary 상태 (HTTP 헬스체크)
+                description: 인프라 상태
                 required:
-                  - status
-                  - latency_ms
+                  - kms
+                  - websocket
                 properties:
-                  status:
-                    $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                    examples:
-                      - "UP"
-                  latency_ms:
-                    type: number
-                    description: 응답 지연 (ms)
-                    examples:
-                      - 45
-              rpc:
-                type: object
-                description: RPC 노드 상태 (eth_blockNumber 호출)
-                required:
-                  - status
-                  - latency_ms
-                properties:
-                  status:
-                    $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                    examples:
-                      - "UP"
-                  latency_ms:
-                    type: number
-                    description: 응답 지연 (ms)
-                    examples:
-                      - 18
-              kafka:
-                type: object
-                description: Kafka 브로커 상태 (브로커 연결 확인)
-                required:
-                  - status
-                  - latency_ms
-                properties:
-                  status:
-                    $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                    examples:
-                      - "UP"
-                  latency_ms:
-                    type: number
-                    description: 응답 지연 (ms)
-                    examples:
-                      - 12
-              redis:
-                type: object
-                description: Redis 상태 (PING)
-                required:
-                  - status
-                  - latency_ms
-                properties:
-                  status:
-                    $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                    examples:
-                      - "UP"
-                  latency_ms:
-                    type: number
-                    description: 응답 지연 (ms)
-                    examples:
-                      - 3
-              skm:
-                type: object
-                description: NHN Cloud SKM 상태 (SKM API 호출)
-                required:
-                  - status
-                  - latency_ms
-                properties:
-                  status:
-                    $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                    examples:
-                      - "UP"
-                  latency_ms:
-                    type: number
-                    description: 응답 지연 (ms)
-                    examples:
-                      - 88
-          polling:
-            type: object
-            description: 폴링 상태 (지표 4)
-            required:
-              - success_rate
-              - total_count
-              - fail_count
-            properties:
-              success_rate:
-                type: number
-                description: 폴링 성공률 (%)
-                examples:
-                  - 99.8
-              total_count:
-                type: number
-                description: 전체 폴링 시도
-                examples:
-                  - 1000
-              fail_count:
-                type: number
-                description: 실패 횟수
-                examples:
-                  - 2
+                  kms:
+                    type: object
+                    description: NHN Cloud KMS 상태 (KMS API 호출)
+                    required:
+                      - status
+                      - latency_ms
+                    properties:
+                      status:
+                        $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
+                        examples:
+                          - "UP"
+                      latency_ms:
+                        type: number
+                        description: 응답 지연 (ms)
+                        examples:
+                          - 88
+                  websocket:
+                    type: object
+                    description: WebSocket 연결 상태
+                    required:
+                      - status
+                      - latency_ms
+                    properties:
+                      status:
+                        $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
+                        examples:
+                          - "UP"
+                      latency_ms:
+                        type: number
+                        description: 응답 지연 (ms)
+                        examples:
+                          - 25
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -1719,27 +1673,19 @@ monitorInfraResult:
             request_id: "II-20260414-000001"
             chain_id: "8217"
             health:
-              bundler_primary:
-                status: "UP"
-                latency_ms: 32
-              bundler_secondary:
-                status: "UP"
-                latency_ms: 45
-              rpc:
-                status: "UP"
-                latency_ms: 18
-              kafka:
-                status: "UP"
-                latency_ms: 12
-              redis:
-                status: "UP"
-                latency_ms: 3
-              skm:
-                status: "UP"
-                latency_ms: 88
-            polling:
-              success_rate: 99.8
-              total_count: 1000
-              fail_count: 2
+              modules:
+                bundler:
+                  status: "UP"
+                  latency_ms: 32
+                listener:
+                  status: "UP"
+                  latency_ms: 15
+              infra:
+                kms:
+                  status: "UP"
+                  latency_ms: 88
+                websocket:
+                  status: "UP"
+                  latency_ms: 25
             message: null
 
