@@ -43,9 +43,10 @@ function resolveType(prop) {
   return { typeName: prop.type || 'string' };
 }
 
-function renderProps(properties, required = []) {
+function renderProps(properties, required = [], depth = 0) {
   if (!properties) return '';
   let rows = '';
+  const indent = '&nbsp;&nbsp;'.repeat(depth);
   for (const [name, prop] of Object.entries(properties)) {
     const isReq = required.includes(name);
     const resolved = resolveType(prop);
@@ -53,16 +54,25 @@ function renderProps(properties, required = []) {
     if (resolved.enumVals) typeStr = resolved.enumVals.map(v => `<code>${esc(v)}</code>`).join(' | ');
     const nullable = prop.nullable ? '<span class="tag nullable">nullable</span>' : '';
     const reqBadge = isReq ? '<span class="tag required">required</span>' : '';
-    const desc = resolved.desc || prop.description || '';
+    const desc = prop.description || (resolved.enumVals ? '' : resolved.desc) || '';
     const example = prop.examples ? `<code>${esc(String(prop.examples[0]))}</code>` : '';
+    const hasChildren = prop.type === 'object' && prop.properties;
+    const toggleId = hasChildren ? `toggle-${Date.now()}-${Math.random().toString(36).slice(2,8)}` : '';
 
-    rows += `<tr>
-      <td><code>${esc(name)}</code></td>
+    rows += `<tr${depth > 0 ? ' class="nested"' : ''}>
+      <td><code>${indent}${hasChildren ? `<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> ` : ''}${esc(name)}</code></td>
       <td>${typeStr} ${nullable}</td>
       <td>${reqBadge}</td>
       <td>${esc(desc)}</td>
       <td>${example}</td>
     </tr>`;
+
+    if (hasChildren) {
+      rows += `<tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <tbody>${renderProps(prop.properties, prop.required || [], depth + 1)}</tbody>
+      </table></div></td></tr>`;
+    }
 
     if (resolved.items?.properties) {
       for (const [sn, sp] of Object.entries(resolved.items.properties)) {
@@ -70,7 +80,7 @@ function renderProps(properties, required = []) {
         const sDesc = sp.description || '';
         const sEx = sp.examples ? `<code>${esc(String(sp.examples[0]))}</code>` : '';
         rows += `<tr class="nested">
-          <td><code>&nbsp;&nbsp;${esc(sn)}</code></td>
+          <td><code>${indent}&nbsp;&nbsp;${esc(sn)}</code></td>
           <td>${sp.type || 'string'}</td>
           <td>${sReq ? '<span class="tag required">required</span>' : ''}</td>
           <td>${esc(sDesc)}</td>
@@ -319,11 +329,17 @@ h3{font-size:17px;font-weight:700;color:var(--gray-900);margin:24px 0 12px;displ
 
 .table-wrap{overflow-x:auto;margin:12px 0 16px;border-radius:var(--radius);border:1px solid var(--gray-200)}
 table{width:100%;border-collapse:collapse;font-size:13.5px;table-layout:fixed}
-colgroup .col-field{width:18%}colgroup .col-type{width:14%}colgroup .col-req{width:8%}colgroup .col-desc{width:40%}colgroup .col-ex{width:20%}
+colgroup .col-field{width:20%}colgroup .col-type{width:14%}colgroup .col-req{width:12%}colgroup .col-desc{width:30%}colgroup .col-ex{width:24%}
 th{background:var(--gray-100);padding:10px 14px;text-align:left;font-weight:700;color:var(--gray-700);font-size:12px;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--gray-200)}
 td{padding:10px 14px;border-bottom:1px solid var(--gray-100)}
 tr:hover td{background:var(--gray-50)}
 tr.nested td{color:var(--gray-500)}
+tr.nested-hidden{display:none}
+.nested-table-wrap{padding:0 0 0 4px;border-left:2px solid var(--primary-light)}
+.nested-table-wrap table{border:none;margin:0;table-layout:fixed}
+.nested-table-wrap td{border-bottom:1px solid var(--gray-100);overflow:hidden;text-overflow:ellipsis;word-break:break-word;padding:4px 10px}
+.prop-toggle{cursor:pointer;font-size:10px;color:var(--primary);margin-right:2px;user-select:none}
+td{overflow:hidden;text-overflow:ellipsis;word-break:break-word}
 td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--primary-dark);font-family:'JetBrains Mono',monospace}
 
 .tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:4px}
