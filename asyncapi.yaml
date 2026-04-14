@@ -47,6 +47,38 @@ channels:
     $ref: './channels.yaml#/reconciliationResult'
   depositDetected:
     $ref: './channels.yaml#/depositDetected'
+  monitorTxRetry:
+    $ref: './channels.yaml#/monitorTxRetry'
+  monitorTxRetried:
+    $ref: './channels.yaml#/monitorTxRetried'
+  monitorEntrypointInquiry:
+    $ref: './channels.yaml#/monitorEntrypointInquiry'
+  monitorEntrypointResult:
+    $ref: './channels.yaml#/monitorEntrypointResult'
+  monitorEntrypointTransfer:
+    $ref: './channels.yaml#/monitorEntrypointTransfer'
+  monitorEntrypointTransferResult:
+    $ref: './channels.yaml#/monitorEntrypointTransferResult'
+  monitorContractInquiry:
+    $ref: './channels.yaml#/monitorContractInquiry'
+  monitorContractResult:
+    $ref: './channels.yaml#/monitorContractResult'
+  monitorNetworkInquiry:
+    $ref: './channels.yaml#/monitorNetworkInquiry'
+  monitorNetworkResult:
+    $ref: './channels.yaml#/monitorNetworkResult'
+  monitorNetworkHistory:
+    $ref: './channels.yaml#/monitorNetworkHistory'
+  monitorNetworkHistoryResult:
+    $ref: './channels.yaml#/monitorNetworkHistoryResult'
+  monitorInfraInquiry:
+    $ref: './channels.yaml#/monitorInfraInquiry'
+  monitorInfraResult:
+    $ref: './channels.yaml#/monitorInfraResult'
+  monitorInfraHistory:
+    $ref: './channels.yaml#/monitorInfraHistory'
+  monitorInfraHistoryResult:
+    $ref: './channels.yaml#/monitorInfraHistoryResult'
 
 operations:
   receiveAccountCreate:
@@ -206,6 +238,142 @@ operations:
     title: 입금 감지 이벤트 발행
     summary: 입금 감지 이벤트 발행 (WebSocket → Kafka)
 
+  receiveMonitorTxRetry:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorTxRetry"
+    title: 실패 UserOp 재처리 요청 수신
+    summary: 실패 UserOp 재처리 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/monitorTxRetried"
+
+  sendMonitorTxRetried:
+    action: send
+    channel:
+      $ref: "#/channels/monitorTxRetried"
+    title: 실패 UserOp 재처리 결과 발행
+    summary: 실패 UserOp 재처리 결과 발행
+
+  receiveMonitorEntrypointInquiry:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorEntrypointInquiry"
+    title: EntryPoint 정보 조회 요청 수신
+    summary: EntryPoint 정보 조회 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/monitorEntrypointResult"
+
+  sendMonitorEntrypointResult:
+    action: send
+    channel:
+      $ref: "#/channels/monitorEntrypointResult"
+    title: EntryPoint 정보 조회 결과 발행
+    summary: EntryPoint 정보 조회 결과 발행
+
+  receiveMonitorEntrypointTransfer:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorEntrypointTransfer"
+    title: EntryPoint 자금 관리 요청 수신
+    summary: EntryPoint 자금 관리 요청 수신 (충전/인출)
+    reply:
+      channel:
+        $ref: "#/channels/monitorEntrypointTransferResult"
+
+  sendMonitorEntrypointTransferred:
+    action: send
+    channel:
+      $ref: "#/channels/monitorEntrypointTransferResult"
+    title: EntryPoint 자금 관리 결과 발행
+    summary: EntryPoint 자금 관리 결과 발행
+
+  receiveMonitorContractInquiry:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorContractInquiry"
+    title: 컨트랙트 목록/상태 조회 요청 수신
+    summary: 컨트랙트 목록/상태 조회 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/monitorContractResult"
+
+  sendMonitorContractResult:
+    action: send
+    channel:
+      $ref: "#/channels/monitorContractResult"
+    title: 컨트랙트 목록/상태 조회 결과 발행
+    summary: 컨트랙트 목록/상태 조회 결과 발행
+
+  receiveMonitorNetworkInquiry:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorNetworkInquiry"
+    title: 네트워크 조회 요청 수신
+    summary: 네트워크 조회 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/monitorNetworkResult"
+
+  sendMonitorNetworkResult:
+    action: send
+    channel:
+      $ref: "#/channels/monitorNetworkResult"
+    title: 네트워크 조회 결과 발행
+    summary: 네트워크 조회 결과 발행
+
+  receiveMonitorNetworkHistory:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorNetworkHistory"
+    title: 네트워크 시계열 조회 요청 수신
+    summary: 네트워크 시계열 조회 요청 수신 (차트용)
+    reply:
+      channel:
+        $ref: "#/channels/monitorNetworkHistoryResult"
+
+  sendMonitorNetworkHistoryResult:
+    action: send
+    channel:
+      $ref: "#/channels/monitorNetworkHistoryResult"
+    title: 네트워크 시계열 조회 결과 발행
+    summary: 네트워크 시계열 조회 결과 발행
+
+  receiveMonitorInfraInquiry:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorInfraInquiry"
+    title: 인프라 조회 요청 수신
+    summary: 인프라 조회 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/monitorInfraResult"
+
+  sendMonitorInfraResult:
+    action: send
+    channel:
+      $ref: "#/channels/monitorInfraResult"
+    title: 인프라 조회 결과 발행
+    summary: 인프라 조회 결과 발행
+
+  receiveMonitorInfraHistory:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorInfraHistory"
+    title: 인프라 시계열 조회 요청 수신
+    summary: 인프라 시계열 조회 요청 수신 (차트용)
+    reply:
+      channel:
+        $ref: "#/channels/monitorInfraHistoryResult"
+
+  sendMonitorInfraHistoryResult:
+    action: send
+    channel:
+      $ref: "#/channels/monitorInfraHistoryResult"
+    title: 인프라 시계열 조회 결과 발행
+    summary: 인프라 시계열 조회 결과 발행
+
 components:
   schemas:
     TransactionStatus:
@@ -220,6 +388,28 @@ components:
         - TXPD: Pending (제출됨, 컨펌 대기 중)
         - TXCF: Confirmed (블록 컨펌 완료)
         - TXFA: Failed (트랜잭션 실패)
+
+    HealthStatus:
+      title: 컴포넌트 헬스 상태
+      type: string
+      enum:
+        - UP
+        - DOWN
+      description: |
+        인프라 컴포넌트 상태:
+        - UP: 정상
+        - DOWN: 장애
+
+    TransferAction:
+      title: EntryPoint 자금 이동 액션
+      type: string
+      enum:
+        - DEPOSIT
+        - WITHDRAW
+      description: |
+        EntryPoint 자금 이동 방향:
+        - DEPOSIT: 핫월렛 → EntryPoint 충전 (depositTo)
+        - WITHDRAW: EntryPoint → 핫월렛 인출 (withdrawTo)
 
 # ═════════════════════════════════════════════════════════════
 #   새 토픽 추가 가이드
