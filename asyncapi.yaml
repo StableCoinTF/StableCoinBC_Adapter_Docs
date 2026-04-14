@@ -44,14 +44,8 @@ channels:
     $ref: './channels.yaml#/reconciliationResult'
   depositDetected:
     $ref: './channels.yaml#/depositDetected'
-  monitorTxRetry:
-    $ref: './channels.yaml#/monitorTxRetry'
-  monitorTxRetried:
-    $ref: './channels.yaml#/monitorTxRetried'
-  monitorEntrypointInquiry:
-    $ref: './channels.yaml#/monitorEntrypointInquiry'
-  monitorEntrypointResult:
-    $ref: './channels.yaml#/monitorEntrypointResult'
+
+
   monitorEntrypointTransfer:
     $ref: './channels.yaml#/monitorEntrypointTransfer'
   monitorEntrypointTransferResult:
@@ -64,18 +58,12 @@ channels:
     $ref: './channels.yaml#/monitorNetworkInquiry'
   monitorNetworkResult:
     $ref: './channels.yaml#/monitorNetworkResult'
-  monitorNetworkHistory:
-    $ref: './channels.yaml#/monitorNetworkHistory'
-  monitorNetworkHistoryResult:
-    $ref: './channels.yaml#/monitorNetworkHistoryResult'
+
   monitorInfraInquiry:
     $ref: './channels.yaml#/monitorInfraInquiry'
   monitorInfraResult:
     $ref: './channels.yaml#/monitorInfraResult'
-  monitorInfraHistory:
-    $ref: './channels.yaml#/monitorInfraHistory'
-  monitorInfraHistoryResult:
-    $ref: './channels.yaml#/monitorInfraHistoryResult'
+
 
 operations:
   receiveAccountCreate:
@@ -219,39 +207,7 @@ operations:
     title: 입금 감지 이벤트 발행
     summary: 입금 감지 이벤트 발행 (WebSocket → Kafka)
 
-  receiveMonitorTxRetry:
-    action: receive
-    channel:
-      $ref: "#/channels/monitorTxRetry"
-    title: 실패 UserOp 재처리 요청 수신
-    summary: 실패 UserOp 재처리 요청 수신
-    reply:
-      channel:
-        $ref: "#/channels/monitorTxRetried"
 
-  sendMonitorTxRetried:
-    action: send
-    channel:
-      $ref: "#/channels/monitorTxRetried"
-    title: 실패 UserOp 재처리 결과 발행
-    summary: 실패 UserOp 재처리 결과 발행
-
-  receiveMonitorEntrypointInquiry:
-    action: receive
-    channel:
-      $ref: "#/channels/monitorEntrypointInquiry"
-    title: EntryPoint 정보 조회 요청 수신
-    summary: EntryPoint 정보 조회 요청 수신
-    reply:
-      channel:
-        $ref: "#/channels/monitorEntrypointResult"
-
-  sendMonitorEntrypointResult:
-    action: send
-    channel:
-      $ref: "#/channels/monitorEntrypointResult"
-    title: EntryPoint 정보 조회 결과 발행
-    summary: EntryPoint 정보 조회 결과 발행
 
   receiveMonitorEntrypointTransfer:
     action: receive
@@ -304,22 +260,6 @@ operations:
     title: 네트워크 조회 결과 발행
     summary: 네트워크 조회 결과 발행
 
-  receiveMonitorNetworkHistory:
-    action: receive
-    channel:
-      $ref: "#/channels/monitorNetworkHistory"
-    title: 네트워크 시계열 조회 요청 수신
-    summary: 네트워크 시계열 조회 요청 수신 (차트용)
-    reply:
-      channel:
-        $ref: "#/channels/monitorNetworkHistoryResult"
-
-  sendMonitorNetworkHistoryResult:
-    action: send
-    channel:
-      $ref: "#/channels/monitorNetworkHistoryResult"
-    title: 네트워크 시계열 조회 결과 발행
-    summary: 네트워크 시계열 조회 결과 발행
 
   receiveMonitorInfraInquiry:
     action: receive
@@ -338,22 +278,6 @@ operations:
     title: 인프라 조회 결과 발행
     summary: 인프라 조회 결과 발행
 
-  receiveMonitorInfraHistory:
-    action: receive
-    channel:
-      $ref: "#/channels/monitorInfraHistory"
-    title: 인프라 시계열 조회 요청 수신
-    summary: 인프라 시계열 조회 요청 수신 (차트용)
-    reply:
-      channel:
-        $ref: "#/channels/monitorInfraHistoryResult"
-
-  sendMonitorInfraHistoryResult:
-    action: send
-    channel:
-      $ref: "#/channels/monitorInfraHistoryResult"
-    title: 인프라 시계열 조회 결과 발행
-    summary: 인프라 시계열 조회 결과 발행
 
 components:
   schemas:
@@ -407,9 +331,9 @@ components:
 #         title: 새 토픽 요청
 #         payload:
 #           type: object
-#           required: [requestId, myField]
+#           required: [request_id, myField]
 #           properties:
-#             requestId:
+#             request_id:
 #               type: string
 #               description: 요청 고유 ID
 #               examples: ["REQ-001"]
@@ -420,7 +344,7 @@ components:
 #         examples:
 #           - name: 요청 예시
 #             payload:
-#               requestId: "REQ-001"
+#               request_id: "REQ-001"
 #               myField: "example-value"
 #
 # [2단계] 이 파일의 channels 섹션에 $ref 추가:
