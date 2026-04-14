@@ -31,10 +31,7 @@ channels:
     $ref: './channels.yaml#/commonConfirm'
   commonConfirmed:
     $ref: './channels.yaml#/commonConfirmed'
-  balanceInquiry:
-    $ref: './channels.yaml#/balanceInquiry'
-  balanceResult:
-    $ref: './channels.yaml#/balanceResult'
+
   configCreate:
     $ref: './channels.yaml#/configCreate'
   settlementRequest:
@@ -173,22 +170,6 @@ operations:
     title: 트랜잭션 컨펌 결과 발행
     summary: 트랜잭션 컨펌 결과 발행
 
-  receiveBalanceInquiry:
-    action: receive
-    channel:
-      $ref: "#/channels/balanceInquiry"
-    title: 잔액 조회 요청 수신
-    summary: 잔액 조회 요청 수신
-    reply:
-      channel:
-        $ref: "#/channels/balanceResult"
-
-  sendBalanceResult:
-    action: send
-    channel:
-      $ref: "#/channels/balanceResult"
-    title: 잔액 조회 결과 발행
-    summary: 잔액 조회 결과 발행
 
   receiveSettlementRequest:
     action: receive
