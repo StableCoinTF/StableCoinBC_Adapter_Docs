@@ -126,10 +126,10 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <div class="nav-group-items"><a href="#receiveAccountCreate" class="nav-link"><span class="badge receive">RECEIVE</span> 계정 생성 요청</a><a href="#sendAccountCreated" class="nav-link"><span class="badge send">SEND</span> 계정 생성 결과</a><a href="#receiveAccountDeploy" class="nav-link"><span class="badge receive">RECEIVE</span> 계정 배포 요청</a><a href="#sendAccountDeployed" class="nav-link"><span class="badge send">SEND</span> 계정 배포 결과</a><a href="#receiveAccountDelete" class="nav-link"><span class="badge receive">RECEIVE</span> 계정 삭제 요청</a></div></div><div class="nav-group collapsed">
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 거래</div>
       <div class="nav-group-items"><a href="#receiveWithdrawRequest" class="nav-link"><span class="badge receive">RECEIVE</span> 출금 요청</a><a href="#sendWithdrawResult" class="nav-link"><span class="badge send">SEND</span> 출금 결과</a><a href="#receivePaymentRequest" class="nav-link"><span class="badge receive">RECEIVE</span> 결제 요청</a><a href="#sendPaymentResult" class="nav-link"><span class="badge send">SEND</span> 결제 결과</a><a href="#receiveConfirm" class="nav-link"><span class="badge receive">RECEIVE</span> 트랜잭션 컨펌 요청</a><a href="#sendConfirmed" class="nav-link"><span class="badge send">SEND</span> 트랜잭션 컨펌 결과</a></div></div><div class="nav-group collapsed">
-      <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 조회 &amp; 대사</div>
-      <div class="nav-group-items"><a href="#receiveBalanceInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 잔액 조회 요청</a><a href="#sendBalanceResult" class="nav-link"><span class="badge send">SEND</span> 잔액 조회 결과</a><a href="#receiveReconciliationInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 대사 조회 요청</a><a href="#sendReconciliationResult" class="nav-link"><span class="badge send">SEND</span> 대사 조회 결과</a></div></div><div class="nav-group collapsed">
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 설정 &amp; 이벤트</div>
       <div class="nav-group-items"><a href="#receiveSettlementRequest" class="nav-link"><span class="badge receive">RECEIVE</span> 정산 요청</a><a href="#sendSettlementResult" class="nav-link"><span class="badge send">SEND</span> 정산 결과</a><a href="#receiveConfigCreate" class="nav-link"><span class="badge receive">RECEIVE</span> 설정 등록</a><a href="#sendDepositDetected" class="nav-link"><span class="badge send">SEND</span> 입금 감지 이벤트</a></div></div><div class="nav-group collapsed">
+      <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 조회 &amp; 대사</div>
+      <div class="nav-group-items"><a href="#receiveReconciliationInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 대사 조회 요청</a><a href="#sendReconciliationResult" class="nav-link"><span class="badge send">SEND</span> 대사 조회 결과</a></div></div><div class="nav-group collapsed">
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 모니터링</div>
       <div class="nav-group-items"><a href="#receiveMonitorTxRetry" class="nav-link"><span class="badge receive">RECEIVE</span> 실패 UserOp 재처리 요청</a><a href="#sendMonitorTxRetried" class="nav-link"><span class="badge send">SEND</span> 실패 UserOp 재처리 결과</a><a href="#receiveMonitorEntrypointInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> EntryPoint 정보 조회 요청</a><a href="#sendMonitorEntrypointResult" class="nav-link"><span class="badge send">SEND</span> EntryPoint 정보 조회 결과</a><a href="#receiveMonitorEntrypointTransfer" class="nav-link"><span class="badge receive">RECEIVE</span> EntryPoint 자금 관리 요청</a><a href="#sendMonitorEntrypointTransferred" class="nav-link"><span class="badge send">SEND</span> EntryPoint 자금 관리 결과</a><a href="#receiveMonitorContractInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</a><a href="#sendMonitorContractResult" class="nav-link"><span class="badge send">SEND</span> 컨트랙트 목록/상태 조회 결과</a><a href="#receiveMonitorNetworkInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 네트워크 조회 요청</a><a href="#sendMonitorNetworkResult" class="nav-link"><span class="badge send">SEND</span> 네트워크 조회 결과</a><a href="#receiveMonitorNetworkHistory" class="nav-link"><span class="badge receive">RECEIVE</span> 네트워크 시계열 조회 요청</a><a href="#sendMonitorNetworkHistoryResult" class="nav-link"><span class="badge send">SEND</span> 네트워크 시계열 조회 결과</a><a href="#receiveMonitorInfraInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 인프라 조회 요청</a><a href="#sendMonitorInfraResult" class="nav-link"><span class="badge send">SEND</span> 인프라 조회 결과</a><a href="#receiveMonitorInfraHistory" class="nav-link"><span class="badge receive">RECEIVE</span> 인프라 시계열 조회 요청</a><a href="#sendMonitorInfraHistoryResult" class="nav-link"><span class="badge send">SEND</span> 인프라 시계열 조회 결과</a></div></div><div class="nav-group collapsed">
     <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 공통 스키마</div>
@@ -903,148 +903,6 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"chainId"</span>: <span class="str">"11155111"</span>,
   <span class="key">"confirmCount"</span>: <span class="num">2</span>,
   <span class="key">"gasFee"</span>: <span class="lit">null</span>
-}</pre>
-    </div>
-  </details></div>
-  </div>
-  </section>
-<section class="section" id="receiveBalanceInquiry">
-  <div class="sec-row">
-    <div class="sec-left">
-      <h2 class="section-title"><span class="badge-lg receive">RECEIVE</span> 잔액 조회 요청</h2>
-      <p class="section-desc">Core → Adapter</p>
-      <div class="topic-info">
-        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.balance.inquiry</code></div>
-      </div>
-    </div>
-    <div class="sec-right"></div>
-  </div>
-
-  <div class="sec-row">
-    <div class="sec-left">
-      <h3>메시지 스키마 — 잔액 조회 요청</h3>
-      <div class="table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
-        <tbody><tr>
-      <td><code>requestId</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>요청 고유 ID</td>
-      <td><code>B123456789</code></td>
-    </tr><tr>
-      <td><code>address</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>조회할 주소</td>
-      <td><code>0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18</code></td>
-    </tr></tbody>
-      </table></div>
-    </div>
-    <div class="sec-right"><details class="examples-toggle">
-    <summary>예시 보기 (1건)</summary>
-    <div class="example-block">
-      <div class="example-title">잔액 조회 요청 예시</div>
-      <pre class="code-block">{
-  <span class="key">"requestId"</span>: <span class="str">"B123456789"</span>,
-  <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>
-}</pre>
-    </div>
-  </details></div>
-  </div>
-  </section>
-<section class="section" id="sendBalanceResult">
-  <div class="sec-row">
-    <div class="sec-left">
-      <h2 class="section-title"><span class="badge-lg send">SEND</span> 잔액 조회 결과</h2>
-      <p class="section-desc">Adapter → Core</p>
-      <div class="topic-info">
-        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.balance.result</code></div>
-      </div>
-    </div>
-    <div class="sec-right"></div>
-  </div>
-
-  <div class="sec-row">
-    <div class="sec-left">
-      <h3>메시지 스키마 — 잔액 조회 결과</h3>
-      <div class="table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
-        <tbody><tr>
-      <td><code>requestId</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>요청 고유 ID</td>
-      <td><code>B123456789</code></td>
-    </tr><tr>
-      <td><code>result</code></td>
-      <td>array<object> </td>
-      <td><span class="tag required">required</span></td>
-      <td>체인/토큰별 잔액 목록</td>
-      <td></td>
-    </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;chainId</code></td>
-          <td>string</td>
-          <td><span class="tag required">required</span></td>
-          <td>체인 ID</td>
-          <td><code>11155111</code></td>
-        </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;symbol</code></td>
-          <td>string</td>
-          <td><span class="tag required">required</span></td>
-          <td>토큰 심볼</td>
-          <td><code>USDC</code></td>
-        </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;address</code></td>
-          <td>string</td>
-          <td><span class="tag required">required</span></td>
-          <td>조회한 주소</td>
-          <td><code>0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18</code></td>
-        </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;balance</code></td>
-          <td>string</td>
-          <td><span class="tag required">required</span></td>
-          <td>잔액 (decimal string)</td>
-          <td><code>250.0</code></td>
-        </tr><tr>
-      <td><code>message</code></td>
-      <td>string <span class="tag nullable">nullable</span></td>
-      <td></td>
-      <td>에러 메시지 (성공 시 null)</td>
-      <td><code>null</code></td>
-    </tr></tbody>
-      </table></div>
-    </div>
-    <div class="sec-right"><details class="examples-toggle">
-    <summary>예시 보기 (2건)</summary>
-    <div class="example-block">
-      <div class="example-title">잔액 조회 성공</div>
-      <pre class="code-block">{
-  <span class="key">"requestId"</span>: <span class="str">"B123456789"</span>,
-  <span class="key">"result"</span>: [
-    {
-      <span class="key">"chainId"</span>: <span class="str">"11155111"</span>,
-      <span class="key">"symbol"</span>: <span class="str">"USDC"</span>,
-      <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>,
-      <span class="key">"balance"</span>: <span class="str">"250.0"</span>
-    },
-    {
-      <span class="key">"chainId"</span>: <span class="str">"11155111"</span>,
-      <span class="key">"symbol"</span>: <span class="str">"ETH"</span>,
-      <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>,
-      <span class="key">"balance"</span>: <span class="str">"1.5"</span>
-    }
-  ],
-  <span class="key">"message"</span>: <span class="lit">null</span>
-}</pre>
-    </div>
-<div class="example-block">
-      <div class="example-title">잔액 조회 실패</div>
-      <pre class="code-block">{
-  <span class="key">"requestId"</span>: <span class="str">"B123456789"</span>,
-  <span class="key">"result"</span>: [],
-  <span class="key">"message"</span>: <span class="str">"ACCOUNT_NOT_FOUND"</span>
 }</pre>
     </div>
   </details></div>
