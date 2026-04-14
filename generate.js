@@ -146,9 +146,16 @@ for (const sec of sections) {
   groupMap.get(sec.group).push(sec.id);
 }
 
-// ── TransactionStatus ──
+// ── Schemas ──
 
-const txStatus = schemas.TransactionStatus;
+const schemaDescMap = {};
+for (const [name, schema] of Object.entries(schemas)) {
+  const lines = (schema.description || '').trim().split('\n').filter(l => l.trim().startsWith('- '));
+  schemaDescMap[name] = { title: schema.title, description: schema.description, enumVals: schema.enum || [], rows: lines.map(l => {
+    const m = l.trim().match(/^-\s*(\S+):\s*(.+)$/);
+    return m ? { val: m[1], desc: m[2] } : { val: l.trim().replace(/^-\s*/, ''), desc: '' };
+  })};
+}
 
 // ── Generate HTML ──
 
@@ -156,7 +163,7 @@ function buildSidebar() {
   let html = `<div class="nav-section-title" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('section-collapsed')"><span class="nav-section-arrow">▾</span> Kafka Message Spec</div>
   <div class="nav-section-body">`;
   for (const g of navGroups) {
-    html += `<div class="nav-group">
+    html += `<div class="nav-group collapsed">
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> ${esc(g.title)}</div>
       <div class="nav-group-items">`;
     for (const id of g.items) {
@@ -167,10 +174,13 @@ function buildSidebar() {
     }
     html += '</div></div>';
   }
-  html += `<div class="nav-group">
+  const schemaLinks = Object.keys(schemaDescMap).map(name =>
+    `<a href="#${esc(name)}" class="nav-link">📌 ${esc(name)}</a>`
+  ).join('\n');
+  html += `<div class="nav-group collapsed">
     <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 공통 스키마</div>
     <div class="nav-group-items">
-      <a href="#TransactionStatus" class="nav-link">📌 TransactionStatus</a>
+      ${schemaLinks}
     </div>
   </div>`;
   html += '</div>';
@@ -210,24 +220,24 @@ function buildSection(sec) {
 }
 
 function buildSchemas() {
-  if (!txStatus) return '';
-  return `<section class="section" id="TransactionStatus">
-    <div class="sec-row">
-      <div class="sec-left">
-        <h2 class="section-title">TransactionStatus</h2>
-        <p class="section-desc">${esc(txStatus.description)}</p>
-        <div class="table-wrap"><table>
-          <thead><tr><th>값</th><th>의미</th></tr></thead>
-          <tbody>
-            <tr><td><code>TXPD</code></td><td>Pending — 제출됨, 컨펌 대기 중</td></tr>
-            <tr><td><code>TXCF</code></td><td>Confirmed — 블록 컨펌 완료</td></tr>
-            <tr><td><code>TXFA</code></td><td>Failed — 트랜잭션 실패</td></tr>
-          </tbody>
-        </table></div>
+  let html = '';
+  for (const [name, info] of Object.entries(schemaDescMap)) {
+    const rows = info.rows.map(r => `<tr><td><code>${esc(r.val)}</code></td><td>${esc(r.desc)}</td></tr>`).join('\n');
+    html += `<section class="section" id="${esc(name)}">
+      <div class="sec-row">
+        <div class="sec-left">
+          <h2 class="section-title">${esc(name)}</h2>
+          <p class="section-desc">${esc(info.title || '')}</p>
+          <div class="table-wrap"><table>
+            <thead><tr><th>값</th><th>의미</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table></div>
+        </div>
+        <div class="sec-right"></div>
       </div>
-      <div class="sec-right"></div>
-    </div>
-  </section>`;
+    </section>`;
+  }
+  return html;
 }
 
 const html = `<!DOCTYPE html>
