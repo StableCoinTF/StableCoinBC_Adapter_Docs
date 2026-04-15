@@ -1756,7 +1756,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <div class="sec-row">
     <div class="sec-left">
       <h2 class="section-title"><span class="badge-lg send">SEND</span> 메트릭 조회 결과</h2>
-      <p class="section-desc">Adapter → Core (RPC raw 응답, 데이터 변환 없음)</p>
+      <p class="section-desc">Adapter → Core (ethers.js 응답 기반)</p>
       <div class="topic-info">
         <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.metric.result</code></div>
       </div>
@@ -1786,7 +1786,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> block</code></td>
       <td>object </td>
       <td><span class="tag required">required</span></td>
-      <td>eth_getBlockByNumber(&quot;latest&quot;, false) raw 응답</td>
+      <td>ethers.js provider.getBlock(&quot;latest&quot;) 응답</td>
       <td></td>
     </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
         <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
@@ -1794,14 +1794,14 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>&nbsp;&nbsp;number</code></td>
       <td>string </td>
       <td></td>
-      <td>최신 블록 높이 hex (지표 1)</td>
-      <td><code>0x498a85</code></td>
+      <td>최신 블록 높이 (지표 1)</td>
+      <td><code>4819589</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;timestamp</code></td>
       <td>string </td>
       <td></td>
-      <td>블록 타임스탬프 hex (지표 2 산출용)</td>
-      <td><code>0x66a1b2c3</code></td>
+      <td>블록 타임스탬프 Unix 초 (지표 2 산출용)</td>
+      <td><code>1722098371</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;hash</code></td>
       <td>string </td>
@@ -1819,7 +1819,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td></td>
       <td>블록 nonce</td>
-      <td><code>0x...</code></td>
+      <td><code>0x0000000000000000</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;sha3_uncles</code></td>
       <td>string </td>
@@ -1860,14 +1860,14 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>&nbsp;&nbsp;difficulty</code></td>
       <td>string </td>
       <td></td>
-      <td>난이도 hex</td>
-      <td><code>0x0</code></td>
+      <td>난이도 (bigint → decimal string)</td>
+      <td><code>0</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;total_difficulty</code></td>
       <td>string </td>
       <td></td>
-      <td>누적 난이도 hex</td>
-      <td><code>0x0</code></td>
+      <td>누적 난이도 (bigint → decimal string)</td>
+      <td><code>0</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;extra_data</code></td>
       <td>string </td>
@@ -1878,26 +1878,26 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>&nbsp;&nbsp;size</code></td>
       <td>string </td>
       <td></td>
-      <td>블록 크기 hex</td>
-      <td><code>0x...</code></td>
+      <td>블록 크기</td>
+      <td><code>1024</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;gas_limit</code></td>
       <td>string </td>
       <td></td>
-      <td>가스 한도 hex</td>
-      <td><code>0x...</code></td>
+      <td>가스 한도 (bigint → decimal string)</td>
+      <td><code>30000000</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;gas_used</code></td>
       <td>string </td>
       <td></td>
-      <td>사용된 가스 hex</td>
-      <td><code>0x...</code></td>
+      <td>사용된 가스 (bigint → decimal string)</td>
+      <td><code>1234567</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;base_fee_per_gas</code></td>
-      <td>string </td>
+      <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
-      <td>기본 가스비 hex</td>
-      <td><code>0x...</code></td>
+      <td>기본 가스비 (bigint → decimal string, EIP-1559 미지원 시 null)</td>
+      <td><code>25000000000</code></td>
     </tr><tr class="nested">
       <td><code>&nbsp;&nbsp;transactions</code></td>
       <td>array<object> </td>
@@ -1907,9 +1907,9 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     </tr></tbody>
       </table></div></td></tr><tr>
       <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> tx_pool</code></td>
-      <td>object </td>
+      <td>object <span class="tag nullable">nullable</span></td>
       <td><span class="tag required">required</span></td>
-      <td>txpool_status raw 응답 (지표 5)</td>
+      <td>txpool_status raw 응답 (지표 5, provider.send)</td>
       <td></td>
     </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
         <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
@@ -1928,15 +1928,15 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     </tr></tbody>
       </table></div></td></tr><tr>
       <td><code>peer_count</code></td>
-      <td>string </td>
+      <td>string <span class="tag nullable">nullable</span></td>
       <td><span class="tag required">required</span></td>
-      <td>P2P 피어 수 hex (net_peerCount raw)</td>
+      <td>P2P 피어 수 hex (net_peerCount, provider.send)</td>
       <td><code>0x12</code></td>
     </tr><tr>
       <td><code>syncing</code></td>
       <td>string </td>
       <td><span class="tag required">required</span></td>
-      <td>동기화 상태 (eth_syncing raw: false=synced, object=syncing 중)</td>
+      <td>동기화 상태 (eth_syncing: false=synced, object=syncing 중)</td>
       <td><code>false</code></td>
     </tr><tr>
       <td><code>message</code></td>
@@ -1955,24 +1955,24 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
   <span class="key">"block"</span>: {
-    <span class="key">"number"</span>: <span class="str">"0x498a85"</span>,
-    <span class="key">"timestamp"</span>: <span class="str">"0x66a1b2c3"</span>,
+    <span class="key">"number"</span>: <span class="str">"4819589"</span>,
+    <span class="key">"timestamp"</span>: <span class="str">"1722098371"</span>,
     <span class="key">"hash"</span>: <span class="str">"0x..."</span>,
     <span class="key">"parent_hash"</span>: <span class="str">"0x..."</span>,
-    <span class="key">"nonce"</span>: <span class="str">"0x..."</span>,
+    <span class="key">"nonce"</span>: <span class="str">"0x0000000000000000"</span>,
     <span class="key">"sha3_uncles"</span>: <span class="str">"0x..."</span>,
     <span class="key">"logs_bloom"</span>: <span class="str">"0x..."</span>,
     <span class="key">"transactions_root"</span>: <span class="str">"0x..."</span>,
     <span class="key">"state_root"</span>: <span class="str">"0x..."</span>,
     <span class="key">"receipts_root"</span>: <span class="str">"0x..."</span>,
     <span class="key">"miner"</span>: <span class="str">"0x..."</span>,
-    <span class="key">"difficulty"</span>: <span class="str">"0x0"</span>,
-    <span class="key">"total_difficulty"</span>: <span class="str">"0x0"</span>,
+    <span class="key">"difficulty"</span>: <span class="str">"0"</span>,
+    <span class="key">"total_difficulty"</span>: <span class="str">"0"</span>,
     <span class="key">"extra_data"</span>: <span class="str">"0x..."</span>,
-    <span class="key">"size"</span>: <span class="str">"0x..."</span>,
-    <span class="key">"gas_limit"</span>: <span class="str">"0x..."</span>,
-    <span class="key">"gas_used"</span>: <span class="str">"0x..."</span>,
-    <span class="key">"base_fee_per_gas"</span>: <span class="str">"0x..."</span>,
+    <span class="key">"size"</span>: <span class="str">"1024"</span>,
+    <span class="key">"gas_limit"</span>: <span class="str">"30000000"</span>,
+    <span class="key">"gas_used"</span>: <span class="str">"1234567"</span>,
+    <span class="key">"base_fee_per_gas"</span>: <span class="str">"25000000000"</span>,
     <span class="key">"transactions"</span>: []
   },
   <span class="key">"tx_pool"</span>: {

@@ -1271,7 +1271,7 @@ monitorMetricInquiry:
 monitorMetricResult:
   address: adapter.board.metric.result
   title: 메트릭 조회 결과
-  description: Adapter → Core (RPC raw 응답, 데이터 변환 없음)
+  description: Adapter → Core (ethers.js 응답 기반)
   messages:
     MetricInquiryResponse:
       name: MetricInquiryResponse
@@ -1298,18 +1298,18 @@ monitorMetricResult:
               - "8217"
           block:
             type: object
-            description: "eth_getBlockByNumber(\"latest\", false) raw 응답"
+            description: "ethers.js provider.getBlock(\"latest\") 응답"
             properties:
               number:
                 type: string
-                description: 최신 블록 높이 hex (지표 1)
+                description: 최신 블록 높이 (지표 1)
                 examples:
-                  - "0x498a85"
+                  - "4819589"
               timestamp:
                 type: string
-                description: 블록 타임스탬프 hex (지표 2 산출용)
+                description: 블록 타임스탬프 Unix 초 (지표 2 산출용)
                 examples:
-                  - "0x66a1b2c3"
+                  - "1722098371"
               hash:
                 type: string
                 description: 블록 해시
@@ -1324,7 +1324,7 @@ monitorMetricResult:
                 type: string
                 description: 블록 nonce
                 examples:
-                  - "0x..."
+                  - "0x0000000000000000"
               sha3_uncles:
                 type: string
                 description: uncle 블록 해시
@@ -1357,14 +1357,14 @@ monitorMetricResult:
                   - "0x..."
               difficulty:
                 type: string
-                description: 난이도 hex
+                description: 난이도 (bigint → decimal string)
                 examples:
-                  - "0x0"
+                  - "0"
               total_difficulty:
                 type: string
-                description: 누적 난이도 hex
+                description: 누적 난이도 (bigint → decimal string)
                 examples:
-                  - "0x0"
+                  - "0"
               extra_data:
                 type: string
                 description: 추가 데이터
@@ -1372,24 +1372,25 @@ monitorMetricResult:
                   - "0x..."
               size:
                 type: string
-                description: 블록 크기 hex
+                description: 블록 크기
                 examples:
-                  - "0x..."
+                  - "1024"
               gas_limit:
                 type: string
-                description: 가스 한도 hex
+                description: 가스 한도 (bigint → decimal string)
                 examples:
-                  - "0x..."
+                  - "30000000"
               gas_used:
                 type: string
-                description: 사용된 가스 hex
+                description: 사용된 가스 (bigint → decimal string)
                 examples:
-                  - "0x..."
+                  - "1234567"
               base_fee_per_gas:
                 type: string
-                description: 기본 가스비 hex
+                description: 기본 가스비 (bigint → decimal string, EIP-1559 미지원 시 null)
+                nullable: true
                 examples:
-                  - "0x..."
+                  - "25000000000"
               transactions:
                 type: array
                 description: 트랜잭션 해시 목록
@@ -1397,7 +1398,8 @@ monitorMetricResult:
                   type: string
           tx_pool:
             type: object
-            description: "txpool_status raw 응답 (지표 5)"
+            description: "txpool_status raw 응답 (지표 5, provider.send)"
+            nullable: true
             required:
               - pending
               - queued
@@ -1414,11 +1416,12 @@ monitorMetricResult:
                   - "0x3"
           peer_count:
             type: string
-            description: P2P 피어 수 hex (net_peerCount raw)
+            description: P2P 피어 수 hex (net_peerCount, provider.send)
+            nullable: true
             examples:
               - "0x12"
           syncing:
-            description: "동기화 상태 (eth_syncing raw: false=synced, object=syncing 중)"
+            description: "동기화 상태 (eth_syncing: false=synced, object=syncing 중)"
             examples:
               - false
           message:
@@ -1433,24 +1436,24 @@ monitorMetricResult:
             request_id: "T123456789"
             chain_id: "8217"
             block:
-              number: "0x498a85"
-              timestamp: "0x66a1b2c3"
+              number: "4819589"
+              timestamp: "1722098371"
               hash: "0x..."
               parent_hash: "0x..."
-              nonce: "0x..."
+              nonce: "0x0000000000000000"
               sha3_uncles: "0x..."
               logs_bloom: "0x..."
               transactions_root: "0x..."
               state_root: "0x..."
               receipts_root: "0x..."
               miner: "0x..."
-              difficulty: "0x0"
-              total_difficulty: "0x0"
+              difficulty: "0"
+              total_difficulty: "0"
               extra_data: "0x..."
-              size: "0x..."
-              gas_limit: "0x..."
-              gas_used: "0x..."
-              base_fee_per_gas: "0x..."
+              size: "1024"
+              gas_limit: "30000000"
+              gas_used: "1234567"
+              base_fee_per_gas: "25000000000"
               transactions: []
             tx_pool:
               pending: "0xc"
