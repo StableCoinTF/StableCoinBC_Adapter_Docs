@@ -1156,8 +1156,6 @@ monitorContractResult:
           - request_id
           - chain_id
           - contracts
-          - circuit_breaker
-          - kms
         properties:
           request_id:
             type: string
@@ -1208,40 +1206,6 @@ monitorContractResult:
                   description: 일시정지 여부 (RPC paused())
                   examples:
                     - false
-          circuit_breaker:
-            type: object
-            description: Circuit Breaker 상태
-            required:
-              - enabled
-              - threshold
-            properties:
-              enabled:
-                type: boolean
-                description: Circuit Breaker 활성 여부
-                examples:
-                  - true
-              threshold:
-                type: number
-                description: 임계값
-                examples:
-                  - 5
-          kms:
-            type: object
-            description: NHN Cloud KMS 상태
-            required:
-              - connected
-              - key_count
-            properties:
-              connected:
-                type: boolean
-                description: KMS 연결 상태 (KMS API)
-                examples:
-                  - true
-              key_count:
-                type: number
-                description: 등록된 키 수 (KMS API)
-                examples:
-                  - 3
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -1270,12 +1234,6 @@ monitorContractResult:
                 version: "v2.1.0"
                 paused: false
               - "..."
-            circuit_breaker:
-              enabled: true
-              threshold: 5
-            kms:
-              connected: true
-              key_count: 3
             message: null
 
 monitorMetricInquiry:
