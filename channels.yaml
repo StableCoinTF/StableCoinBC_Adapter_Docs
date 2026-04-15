@@ -1200,7 +1200,7 @@ monitorContractResult:
                     - "0xImpl000000000000000000000000000000000001"
                 version:
                   type: string
-                  description: 컨트랙트 버전 (RPC version() 또는 설정값)
+                  description: 컨트랙트 버전
                   examples:
                     - "v0.6.0"
                 paused:
