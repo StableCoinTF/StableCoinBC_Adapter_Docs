@@ -18,7 +18,7 @@ accountCreate:
             type: string
             description: 요청 고유 ID
             examples:
-              - "U123456789"
+              - "T123456789"
           network_type:
             type: string
             description: "네트워크 타입 (예: EVM)"
@@ -27,7 +27,7 @@ accountCreate:
       examples:
         - name: 계정 생성 요청 예시
           payload:
-            request_id: "U123456789"
+            request_id: "T123456789"
             network_type: "EVM"
 
 accountCreated:
@@ -49,7 +49,7 @@ accountCreated:
             type: string
             description: 요청 고유 ID
             examples:
-              - "U123456789"
+              - "T123456789"
           address:
             type: string
             description: 생성된 Smart Account 주소 (실패 시 null)
@@ -72,13 +72,13 @@ accountCreated:
       examples:
         - name: 계정 생성 성공
           payload:
-            request_id: "U123456789"
+            request_id: "T123456789"
             address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
             network_type: "EVM"
             message: ""
         - name: 계정 생성 실패
           payload:
-            request_id: "U123456789"
+            request_id: "T123456789"
             address: null
             network_type: null
             message: "UNSUPPORTED_NETWORK_TYPE"
@@ -104,7 +104,7 @@ accountDeploy:
             type: string
             description: 요청 고유 ID
             examples:
-              - "U123456789"
+              - "T123456789"
           chain_id:
             type: string
             description: "체인 ID (예: 11155111 = Sepolia)"
@@ -119,7 +119,7 @@ accountDeploy:
       examples:
         - name: 계정 배포 요청 예시
           payload:
-            request_id: "U123456789"
+            request_id: "T123456789"
             chain_id: "11155111"
             address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
 
@@ -143,7 +143,7 @@ accountDeployed:
             type: string
             description: 요청 고유 ID
             examples:
-              - "U123456789"
+              - "T123456789"
           status:
             $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
           tx_hash:
@@ -168,14 +168,14 @@ accountDeployed:
       examples:
         - name: 배포 Pending
           payload:
-            request_id: "U123456789"
+            request_id: "T123456789"
             status: "TXPD"
             tx_hash: null
             complete_datetime: null
             message: ""
         - name: 배포 Confirmed
           payload:
-            request_id: "U123456789"
+            request_id: "T123456789"
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
             complete_datetime: "20260325143015"
@@ -201,7 +201,7 @@ accountDelete:
             type: string
             description: 요청 고유 ID
             examples:
-              - "U123456789"
+              - "T123456789"
           address:
             type: string
             description: 삭제할 계정 주소
@@ -211,7 +211,7 @@ accountDelete:
       examples:
         - name: 계정 삭제 요청 예시
           payload:
-            request_id: "U123456789"
+            request_id: "T123456789"
             address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
 
 withdrawRequest:
@@ -236,7 +236,7 @@ withdrawRequest:
             type: string
             description: 요청 고유 ID
             examples:
-              - "WD-20260325-000001"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -264,14 +264,14 @@ withdrawRequest:
       examples:
         - name: ERC-20 토큰 출금
           payload:
-            request_id: "WD-20260325-000001"
+            request_id: "T123456789"
             chain_id: "11155111"
             to_address: "0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"
             amount: "100000000000000000"
             symbol: "USDC"
         - name: 네이티브 코인 출금
           payload:
-            request_id: "WD-20260325-000002"
+            request_id: "T123456789"
             chain_id: "11155111"
             to_address: "0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"
             amount: "500000000000000000"
@@ -299,7 +299,7 @@ withdrawResult:
             type: string
             description: 요청 고유 ID
             examples:
-              - "WD-20260325-000001"
+              - "T123456789"
           status:
             $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
           tx_hash:
@@ -332,7 +332,7 @@ withdrawResult:
       examples:
         - name: 출금 성공 (Confirmed)
           payload:
-            request_id: "WD-20260325-000001"
+            request_id: "T123456789"
             status: "TXCF"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             complete_datetime: "20260325173715"
@@ -341,7 +341,7 @@ withdrawResult:
             message: null
         - name: 출금 실패
           payload:
-            request_id: "WD-20260325-000001"
+            request_id: "T123456789"
             status: "TXFA"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             complete_datetime: "20260325173715"
@@ -370,7 +370,7 @@ paymentRequest:
             type: string
             description: 결제 고유 ID
             examples:
-              - "2026032501"
+              - "T123456789"
           amount:
             type: string
             description: 결제 금액 (decimal string)
@@ -385,7 +385,7 @@ paymentRequest:
       examples:
         - name: USDC 결제 요청
           payload:
-            request_id: "2026032501"
+            request_id: "T123456789"
             amount: "7.69"
             symbol: "USDC"
 
@@ -407,7 +407,7 @@ paymentResult:
             type: string
             description: 결제 고유 ID
             examples:
-              - "2026032501"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -450,7 +450,7 @@ paymentResult:
       examples:
         - name: 결제 성공
           payload:
-            request_id: "2026032501"
+            request_id: "T123456789"
             chain_id: "56357"
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
@@ -460,7 +460,7 @@ paymentResult:
             message: null
         - name: 결제 실패
           payload:
-            request_id: "2026032501"
+            request_id: "T123456789"
             chain_id: null
             status: "TXFA"
             tx_hash: null
@@ -489,7 +489,7 @@ commonConfirm:
             type: string
             description: 요청 고유 ID
             examples:
-              - "W123456789"
+              - "T123456789"
           tx_hash:
             type: string
             description: 확인할 트랜잭션 해시
@@ -505,12 +505,12 @@ commonConfirm:
       examples:
         - name: 출금 컨펌 확인
           payload:
-            request_id: "W123456789"
+            request_id: "T123456789"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             chain_id: "11155111"
         - name: 결제 컨펌 확인
           payload:
-            request_id: "W123456789"
+            request_id: "T123456789"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
             chain_id: null
 
@@ -534,7 +534,7 @@ commonConfirmed:
             type: string
             description: 요청 고유 ID
             examples:
-              - "W123456789"
+              - "T123456789"
           tx_hash:
             type: string
             description: 트랜잭션 해시
@@ -563,7 +563,7 @@ commonConfirmed:
       examples:
         - name: 컨펌 완료
           payload:
-            request_id: "W123456789"
+            request_id: "T123456789"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             status: "TXCF"
             chain_id: "11155111"
@@ -571,7 +571,7 @@ commonConfirmed:
             gas_fee: "0.0001"
         - name: 컨펌 대기 중
           payload:
-            request_id: "W123456789"
+            request_id: "T123456789"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             status: "TXPD"
             chain_id: "11155111"
@@ -599,7 +599,7 @@ configCreate:
             type: string
             description: 요청 고유 ID
             examples:
-              - "C123456789"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -614,7 +614,7 @@ configCreate:
       examples:
         - name: 토큰 설정 등록
           payload:
-            request_id: "C123456789"
+            request_id: "T123456789"
             chain_id: "43114"
             contract_address: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
 
@@ -641,7 +641,7 @@ settlementRequest:
             type: string
             description: 요청 고유 ID
             examples:
-              - "ST-20260407-000001"
+              - "T123456789"
           symbol:
             type: string
             description: 토큰 심볼 (1-20자)
@@ -668,7 +668,7 @@ settlementRequest:
       examples:
         - name: USDC 정산 요청
           payload:
-            request_id: "ST-20260407-000001"
+            request_id: "T123456789"
             symbol: "USDC"
             amount: "100.00"
             fee: "1.50"
@@ -693,7 +693,7 @@ settlementResult:
             type: string
             description: 요청 고유 ID
             examples:
-              - "ST-20260407-000001"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -735,7 +735,7 @@ settlementResult:
       examples:
         - name: 정산 성공
           payload:
-            request_id: "ST-20260407-000001"
+            request_id: "T123456789"
             chain_id: "56357"
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
@@ -745,7 +745,7 @@ settlementResult:
             message: null
         - name: 정산 실패
           payload:
-            request_id: "ST-20260407-000001"
+            request_id: "T123456789"
             chain_id: "56357"
             status: "TXFA"
             tx_hash: null
@@ -774,7 +774,7 @@ reconciliationInquiry:
             type: string
             description: 요청 고유 ID
             examples:
-              - "RC-20260407-000001"
+              - "T123456789"
           target_dt:
             type: string
             description: 대사 기준 일시 (yyyyMMddHHmmss)
@@ -784,7 +784,7 @@ reconciliationInquiry:
       examples:
         - name: 대사 조회 요청 예시
           payload:
-            request_id: "RC-20260407-000001"
+            request_id: "T123456789"
             target_dt: "20260407000000"
 
 reconciliationResult:
@@ -805,7 +805,7 @@ reconciliationResult:
             type: string
             description: 요청 고유 ID
             examples:
-              - "RC-20260407-000001"
+              - "T123456789"
           result:
             type: array
             description: 토큰별 대사 결과 목록
@@ -852,7 +852,7 @@ reconciliationResult:
       examples:
         - name: 대사 조회 성공
           payload:
-            request_id: "RC-20260407-000001"
+            request_id: "T123456789"
             result:
               - symbol: "USDC"
                 user_on_total: "50000.00"
@@ -867,7 +867,7 @@ reconciliationResult:
             message: null
         - name: 대사 조회 실패
           payload:
-            request_id: "RC-20260407-000001"
+            request_id: "T123456789"
             result: []
             message: "VALIDATION_ERROR"
 
@@ -990,7 +990,7 @@ monitorEntrypointTransfer:
             type: string
             description: 요청 고유 ID
             examples:
-              - "EF-20260414-000001"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -1013,14 +1013,14 @@ monitorEntrypointTransfer:
       examples:
         - name: EntryPoint 충전 요청
           payload:
-            request_id: "EF-20260414-000001"
+            request_id: "T123456789"
             chain_id: "8217"
             action: "DEPOSIT"
             address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
             amount: "5.0"
         - name: EntryPoint 인출 요청
           payload:
-            request_id: "EF-20260414-000002"
+            request_id: "T123456789"
             chain_id: "8217"
             action: "WITHDRAW"
             address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
@@ -1047,7 +1047,7 @@ monitorEntrypointTransferResult:
             type: string
             description: 요청 고유 ID
             examples:
-              - "EF-20260414-000001"
+              - "T123456789"
           action:
             $ref: "asyncapi.yaml#/components/schemas/TransferAction"
           address:
@@ -1091,7 +1091,7 @@ monitorEntrypointTransferResult:
       examples:
         - name: 충전 전송 성공
           payload:
-            request_id: "EF-20260414-000001"
+            request_id: "T123456789"
             action: "DEPOSIT"
             address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
             amount: "5.0"
@@ -1101,7 +1101,7 @@ monitorEntrypointTransferResult:
             message: null
         - name: 인출 실패
           payload:
-            request_id: "EF-20260414-000002"
+            request_id: "T123456789"
             action: "WITHDRAW"
             address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
             amount: "3.0"
@@ -1130,7 +1130,7 @@ monitorContractInquiry:
             type: string
             description: 요청 고유 ID
             examples:
-              - "CI-20260414-000001"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -1139,7 +1139,7 @@ monitorContractInquiry:
       examples:
         - name: 컨트랙트 조회 요청 예시
           payload:
-            request_id: "CI-20260414-000001"
+            request_id: "T123456789"
             chain_id: "8217"
 
 monitorContractResult:
@@ -1163,7 +1163,7 @@ monitorContractResult:
             type: string
             description: 요청 고유 ID
             examples:
-              - "CI-20260414-000001"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -1177,7 +1177,7 @@ monitorContractResult:
               required:
                 - name
                 - proxy_address
-                - implementation_address
+                - impl_address
                 - version
                 - paused
               properties:
@@ -1192,7 +1192,7 @@ monitorContractResult:
                   pattern: "^0x[a-fA-F0-9]{40}$"
                   examples:
                     - "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d3789"
-                implementation_address:
+                impl_address:
                   type: string
                   description: Implementation 주소 (RPC EIP-1967 getImplementation)
                   pattern: "^0x[a-fA-F0-9]{40}$"
@@ -1210,7 +1210,7 @@ monitorContractResult:
                     - false
           circuit_breaker:
             type: object
-            description: Circuit Breaker 상태 (Redis)
+            description: Circuit Breaker 상태
             required:
               - enabled
               - threshold
@@ -1251,29 +1251,25 @@ monitorContractResult:
       examples:
         - name: 컨트랙트 조회 성공
           payload:
-            request_id: "CI-20260414-000001"
+            request_id: "T123456789"
             chain_id: "8217"
             contracts:
               - name: "EntryPoint"
                 proxy_address: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d3789"
-                implementation_address: "0xImpl000000000000000000000000000000000001"
+                impl_address: "0xImpl000000000000000000000000000000000001"
                 version: "v0.6.0"
                 paused: false
               - name: "AccountFactory"
                 proxy_address: "0xFact000000000000000000000000000000001234"
-                implementation_address: "0xImpl000000000000000000000000000000000002"
+                impl_address: "0xImpl000000000000000000000000000000000002"
                 version: "v1.2.0"
                 paused: false
               - name: "USDC Token"
                 proxy_address: "0xUsdc00000000000000000000000000000000ABCD"
-                implementation_address: "0xImpl000000000000000000000000000000000003"
+                impl_address: "0xImpl000000000000000000000000000000000003"
                 version: "v2.1.0"
                 paused: false
-              - name: "Bridge"
-                proxy_address: "0xBrid000000000000000000000000000000005678"
-                implementation_address: "0xImpl000000000000000000000000000000000004"
-                version: "v0.9.1"
-                paused: true
+              - "..."
             circuit_breaker:
               enabled: true
               threshold: 5
@@ -1282,16 +1278,16 @@ monitorContractResult:
               key_count: 3
             message: null
 
-monitorNetworkInquiry:
-  address: adapter.board.network.request
-  title: 네트워크 조회 요청
+monitorMetricInquiry:
+  address: adapter.board.metric.request
+  title: 메트릭 조회 요청
   description: Core → Adapter
   x-group: 모니터링
   x-icon: "🌐"
   messages:
-    NetworkInquiryRequest:
-      name: NetworkInquiryRequest
-      title: 네트워크 조회 요청
+    MetricInquiryRequest:
+      name: MetricInquiryRequest
+      title: 메트릭 조회 요청
       payload:
         type: object
         required:
@@ -1302,26 +1298,26 @@ monitorNetworkInquiry:
             type: string
             description: 요청 고유 ID
             examples:
-              - "NI-20260414-000001"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
             examples:
               - "8217"
       examples:
-        - name: 네트워크 조회 요청 예시
+        - name: 메트릭 조회 요청 예시
           payload:
-            request_id: "NI-20260414-000001"
+            request_id: "T123456789"
             chain_id: "8217"
 
-monitorNetworkResult:
-  address: adapter.board.network.result
-  title: 네트워크 조회 결과
+monitorMetricResult:
+  address: adapter.board.metric.result
+  title: 메트릭 조회 결과
   description: Adapter → Core (RPC raw 응답, 데이터 변환 없음)
   messages:
-    NetworkInquiryResponse:
-      name: NetworkInquiryResponse
-      title: 네트워크 조회 결과
+    MetricInquiryResponse:
+      name: MetricInquiryResponse
+      title: 메트릭 조회 결과
       payload:
         type: object
         required:
@@ -1331,14 +1327,12 @@ monitorNetworkResult:
           - tx_pool
           - peer_count
           - syncing
-          - network
-          - rpc_endpoint
         properties:
           request_id:
             type: string
             description: 요청 고유 ID
             examples:
-              - "NI-20260414-000001"
+              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -1469,16 +1463,6 @@ monitorNetworkResult:
             description: "동기화 상태 (eth_syncing raw: false=synced, object=syncing 중)"
             examples:
               - false
-          network:
-            type: string
-            description: 네트워크명 (설정값)
-            examples:
-              - "mainnet"
-          rpc_endpoint:
-            type: string
-            description: RPC 엔드포인트 (설정값)
-            examples:
-              - "https://rpc.kcpchain.io"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -1486,9 +1470,9 @@ monitorNetworkResult:
             examples:
               - null
       examples:
-        - name: 네트워크 조회 성공
+        - name: 메트릭 조회 성공
           payload:
-            request_id: "NI-20260414-000001"
+            request_id: "T123456789"
             chain_id: "8217"
             block:
               number: "0x498a85"
@@ -1515,8 +1499,6 @@ monitorNetworkResult:
               queued: "0x3"
             peer_count: "0x12"
             syncing: false
-            network: "mainnet"
-            rpc_endpoint: "https://rpc.kcpchain.io"
             message: null
 
 monitorInfraInquiry:
@@ -1533,23 +1515,16 @@ monitorInfraInquiry:
         type: object
         required:
           - request_id
-          - chain_id
         properties:
           request_id:
             type: string
             description: 요청 고유 ID
             examples:
-              - "II-20260414-000001"
-          chain_id:
-            type: string
-            description: 체인 ID
-            examples:
-              - "8217"
+              - "T123456789"
       examples:
         - name: 인프라 조회 요청 예시
           payload:
-            request_id: "II-20260414-000001"
-            chain_id: "8217"
+            request_id: "T123456789"
 
 monitorInfraResult:
   address: adapter.board.infra.result
@@ -1563,19 +1538,13 @@ monitorInfraResult:
         type: object
         required:
           - request_id
-          - chain_id
           - health
         properties:
           request_id:
             type: string
             description: 요청 고유 ID
             examples:
-              - "II-20260414-000001"
-          chain_id:
-            type: string
-            description: 체인 ID
-            examples:
-              - "8217"
+              - "T123456789"
           health:
             type: object
             description: 컴포넌트별 헬스 상태
@@ -1670,8 +1639,7 @@ monitorInfraResult:
       examples:
         - name: 인프라 조회 성공
           payload:
-            request_id: "II-20260414-000001"
-            chain_id: "8217"
+            request_id: "T123456789"
             health:
               modules:
                 bundler:

@@ -121,7 +121,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 
 <header class="header">
   <h1>🔗 <span>StableCoin BC</span> Adapter 메시지 스펙</h1>
-  <span class="header-meta">AsyncAPI 1.0.0 · 2026-04-14</span>
+  <span class="header-meta">AsyncAPI 1.0.0 · 2026-04-15</span>
 </header>
 
 <div class="layout">
@@ -137,7 +137,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 조회 &amp; 대사</div>
       <div class="nav-group-items"><a href="#receiveReconciliationInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 대사 조회 요청</a><a href="#sendReconciliationResult" class="nav-link"><span class="badge send">SEND</span> 대사 조회 결과</a></div></div><div class="nav-group collapsed">
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 모니터링</div>
-      <div class="nav-group-items"><a href="#receiveMonitorEntrypointTransfer" class="nav-link"><span class="badge receive">RECEIVE</span> EntryPoint 자금 관리 요청</a><a href="#sendMonitorEntrypointTransferred" class="nav-link"><span class="badge send">SEND</span> EntryPoint 자금 관리 결과</a><a href="#receiveMonitorContractInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</a><a href="#sendMonitorContractResult" class="nav-link"><span class="badge send">SEND</span> 컨트랙트 목록/상태 결과</a><a href="#receiveMonitorNetworkInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 네트워크 조회 요청</a><a href="#sendMonitorNetworkResult" class="nav-link"><span class="badge send">SEND</span> 네트워크 조회 결과</a><a href="#receiveMonitorInfraInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 인프라 조회 요청</a><a href="#sendMonitorInfraResult" class="nav-link"><span class="badge send">SEND</span> 인프라 조회 결과</a></div></div><div class="nav-group collapsed">
+      <div class="nav-group-items"><a href="#receiveMonitorEntrypointTransfer" class="nav-link"><span class="badge receive">RECEIVE</span> EntryPoint 자금 관리 요청</a><a href="#sendMonitorEntrypointTransferred" class="nav-link"><span class="badge send">SEND</span> EntryPoint 자금 관리 결과</a><a href="#receiveMonitorContractInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</a><a href="#sendMonitorContractResult" class="nav-link"><span class="badge send">SEND</span> 컨트랙트 목록/상태 결과</a><a href="#receiveMonitorMetricInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 메트릭 조회 요청</a><a href="#sendMonitorMetricResult" class="nav-link"><span class="badge send">SEND</span> 메트릭 조회 결과</a><a href="#receiveMonitorInfraInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 인프라 조회 요청</a><a href="#sendMonitorInfraResult" class="nav-link"><span class="badge send">SEND</span> 인프라 조회 결과</a></div></div><div class="nav-group collapsed">
     <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 공통 스키마</div>
     <div class="nav-group-items">
       <a href="#TransactionStatus" class="nav-link">📌 TransactionStatus</a>
@@ -171,7 +171,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>U123456789</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>network_type</code></td>
       <td>string </td>
@@ -186,7 +186,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">계정 생성 요청 예시</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"U123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"network_type"</span>: <span class="str">"EVM"</span>
 }</pre>
     </div>
@@ -216,7 +216,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>U123456789</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>address</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
@@ -243,7 +243,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">계정 생성 성공</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"U123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>,
   <span class="key">"network_type"</span>: <span class="str">"EVM"</span>,
   <span class="key">"message"</span>: <span class="str">""</span>
@@ -252,7 +252,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">계정 생성 실패</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"U123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"address"</span>: <span class="lit">null</span>,
   <span class="key">"network_type"</span>: <span class="lit">null</span>,
   <span class="key">"message"</span>: <span class="str">"UNSUPPORTED_NETWORK_TYPE"</span>
@@ -284,7 +284,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>U123456789</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -305,7 +305,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">계정 배포 요청 예시</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"U123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"11155111"</span>,
   <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>
 }</pre>
@@ -336,7 +336,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>U123456789</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>status</code></td>
       <td><code>TXPD</code> | <code>TXCF</code> | <code>TXFA</code> </td>
@@ -369,7 +369,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">배포 Pending</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"U123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"status"</span>: <span class="str">"TXPD"</span>,
   <span class="key">"tx_hash"</span>: <span class="lit">null</span>,
   <span class="key">"complete_datetime"</span>: <span class="lit">null</span>,
@@ -379,7 +379,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">배포 Confirmed</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"U123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"status"</span>: <span class="str">"TXCF"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"</span>,
   <span class="key">"complete_datetime"</span>: <span class="str">"20260325143015"</span>,
@@ -412,7 +412,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>U123456789</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>address</code></td>
       <td>string </td>
@@ -427,7 +427,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">계정 삭제 요청 예시</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"U123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>
 }</pre>
     </div>
@@ -457,7 +457,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>WD-20260325-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -490,7 +490,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">ERC-20 토큰 출금</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"WD-20260325-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"11155111"</span>,
   <span class="key">"to_address"</span>: <span class="str">"0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"</span>,
   <span class="key">"amount"</span>: <span class="str">"100000000000000000"</span>,
@@ -500,7 +500,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">네이티브 코인 출금</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"WD-20260325-000002"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"11155111"</span>,
   <span class="key">"to_address"</span>: <span class="str">"0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"</span>,
   <span class="key">"amount"</span>: <span class="str">"500000000000000000"</span>,
@@ -533,7 +533,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>WD-20260325-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>status</code></td>
       <td><code>TXPD</code> | <code>TXCF</code> | <code>TXFA</code> </td>
@@ -578,7 +578,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">출금 성공 (Confirmed)</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"WD-20260325-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"status"</span>: <span class="str">"TXCF"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"</span>,
   <span class="key">"complete_datetime"</span>: <span class="str">"20260325173715"</span>,
@@ -590,7 +590,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">출금 실패</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"WD-20260325-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"status"</span>: <span class="str">"TXFA"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"</span>,
   <span class="key">"complete_datetime"</span>: <span class="str">"20260325173715"</span>,
@@ -625,7 +625,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>결제 고유 ID</td>
-      <td><code>2026032501</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>amount</code></td>
       <td>string </td>
@@ -646,7 +646,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">USDC 결제 요청</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"2026032501"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"amount"</span>: <span class="str">"7.69"</span>,
   <span class="key">"symbol"</span>: <span class="str">"USDC"</span>
 }</pre>
@@ -677,7 +677,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>결제 고유 ID</td>
-      <td><code>2026032501</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
@@ -728,7 +728,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">결제 성공</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"2026032501"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"56357"</span>,
   <span class="key">"status"</span>: <span class="str">"TXCF"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"</span>,
@@ -741,7 +741,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">결제 실패</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"2026032501"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="lit">null</span>,
   <span class="key">"status"</span>: <span class="str">"TXFA"</span>,
   <span class="key">"tx_hash"</span>: <span class="lit">null</span>,
@@ -777,7 +777,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>W123456789</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>tx_hash</code></td>
       <td>string </td>
@@ -798,7 +798,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">출금 컨펌 확인</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"W123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"11155111"</span>
 }</pre>
@@ -806,7 +806,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">결제 컨펌 확인</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"W123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"</span>,
   <span class="key">"chain_id"</span>: <span class="lit">null</span>
 }</pre>
@@ -837,7 +837,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>W123456789</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>tx_hash</code></td>
       <td>string </td>
@@ -876,7 +876,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">컨펌 완료</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"W123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"</span>,
   <span class="key">"status"</span>: <span class="str">"TXCF"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"11155111"</span>,
@@ -887,7 +887,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">컨펌 대기 중</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"W123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"</span>,
   <span class="key">"status"</span>: <span class="str">"TXPD"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"11155111"</span>,
@@ -921,7 +921,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>ST-20260407-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>symbol</code></td>
       <td>string </td>
@@ -954,7 +954,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">USDC 정산 요청</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"ST-20260407-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"symbol"</span>: <span class="str">"USDC"</span>,
   <span class="key">"amount"</span>: <span class="str">"100.00"</span>,
   <span class="key">"fee"</span>: <span class="str">"1.50"</span>,
@@ -987,7 +987,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>ST-20260407-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -1038,7 +1038,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">정산 성공</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"ST-20260407-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"56357"</span>,
   <span class="key">"status"</span>: <span class="str">"TXCF"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"</span>,
@@ -1051,7 +1051,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">정산 실패</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"ST-20260407-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"56357"</span>,
   <span class="key">"status"</span>: <span class="str">"TXFA"</span>,
   <span class="key">"tx_hash"</span>: <span class="lit">null</span>,
@@ -1087,7 +1087,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>RC-20260407-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>target_dt</code></td>
       <td>string </td>
@@ -1102,7 +1102,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">대사 조회 요청 예시</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"RC-20260407-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"target_dt"</span>: <span class="str">"20260407000000"</span>
 }</pre>
     </div>
@@ -1132,7 +1132,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>RC-20260407-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>result</code></td>
       <td>array<object> </td>
@@ -1183,7 +1183,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">대사 조회 성공</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"RC-20260407-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"result"</span>: [
     {
       <span class="key">"symbol"</span>: <span class="str">"USDC"</span>,
@@ -1206,7 +1206,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">대사 조회 실패</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"RC-20260407-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"result"</span>: [],
   <span class="key">"message"</span>: <span class="str">"VALIDATION_ERROR"</span>
 }</pre>
@@ -1237,7 +1237,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>C123456789</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -1258,7 +1258,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">토큰 설정 등록</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"C123456789"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"43114"</span>,
   <span class="key">"contract_address"</span>: <span class="str">"0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"</span>
 }</pre>
@@ -1397,7 +1397,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>EF-20260414-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -1430,7 +1430,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">EntryPoint 충전 요청</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"EF-20260414-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
   <span class="key">"action"</span>: <span class="str">"DEPOSIT"</span>,
   <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>,
@@ -1440,7 +1440,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">EntryPoint 인출 요청</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"EF-20260414-000002"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
   <span class="key">"action"</span>: <span class="str">"WITHDRAW"</span>,
   <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>,
@@ -1473,7 +1473,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>EF-20260414-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>action</code></td>
       <td><code>DEPOSIT</code> | <code>WITHDRAW</code> </td>
@@ -1524,7 +1524,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">충전 전송 성공</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"EF-20260414-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"action"</span>: <span class="str">"DEPOSIT"</span>,
   <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>,
   <span class="key">"amount"</span>: <span class="str">"5.0"</span>,
@@ -1537,7 +1537,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 <div class="example-block">
       <div class="example-title">인출 실패</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"EF-20260414-000002"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"action"</span>: <span class="str">"WITHDRAW"</span>,
   <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>,
   <span class="key">"amount"</span>: <span class="str">"3.0"</span>,
@@ -1573,7 +1573,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>CI-20260414-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -1588,7 +1588,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">컨트랙트 조회 요청 예시</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"CI-20260414-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>
 }</pre>
     </div>
@@ -1618,7 +1618,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>CI-20260414-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -1644,7 +1644,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
           <td>Proxy 컨트랙트 주소</td>
           <td><code>0x5FF137D4b0FDCD49DcA30c7CF57E578a026d3789</code></td>
         </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;implementation_address</code></td>
+          <td><code>&nbsp;&nbsp;impl_address</code></td>
           <td>string</td>
           <td><span class="tag required">required</span></td>
           <td>Implementation 주소 (RPC EIP-1967 getImplementation)</td>
@@ -1665,7 +1665,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> circuit_breaker</code></td>
       <td>object </td>
       <td><span class="tag required">required</span></td>
-      <td>Circuit Breaker 상태 (Redis)</td>
+      <td>Circuit Breaker 상태</td>
       <td></td>
     </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
         <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
@@ -1717,37 +1717,31 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">컨트랙트 조회 성공</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"CI-20260414-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
   <span class="key">"contracts"</span>: [
     {
       <span class="key">"name"</span>: <span class="str">"EntryPoint"</span>,
       <span class="key">"proxy_address"</span>: <span class="str">"0x5FF137D4b0FDCD49DcA30c7CF57E578a026d3789"</span>,
-      <span class="key">"implementation_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000001"</span>,
+      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000001"</span>,
       <span class="key">"version"</span>: <span class="str">"v0.6.0"</span>,
       <span class="key">"paused"</span>: <span class="lit">false</span>
     },
     {
       <span class="key">"name"</span>: <span class="str">"AccountFactory"</span>,
       <span class="key">"proxy_address"</span>: <span class="str">"0xFact000000000000000000000000000000001234"</span>,
-      <span class="key">"implementation_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000002"</span>,
+      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000002"</span>,
       <span class="key">"version"</span>: <span class="str">"v1.2.0"</span>,
       <span class="key">"paused"</span>: <span class="lit">false</span>
     },
     {
       <span class="key">"name"</span>: <span class="str">"USDC Token"</span>,
       <span class="key">"proxy_address"</span>: <span class="str">"0xUsdc00000000000000000000000000000000ABCD"</span>,
-      <span class="key">"implementation_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000003"</span>,
+      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000003"</span>,
       <span class="key">"version"</span>: <span class="str">"v2.1.0"</span>,
       <span class="key">"paused"</span>: <span class="lit">false</span>
     },
-    {
-      <span class="key">"name"</span>: <span class="str">"Bridge"</span>,
-      <span class="key">"proxy_address"</span>: <span class="str">"0xBrid000000000000000000000000000000005678"</span>,
-      <span class="key">"implementation_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000004"</span>,
-      <span class="key">"version"</span>: <span class="str">"v0.9.1"</span>,
-      <span class="key">"paused"</span>: <span class="lit">true</span>
-    }
+    "..."
   ],
   <span class="key">"circuit_breaker"</span>: {
     <span class="key">"enabled"</span>: <span class="lit">true</span>,
@@ -1763,13 +1757,13 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   </details></div>
   </div>
   </section>
-<section class="section" id="receiveMonitorNetworkInquiry">
+<section class="section" id="receiveMonitorMetricInquiry">
   <div class="sec-row">
     <div class="sec-left">
-      <h2 class="section-title"><span class="badge-lg receive">RECEIVE</span> 네트워크 조회 요청</h2>
+      <h2 class="section-title"><span class="badge-lg receive">RECEIVE</span> 메트릭 조회 요청</h2>
       <p class="section-desc">Core → Adapter</p>
       <div class="topic-info">
-        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.network.request</code></div>
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.metric.request</code></div>
       </div>
     </div>
     <div class="sec-right"></div>
@@ -1777,7 +1771,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 
   <div class="sec-row">
     <div class="sec-left">
-      <h3>메시지 스키마 — 네트워크 조회 요청</h3>
+      <h3>메시지 스키마 — 메트릭 조회 요청</h3>
       <div class="table-wrap"><table>
         <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
         <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
@@ -1786,7 +1780,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>NI-20260414-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -1799,22 +1793,22 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="sec-right"><details class="examples-toggle">
     <summary>예시 보기 (1건)</summary>
     <div class="example-block">
-      <div class="example-title">네트워크 조회 요청 예시</div>
+      <div class="example-title">메트릭 조회 요청 예시</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"NI-20260414-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>
 }</pre>
     </div>
   </details></div>
   </div>
   </section>
-<section class="section" id="sendMonitorNetworkResult">
+<section class="section" id="sendMonitorMetricResult">
   <div class="sec-row">
     <div class="sec-left">
-      <h2 class="section-title"><span class="badge-lg send">SEND</span> 네트워크 조회 결과</h2>
+      <h2 class="section-title"><span class="badge-lg send">SEND</span> 메트릭 조회 결과</h2>
       <p class="section-desc">Adapter → Core (RPC raw 응답, 데이터 변환 없음)</p>
       <div class="topic-info">
-        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.network.result</code></div>
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.metric.result</code></div>
       </div>
     </div>
     <div class="sec-right"></div>
@@ -1822,7 +1816,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 
   <div class="sec-row">
     <div class="sec-left">
-      <h3>메시지 스키마 — 네트워크 조회 결과</h3>
+      <h3>메시지 스키마 — 메트릭 조회 결과</h3>
       <div class="table-wrap"><table>
         <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
         <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
@@ -1831,7 +1825,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>NI-20260414-000001</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code>chain_id</code></td>
       <td>string </td>
@@ -1995,18 +1989,6 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>동기화 상태 (eth_syncing raw: false=synced, object=syncing 중)</td>
       <td><code>false</code></td>
     </tr><tr>
-      <td><code>network</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>네트워크명 (설정값)</td>
-      <td><code>mainnet</code></td>
-    </tr><tr>
-      <td><code>rpc_endpoint</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>RPC 엔드포인트 (설정값)</td>
-      <td><code>https://rpc.kcpchain.io</code></td>
-    </tr><tr>
       <td><code>message</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
@@ -2018,9 +2000,9 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="sec-right"><details class="examples-toggle">
     <summary>예시 보기 (1건)</summary>
     <div class="example-block">
-      <div class="example-title">네트워크 조회 성공</div>
+      <div class="example-title">메트릭 조회 성공</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"NI-20260414-000001"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
   <span class="key">"block"</span>: {
     <span class="key">"number"</span>: <span class="str">"0x498a85"</span>,
@@ -2049,8 +2031,6 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   },
   <span class="key">"peer_count"</span>: <span class="str">"0x12"</span>,
   <span class="key">"syncing"</span>: <span class="lit">false</span>,
-  <span class="key">"network"</span>: <span class="str">"mainnet"</span>,
-  <span class="key">"rpc_endpoint"</span>: <span class="str">"https://rpc.kcpchain.io"</span>,
   <span class="key">"message"</span>: <span class="lit">null</span>
 }</pre>
     </div>
@@ -2080,13 +2060,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>II-20260414-000001</code></td>
-    </tr><tr>
-      <td><code>chain_id</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>체인 ID</td>
-      <td><code>8217</code></td>
+      <td><code>T123456789</code></td>
     </tr></tbody>
       </table></div>
     </div>
@@ -2095,8 +2069,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">인프라 조회 요청 예시</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"II-20260414-000001"</span>,
-  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>
 }</pre>
     </div>
   </details></div>
@@ -2125,13 +2098,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>string </td>
       <td><span class="tag required">required</span></td>
       <td>요청 고유 ID</td>
-      <td><code>II-20260414-000001</code></td>
-    </tr><tr>
-      <td><code>chain_id</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>체인 ID</td>
-      <td><code>8217</code></td>
+      <td><code>T123456789</code></td>
     </tr><tr>
       <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> health</code></td>
       <td>object </td>
@@ -2257,8 +2224,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="example-block">
       <div class="example-title">인프라 조회 성공</div>
       <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"II-20260414-000001"</span>,
-  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"health"</span>: {
     <span class="key">"modules"</span>: {
       <span class="key">"bundler"</span>: {

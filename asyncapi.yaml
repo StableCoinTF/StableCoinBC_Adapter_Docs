@@ -54,10 +54,10 @@ channels:
     $ref: './channels.yaml#/monitorContractInquiry'
   monitorContractResult:
     $ref: './channels.yaml#/monitorContractResult'
-  monitorNetworkInquiry:
-    $ref: './channels.yaml#/monitorNetworkInquiry'
-  monitorNetworkResult:
-    $ref: './channels.yaml#/monitorNetworkResult'
+  monitorMetricInquiry:
+    $ref: './channels.yaml#/monitorMetricInquiry'
+  monitorMetricResult:
+    $ref: './channels.yaml#/monitorMetricResult'
 
   monitorInfraInquiry:
     $ref: './channels.yaml#/monitorInfraInquiry'
@@ -243,22 +243,22 @@ operations:
     title: 컨트랙트 목록/상태 조회 결과 발행
     summary: 컨트랙트 목록/상태 조회 결과 발행
 
-  receiveMonitorNetworkInquiry:
+  receiveMonitorMetricInquiry:
     action: receive
     channel:
-      $ref: "#/channels/monitorNetworkInquiry"
-    title: 네트워크 조회 요청 수신
-    summary: 네트워크 조회 요청 수신
+      $ref: "#/channels/monitorMetricInquiry"
+    title: 메트릭 조회 요청 수신
+    summary: 메트릭 조회 요청 수신
     reply:
       channel:
-        $ref: "#/channels/monitorNetworkResult"
+        $ref: "#/channels/monitorMetricResult"
 
-  sendMonitorNetworkResult:
+  sendMonitorMetricResult:
     action: send
     channel:
-      $ref: "#/channels/monitorNetworkResult"
-    title: 네트워크 조회 결과 발행
-    summary: 네트워크 조회 결과 발행
+      $ref: "#/channels/monitorMetricResult"
+    title: 메트릭 조회 결과 발행
+    summary: 메트릭 조회 결과 발행
 
 
   receiveMonitorInfraInquiry:
