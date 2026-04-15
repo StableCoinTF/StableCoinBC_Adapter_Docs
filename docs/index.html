@@ -1662,48 +1662,6 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
           <td>일시정지 여부 (RPC paused())</td>
           <td><code>false</code></td>
         </tr><tr>
-      <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> circuit_breaker</code></td>
-      <td>object </td>
-      <td><span class="tag required">required</span></td>
-      <td>Circuit Breaker 상태</td>
-      <td></td>
-    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;enabled</code></td>
-      <td>boolean </td>
-      <td><span class="tag required">required</span></td>
-      <td>Circuit Breaker 활성 여부</td>
-      <td><code>true</code></td>
-    </tr><tr class="nested">
-      <td><code>&nbsp;&nbsp;threshold</code></td>
-      <td>number </td>
-      <td><span class="tag required">required</span></td>
-      <td>임계값</td>
-      <td><code>5</code></td>
-    </tr></tbody>
-      </table></div></td></tr><tr>
-      <td><code><span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> kms</code></td>
-      <td>object </td>
-      <td><span class="tag required">required</span></td>
-      <td>NHN Cloud KMS 상태</td>
-      <td></td>
-    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;connected</code></td>
-      <td>boolean </td>
-      <td><span class="tag required">required</span></td>
-      <td>KMS 연결 상태 (KMS API)</td>
-      <td><code>true</code></td>
-    </tr><tr class="nested">
-      <td><code>&nbsp;&nbsp;key_count</code></td>
-      <td>number </td>
-      <td><span class="tag required">required</span></td>
-      <td>등록된 키 수 (KMS API)</td>
-      <td><code>3</code></td>
-    </tr></tbody>
-      </table></div></td></tr><tr>
       <td><code>message</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
@@ -1743,14 +1701,6 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     },
     "..."
   ],
-  <span class="key">"circuit_breaker"</span>: {
-    <span class="key">"enabled"</span>: <span class="lit">true</span>,
-    <span class="key">"threshold"</span>: <span class="num">5</span>
-  },
-  <span class="key">"kms"</span>: {
-    <span class="key">"connected"</span>: <span class="lit">true</span>,
-    <span class="key">"key_count"</span>: <span class="num">3</span>
-  },
   <span class="key">"message"</span>: <span class="lit">null</span>
 }</pre>
     </div>
