@@ -1525,33 +1525,21 @@ monitorInfraResult:
                     description: Bundler 상태 (HTTP 헬스체크)
                     required:
                       - status
-                      - latency_ms
                     properties:
                       status:
                         $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
                         examples:
                           - "UP"
-                      latency_ms:
-                        type: number
-                        description: 응답 지연 (ms)
-                        examples:
-                          - 32
                   listener:
                     type: object
                     description: Listener 상태 (HTTP 헬스체크)
                     required:
                       - status
-                      - latency_ms
                     properties:
                       status:
                         $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
                         examples:
                           - "UP"
-                      latency_ms:
-                        type: number
-                        description: 응답 지연 (ms)
-                        examples:
-                          - 15
               infra:
                 type: object
                 description: 인프라 상태
@@ -1564,33 +1552,21 @@ monitorInfraResult:
                     description: NHN Cloud KMS 상태 (KMS API 호출)
                     required:
                       - status
-                      - latency_ms
                     properties:
                       status:
                         $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
                         examples:
                           - "UP"
-                      latency_ms:
-                        type: number
-                        description: 응답 지연 (ms)
-                        examples:
-                          - 88
                   websocket:
                     type: object
                     description: WebSocket 연결 상태
                     required:
                       - status
-                      - latency_ms
                     properties:
                       status:
                         $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
                         examples:
                           - "UP"
-                      latency_ms:
-                        type: number
-                        description: 응답 지연 (ms)
-                        examples:
-                          - 25
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -1605,16 +1581,12 @@ monitorInfraResult:
               modules:
                 bundler:
                   status: "UP"
-                  latency_ms: 32
                 listener:
                   status: "UP"
-                  latency_ms: 15
               infra:
                 kms:
                   status: "UP"
-                  latency_ms: 88
                 websocket:
                   status: "UP"
-                  latency_ms: 25
             message: null
 
