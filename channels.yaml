@@ -1514,59 +1514,41 @@ monitorInfraResult:
               - infra
             properties:
               modules:
-                type: object
+                type: array
                 description: 어댑터 모듈 상태
-                required:
-                  - bundler
-                  - listener
-                properties:
-                  bundler:
-                    type: object
-                    description: Bundler 상태 (HTTP 헬스체크)
-                    required:
-                      - status
-                    properties:
-                      status:
-                        $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                        examples:
-                          - "UP"
-                  listener:
-                    type: object
-                    description: Listener 상태 (HTTP 헬스체크)
-                    required:
-                      - status
-                    properties:
-                      status:
-                        $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                        examples:
-                          - "UP"
+                items:
+                  type: object
+                  required:
+                    - name
+                    - status
+                  properties:
+                    name:
+                      type: string
+                      description: 모듈 이름 (bundler, listener 등)
+                      examples:
+                        - "bundler"
+                    status:
+                      $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
+                      examples:
+                        - "UP"
               infra:
-                type: object
+                type: array
                 description: 인프라 상태
-                required:
-                  - kms
-                  - websocket
-                properties:
-                  kms:
-                    type: object
-                    description: NHN Cloud KMS 상태 (KMS API 호출)
-                    required:
-                      - status
-                    properties:
-                      status:
-                        $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                        examples:
-                          - "UP"
-                  websocket:
-                    type: object
-                    description: WebSocket 연결 상태
-                    required:
-                      - status
-                    properties:
-                      status:
-                        $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
-                        examples:
-                          - "UP"
+                items:
+                  type: object
+                  required:
+                    - name
+                    - status
+                  properties:
+                    name:
+                      type: string
+                      description: 인프라 이름 (kms, websocket 등)
+                      examples:
+                        - "kms"
+                    status:
+                      $ref: "asyncapi.yaml#/components/schemas/HealthStatus"
+                      examples:
+                        - "UP"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -1579,14 +1561,14 @@ monitorInfraResult:
             request_id: "T123456789"
             health:
               modules:
-                bundler:
+                - name: "bundler"
                   status: "UP"
-                listener:
+                - name: "listener"
                   status: "UP"
               infra:
-                kms:
+                - name: "kms"
                   status: "UP"
-                websocket:
+                - name: "websocket"
                   status: "UP"
             message: null
 

@@ -121,7 +121,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 
 <header class="header">
   <h1>🔗 <span>StableCoin BC</span> Adapter 메시지 스펙</h1>
-  <span class="header-meta">AsyncAPI 1.0.0 · 2026-04-15</span>
+  <span class="header-meta">AsyncAPI 1.0.0 · 2026-04-17</span>
 </header>
 
 <div class="layout">
@@ -2058,84 +2058,42 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
         <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
         <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> modules</code></td>
-      <td>object </td>
+      <td><code>&nbsp;&nbsp;modules</code></td>
+      <td>array<object> </td>
       <td><span class="tag required">required</span></td>
       <td>어댑터 모듈 상태</td>
       <td></td>
-    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> bundler</code></td>
-      <td>object </td>
-      <td><span class="tag required">required</span></td>
-      <td>Bundler 상태 (HTTP 헬스체크)</td>
-      <td></td>
-    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
-      <td><code>UP</code> | <code>DOWN</code> </td>
-      <td><span class="tag required">required</span></td>
-      <td></td>
-      <td><code>UP</code></td>
-    </tr></tbody>
-      </table></div></td></tr><tr class="nested">
-      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> listener</code></td>
-      <td>object </td>
-      <td><span class="tag required">required</span></td>
-      <td>Listener 상태 (HTTP 헬스체크)</td>
-      <td></td>
-    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
-      <td><code>UP</code> | <code>DOWN</code> </td>
-      <td><span class="tag required">required</span></td>
-      <td></td>
-      <td><code>UP</code></td>
-    </tr></tbody>
-      </table></div></td></tr></tbody>
-      </table></div></td></tr><tr class="nested">
-      <td><code>&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> infra</code></td>
-      <td>object </td>
+    </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;&nbsp;&nbsp;name</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>모듈 이름 (bundler, listener 등)</td>
+          <td><code>bundler</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td></td>
+          <td><code>UP</code></td>
+        </tr><tr class="nested">
+      <td><code>&nbsp;&nbsp;infra</code></td>
+      <td>array<object> </td>
       <td><span class="tag required">required</span></td>
       <td>인프라 상태</td>
       <td></td>
-    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> kms</code></td>
-      <td>object </td>
-      <td><span class="tag required">required</span></td>
-      <td>NHN Cloud KMS 상태 (KMS API 호출)</td>
-      <td></td>
-    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
-      <td><code>UP</code> | <code>DOWN</code> </td>
-      <td><span class="tag required">required</span></td>
-      <td></td>
-      <td><code>UP</code></td>
-    </tr></tbody>
-      </table></div></td></tr><tr class="nested">
-      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;<span class="prop-toggle" onclick="this.closest('tr').nextElementSibling.classList.toggle('nested-hidden');this.textContent=this.textContent==='▶'?'▼':'▶'">▶</span> websocket</code></td>
-      <td>object </td>
-      <td><span class="tag required">required</span></td>
-      <td>WebSocket 연결 상태</td>
-      <td></td>
-    </tr><tr class="nested-hidden"><td colspan="5" style="padding:0"><div class="nested-table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <tbody><tr class="nested">
-      <td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
-      <td><code>UP</code> | <code>DOWN</code> </td>
-      <td><span class="tag required">required</span></td>
-      <td></td>
-      <td><code>UP</code></td>
-    </tr></tbody>
-      </table></div></td></tr></tbody>
-      </table></div></td></tr></tbody>
+    </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;&nbsp;&nbsp;name</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>인프라 이름 (kms, websocket 등)</td>
+          <td><code>kms</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;&nbsp;&nbsp;status</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td></td>
+          <td><code>UP</code></td>
+        </tr></tbody>
       </table></div></td></tr><tr>
       <td><code>message</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
@@ -2152,22 +2110,26 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <pre class="code-block">{
   <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"health"</span>: {
-    <span class="key">"modules"</span>: {
-      <span class="key">"bundler"</span>: {
+    <span class="key">"modules"</span>: [
+      {
+        <span class="key">"name"</span>: <span class="str">"bundler"</span>,
         <span class="key">"status"</span>: <span class="str">"UP"</span>
       },
-      <span class="key">"listener"</span>: {
+      {
+        <span class="key">"name"</span>: <span class="str">"listener"</span>,
         <span class="key">"status"</span>: <span class="str">"UP"</span>
       }
-    },
-    <span class="key">"infra"</span>: {
-      <span class="key">"kms"</span>: {
+    ],
+    <span class="key">"infra"</span>: [
+      {
+        <span class="key">"name"</span>: <span class="str">"kms"</span>,
         <span class="key">"status"</span>: <span class="str">"UP"</span>
       },
-      <span class="key">"websocket"</span>: {
+      {
+        <span class="key">"name"</span>: <span class="str">"websocket"</span>,
         <span class="key">"status"</span>: <span class="str">"UP"</span>
       }
-    }
+    ]
   },
   <span class="key">"message"</span>: <span class="lit">null</span>
 }</pre>
