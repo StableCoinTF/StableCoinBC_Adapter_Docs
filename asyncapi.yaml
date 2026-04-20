@@ -38,6 +38,10 @@ channels:
     $ref: './channels.yaml#/settlementRequest'
   settlementResult:
     $ref: './channels.yaml#/settlementResult'
+  balanceInquiry:
+    $ref: './channels.yaml#/balanceInquiry'
+  balanceResult:
+    $ref: './channels.yaml#/balanceResult'
   reconciliationInquiry:
     $ref: './channels.yaml#/reconciliationInquiry'
   reconciliationResult:
@@ -175,6 +179,23 @@ operations:
       $ref: "#/channels/settlementResult"
     title: 정산 결과 발행
     summary: 정산 결과 발행
+
+  receiveBalanceInquiry:
+    action: receive
+    channel:
+      $ref: "#/channels/balanceInquiry"
+    title: 잔액 조회 요청 수신
+    summary: 잔액 조회 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/balanceResult"
+
+  sendBalanceResult:
+    action: send
+    channel:
+      $ref: "#/channels/balanceResult"
+    title: 잔액 조회 결과 발행
+    summary: 잔액 조회 결과 발행
 
   receiveReconciliationInquiry:
     action: receive

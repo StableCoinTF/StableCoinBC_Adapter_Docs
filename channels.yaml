@@ -313,6 +313,12 @@ withdrawResult:
             description: 완료 일시 (yyyyMMddHHmmss)
             examples:
               - "20260325173715"
+          received_datetime_ms:
+            type: string
+            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            nullable: true
+            examples:
+              - "1743084615000"
           amount:
             type: string
             description: 출금 금액 (decimal string)
@@ -336,6 +342,7 @@ withdrawResult:
             status: "TXCF"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             complete_datetime: "20260325173715"
+            received_datetime_ms: "1743084615000"
             amount: "100000000000000000"
             gas_fee: "21000"
             message: null
@@ -345,6 +352,7 @@ withdrawResult:
             status: "TXFA"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             complete_datetime: "20260325173715"
+            received_datetime_ms: null
             amount: "100000000000000000"
             gas_fee: "21000"
             message: "INSUFFICIENT_BALANCE"
@@ -429,6 +437,12 @@ paymentResult:
             nullable: true
             examples:
               - "20260325191630"
+          received_datetime_ms:
+            type: string
+            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            nullable: true
+            examples:
+              - "1743084615000"
           amount:
             type: string
             description: 결제 금액 (실패 시 null)
@@ -455,6 +469,7 @@ paymentResult:
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
             complete_datetime: "20260325191630"
+            received_datetime_ms: "1743084615000"
             amount: "7.69"
             gas_fee: "21000"
             message: null
@@ -465,6 +480,7 @@ paymentResult:
             status: "TXFA"
             tx_hash: null
             complete_datetime: null
+            received_datetime_ms: null
             amount: null
             gas_fee: null
             message: "BUSINESS_ERROR"
@@ -714,6 +730,12 @@ settlementResult:
             nullable: true
             examples:
               - "20260407143015"
+          received_datetime_ms:
+            type: string
+            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            nullable: true
+            examples:
+              - "1743084615000"
           amount:
             type: string
             description: 정산 금액 (실패 시 null)
@@ -740,6 +762,7 @@ settlementResult:
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
             complete_datetime: "20260407143015"
+            received_datetime_ms: "1743084615000"
             amount: "100.00"
             gas_fee: "21000"
             message: null
@@ -750,12 +773,119 @@ settlementResult:
             status: "TXFA"
             tx_hash: null
             complete_datetime: null
+            received_datetime_ms: null
             amount: null
             gas_fee: null
             message: "INSUFFICIENT_BALANCE"
 
+balanceInquiry:
+  address: adapter.balance.inquiry
+  title: 잔액 조회 요청
+  description: Core → Adapter
+  x-group: 조회 & 대사
+  x-icon: "💰"
+  messages:
+    BalanceInquiryRequest:
+      name: BalanceInquiryRequest
+      title: 잔액 조회 요청
+      payload:
+        type: object
+        required:
+          - request_id
+          - address
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          address:
+            type: string
+            description: 조회 대상 EVM 주소
+            pattern: "^0x[a-fA-F0-9]{40}$"
+            examples:
+              - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+      examples:
+        - name: 잔액 조회 요청 예시
+          payload:
+            request_id: "T123456789"
+            address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+
+balanceResult:
+  address: adapter.balance.result
+  title: 잔액 조회 결과
+  description: Adapter → Core
+  messages:
+    BalanceInquiryResponse:
+      name: BalanceInquiryResponse
+      title: 잔액 조회 결과
+      payload:
+        type: object
+        required:
+          - request_id
+          - result
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          result:
+            type: array
+            description: 심볼별 잔액 결과 목록
+            items:
+              type: object
+              required:
+                - chain_id
+                - symbol
+                - address
+                - balance
+              properties:
+                chain_id:
+                  type: string
+                  description: 체인 ID
+                  examples:
+                    - "11155111"
+                symbol:
+                  type: string
+                  description: 토큰 심볼
+                  examples:
+                    - "USDC"
+                address:
+                  type: string
+                  description: EVM 주소
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  examples:
+                    - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+                balance:
+                  type: string
+                  description: 잔액 (decimal string)
+                  examples:
+                    - "100.00"
+          message:
+            type: string
+            description: 에러 메시지 (성공 시 null)
+            nullable: true
+            examples:
+              - null
+      examples:
+        - name: 잔액 조회 성공
+          payload:
+            request_id: "T123456789"
+            result:
+              - chain_id: "11155111"
+                symbol: "USDC"
+                address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+                balance: "100.00"
+            message: null
+        - name: 잔액 조회 실패
+          payload:
+            request_id: "T123456789"
+            result: []
+            message: "VALIDATION_ERROR"
+
 reconciliationInquiry:
-  address: adapter.reconciliation.request
+  address: adapter.reconciliation.inquiry
   title: 대사 조회 요청
   description: Core → Adapter
   x-group: 조회 & 대사
