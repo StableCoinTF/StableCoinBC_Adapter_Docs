@@ -54,14 +54,19 @@ channels:
     $ref: './channels.yaml#/monitorEntrypointTransfer'
   monitorEntrypointTransferResult:
     $ref: './channels.yaml#/monitorEntrypointTransferResult'
-  monitorContractInquiry:
-    $ref: './channels.yaml#/monitorContractInquiry'
-  monitorContractResult:
-    $ref: './channels.yaml#/monitorContractResult'
   monitorMetricInquiry:
     $ref: './channels.yaml#/monitorMetricInquiry'
   monitorMetricResult:
     $ref: './channels.yaml#/monitorMetricResult'
+  monitorContractInquiry:
+    $ref: './channels.yaml#/monitorContractInquiry'
+  monitorContractResult:
+    $ref: './channels.yaml#/monitorContractResult'
+
+  monitorContractHistory:
+    $ref: './channels.yaml#/monitorContractHistory'
+  monitorContractHistoryResult:
+    $ref: './channels.yaml#/monitorContractHistoryResult'
 
   monitorInfraInquiry:
     $ref: './channels.yaml#/monitorInfraInquiry'
@@ -247,6 +252,23 @@ operations:
     title: EntryPoint 자금 관리 결과 발행
     summary: EntryPoint 자금 관리 결과 발행
 
+  receiveMonitorMetricInquiry:
+    action: receive
+    channel:
+      $ref: "#/channels/monitorMetricInquiry"
+    title: 메트릭 조회 요청 수신
+    summary: 메트릭 조회 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/monitorMetricResult"
+
+  sendMonitorMetricResult:
+    action: send
+    channel:
+      $ref: "#/channels/monitorMetricResult"
+    title: 메트릭 조회 결과 발행
+    summary: 메트릭 조회 결과 발행
+
   receiveMonitorContractInquiry:
     action: receive
     channel:
@@ -264,22 +286,23 @@ operations:
     title: 컨트랙트 목록/상태 조회 결과 발행
     summary: 컨트랙트 목록/상태 조회 결과 발행
 
-  receiveMonitorMetricInquiry:
+
+  receiveMonitorContractHistory:
     action: receive
     channel:
-      $ref: "#/channels/monitorMetricInquiry"
-    title: 메트릭 조회 요청 수신
-    summary: 메트릭 조회 요청 수신
+      $ref: "#/channels/monitorContractHistory"
+    title: 컨트랙트 버전 이력 조회 요청 수신
+    summary: 컨트랙트 버전 이력 조회 요청 수신
     reply:
       channel:
-        $ref: "#/channels/monitorMetricResult"
+        $ref: "#/channels/monitorContractHistoryResult"
 
-  sendMonitorMetricResult:
+  sendMonitorContractHistoryResult:
     action: send
     channel:
-      $ref: "#/channels/monitorMetricResult"
-    title: 메트릭 조회 결과 발행
-    summary: 메트릭 조회 결과 발행
+      $ref: "#/channels/monitorContractHistoryResult"
+    title: 컨트랙트 버전 이력 조회 결과 발행
+    summary: 컨트랙트 버전 이력 조회 결과 발행
 
 
   receiveMonitorInfraInquiry:
