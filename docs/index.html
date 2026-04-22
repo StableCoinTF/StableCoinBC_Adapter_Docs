@@ -121,7 +121,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 
 <header class="header">
   <h1>🔗 <span>StableCoin BC</span> Adapter 메시지 스펙</h1>
-  <span class="header-meta">AsyncAPI 1.0.0 · 2026-04-17</span>
+  <span class="header-meta">AsyncAPI 1.0.0 · 2026-04-22</span>
 </header>
 
 <div class="layout">
@@ -135,9 +135,9 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 설정 &amp; 이벤트</div>
       <div class="nav-group-items"><a href="#receiveSettlementRequest" class="nav-link"><span class="badge receive">RECEIVE</span> 정산 요청</a><a href="#sendSettlementResult" class="nav-link"><span class="badge send">SEND</span> 정산 결과</a><a href="#receiveConfigCreate" class="nav-link"><span class="badge receive">RECEIVE</span> 설정 등록</a><a href="#sendDepositDetected" class="nav-link"><span class="badge send">SEND</span> 입금 감지 이벤트</a></div></div><div class="nav-group collapsed">
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 조회 &amp; 대사</div>
-      <div class="nav-group-items"><a href="#receiveReconciliationInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 대사 조회 요청</a><a href="#sendReconciliationResult" class="nav-link"><span class="badge send">SEND</span> 대사 조회 결과</a></div></div><div class="nav-group collapsed">
+      <div class="nav-group-items"><a href="#receiveBalanceInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 잔액 조회 요청</a><a href="#sendBalanceResult" class="nav-link"><span class="badge send">SEND</span> 잔액 조회 결과</a><a href="#receiveReconciliationInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 대사 조회 요청</a><a href="#sendReconciliationResult" class="nav-link"><span class="badge send">SEND</span> 대사 조회 결과</a></div></div><div class="nav-group collapsed">
       <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 모니터링</div>
-      <div class="nav-group-items"><a href="#receiveMonitorEntrypointTransfer" class="nav-link"><span class="badge receive">RECEIVE</span> EntryPoint 자금 관리 요청</a><a href="#sendMonitorEntrypointTransferred" class="nav-link"><span class="badge send">SEND</span> EntryPoint 자금 관리 결과</a><a href="#receiveMonitorContractInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</a><a href="#sendMonitorContractResult" class="nav-link"><span class="badge send">SEND</span> 컨트랙트 목록/상태 결과</a><a href="#receiveMonitorMetricInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 메트릭 조회 요청</a><a href="#sendMonitorMetricResult" class="nav-link"><span class="badge send">SEND</span> 메트릭 조회 결과</a><a href="#receiveMonitorInfraInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 인프라 조회 요청</a><a href="#sendMonitorInfraResult" class="nav-link"><span class="badge send">SEND</span> 인프라 조회 결과</a></div></div><div class="nav-group collapsed">
+      <div class="nav-group-items"><a href="#receiveMonitorEntrypointTransfer" class="nav-link"><span class="badge receive">RECEIVE</span> EntryPoint 자금 관리 요청</a><a href="#sendMonitorEntrypointTransferred" class="nav-link"><span class="badge send">SEND</span> EntryPoint 자금 관리 결과</a><a href="#receiveMonitorMetricInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 메트릭 조회 요청</a><a href="#sendMonitorMetricResult" class="nav-link"><span class="badge send">SEND</span> 메트릭 조회 결과</a><a href="#receiveMonitorContractInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</a><a href="#sendMonitorContractResult" class="nav-link"><span class="badge send">SEND</span> 컨트랙트 목록/상태 결과</a><a href="#receiveMonitorContractHistory" class="nav-link"><span class="badge receive">RECEIVE</span> 컨트랙트 버전 이력 조회 요청</a><a href="#sendMonitorContractHistoryResult" class="nav-link"><span class="badge send">SEND</span> 컨트랙트 버전 이력 조회 결과</a><a href="#receiveMonitorInfraInquiry" class="nav-link"><span class="badge receive">RECEIVE</span> 인프라 조회 요청</a><a href="#sendMonitorInfraResult" class="nav-link"><span class="badge send">SEND</span> 인프라 조회 결과</a></div></div><div class="nav-group collapsed">
     <div class="nav-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="nav-arrow">▾</span> 공통 스키마</div>
     <div class="nav-group-items">
       <a href="#TransactionStatus" class="nav-link">📌 TransactionStatus</a>
@@ -553,6 +553,12 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>완료 일시 (yyyyMMddHHmmss)</td>
       <td><code>20260325173715</code></td>
     </tr><tr>
+      <td><code>received_datetime_ms</code></td>
+      <td>string <span class="tag nullable">nullable</span></td>
+      <td></td>
+      <td>수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)</td>
+      <td><code>1743084615000</code></td>
+    </tr><tr>
       <td><code>amount</code></td>
       <td>string </td>
       <td><span class="tag required">required</span></td>
@@ -582,6 +588,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"status"</span>: <span class="str">"TXCF"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"</span>,
   <span class="key">"complete_datetime"</span>: <span class="str">"20260325173715"</span>,
+  <span class="key">"received_datetime_ms"</span>: <span class="str">"1743084615000"</span>,
   <span class="key">"amount"</span>: <span class="str">"100000000000000000"</span>,
   <span class="key">"gas_fee"</span>: <span class="str">"21000"</span>,
   <span class="key">"message"</span>: <span class="lit">null</span>
@@ -594,6 +601,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"status"</span>: <span class="str">"TXFA"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"</span>,
   <span class="key">"complete_datetime"</span>: <span class="str">"20260325173715"</span>,
+  <span class="key">"received_datetime_ms"</span>: <span class="lit">null</span>,
   <span class="key">"amount"</span>: <span class="str">"100000000000000000"</span>,
   <span class="key">"gas_fee"</span>: <span class="str">"21000"</span>,
   <span class="key">"message"</span>: <span class="str">"INSUFFICIENT_BALANCE"</span>
@@ -703,6 +711,12 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>완료 일시 (yyyyMMddHHmmss, 실패 시 null)</td>
       <td><code>20260325191630</code></td>
     </tr><tr>
+      <td><code>received_datetime_ms</code></td>
+      <td>string <span class="tag nullable">nullable</span></td>
+      <td></td>
+      <td>수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)</td>
+      <td><code>1743084615000</code></td>
+    </tr><tr>
       <td><code>amount</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
@@ -733,6 +747,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"status"</span>: <span class="str">"TXCF"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"</span>,
   <span class="key">"complete_datetime"</span>: <span class="str">"20260325191630"</span>,
+  <span class="key">"received_datetime_ms"</span>: <span class="str">"1743084615000"</span>,
   <span class="key">"amount"</span>: <span class="str">"7.69"</span>,
   <span class="key">"gas_fee"</span>: <span class="str">"21000"</span>,
   <span class="key">"message"</span>: <span class="lit">null</span>
@@ -746,6 +761,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"status"</span>: <span class="str">"TXFA"</span>,
   <span class="key">"tx_hash"</span>: <span class="lit">null</span>,
   <span class="key">"complete_datetime"</span>: <span class="lit">null</span>,
+  <span class="key">"received_datetime_ms"</span>: <span class="lit">null</span>,
   <span class="key">"amount"</span>: <span class="lit">null</span>,
   <span class="key">"gas_fee"</span>: <span class="lit">null</span>,
   <span class="key">"message"</span>: <span class="str">"BUSINESS_ERROR"</span>
@@ -1013,6 +1029,12 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>완료 일시 (yyyyMMddHHmmss, 실패 시 null)</td>
       <td><code>20260407143015</code></td>
     </tr><tr>
+      <td><code>received_datetime_ms</code></td>
+      <td>string <span class="tag nullable">nullable</span></td>
+      <td></td>
+      <td>수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)</td>
+      <td><code>1743084615000</code></td>
+    </tr><tr>
       <td><code>amount</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
@@ -1043,6 +1065,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"status"</span>: <span class="str">"TXCF"</span>,
   <span class="key">"tx_hash"</span>: <span class="str">"0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"</span>,
   <span class="key">"complete_datetime"</span>: <span class="str">"20260407143015"</span>,
+  <span class="key">"received_datetime_ms"</span>: <span class="str">"1743084615000"</span>,
   <span class="key">"amount"</span>: <span class="str">"100.00"</span>,
   <span class="key">"gas_fee"</span>: <span class="str">"21000"</span>,
   <span class="key">"message"</span>: <span class="lit">null</span>
@@ -1056,9 +1079,146 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   <span class="key">"status"</span>: <span class="str">"TXFA"</span>,
   <span class="key">"tx_hash"</span>: <span class="lit">null</span>,
   <span class="key">"complete_datetime"</span>: <span class="lit">null</span>,
+  <span class="key">"received_datetime_ms"</span>: <span class="lit">null</span>,
   <span class="key">"amount"</span>: <span class="lit">null</span>,
   <span class="key">"gas_fee"</span>: <span class="lit">null</span>,
   <span class="key">"message"</span>: <span class="str">"INSUFFICIENT_BALANCE"</span>
+}</pre>
+    </div>
+  </details></div>
+  </div>
+  </section>
+<section class="section" id="receiveBalanceInquiry">
+  <div class="sec-row">
+    <div class="sec-left">
+      <h2 class="section-title"><span class="badge-lg receive">RECEIVE</span> 잔액 조회 요청</h2>
+      <p class="section-desc">Core → Adapter</p>
+      <div class="topic-info">
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.balance.inquiry</code></div>
+      </div>
+    </div>
+    <div class="sec-right"></div>
+  </div>
+
+  <div class="sec-row">
+    <div class="sec-left">
+      <h3>메시지 스키마 — 잔액 조회 요청</h3>
+      <div class="table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
+        <tbody><tr>
+      <td><code>request_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>요청 고유 ID</td>
+      <td><code>T123456789</code></td>
+    </tr><tr>
+      <td><code>address</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>조회 대상 EVM 주소</td>
+      <td><code>0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18</code></td>
+    </tr></tbody>
+      </table></div>
+    </div>
+    <div class="sec-right"><details class="examples-toggle">
+    <summary>예시 보기 (1건)</summary>
+    <div class="example-block">
+      <div class="example-title">잔액 조회 요청 예시</div>
+      <pre class="code-block">{
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
+  <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>
+}</pre>
+    </div>
+  </details></div>
+  </div>
+  </section>
+<section class="section" id="sendBalanceResult">
+  <div class="sec-row">
+    <div class="sec-left">
+      <h2 class="section-title"><span class="badge-lg send">SEND</span> 잔액 조회 결과</h2>
+      <p class="section-desc">Adapter → Core</p>
+      <div class="topic-info">
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.balance.result</code></div>
+      </div>
+    </div>
+    <div class="sec-right"></div>
+  </div>
+
+  <div class="sec-row">
+    <div class="sec-left">
+      <h3>메시지 스키마 — 잔액 조회 결과</h3>
+      <div class="table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
+        <tbody><tr>
+      <td><code>request_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>요청 고유 ID</td>
+      <td><code>T123456789</code></td>
+    </tr><tr>
+      <td><code>result</code></td>
+      <td>array<object> </td>
+      <td><span class="tag required">required</span></td>
+      <td>심볼별 잔액 결과 목록</td>
+      <td></td>
+    </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;chain_id</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>체인 ID</td>
+          <td><code>11155111</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;symbol</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>토큰 심볼</td>
+          <td><code>USDC</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;address</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>EVM 주소</td>
+          <td><code>0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;balance</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>잔액 (decimal string)</td>
+          <td><code>100.00</code></td>
+        </tr><tr>
+      <td><code>message</code></td>
+      <td>string <span class="tag nullable">nullable</span></td>
+      <td></td>
+      <td>에러 메시지 (성공 시 null)</td>
+      <td><code>null</code></td>
+    </tr></tbody>
+      </table></div>
+    </div>
+    <div class="sec-right"><details class="examples-toggle">
+    <summary>예시 보기 (2건)</summary>
+    <div class="example-block">
+      <div class="example-title">잔액 조회 성공</div>
+      <pre class="code-block">{
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
+  <span class="key">"result"</span>: [
+    {
+      <span class="key">"chain_id"</span>: <span class="str">"11155111"</span>,
+      <span class="key">"symbol"</span>: <span class="str">"USDC"</span>,
+      <span class="key">"address"</span>: <span class="str">"0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"</span>,
+      <span class="key">"balance"</span>: <span class="str">"100.00"</span>
+    }
+  ],
+  <span class="key">"message"</span>: <span class="lit">null</span>
+}</pre>
+    </div>
+<div class="example-block">
+      <div class="example-title">잔액 조회 실패</div>
+      <pre class="code-block">{
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
+  <span class="key">"result"</span>: [],
+  <span class="key">"message"</span>: <span class="str">"VALIDATION_ERROR"</span>
 }</pre>
     </div>
   </details></div>
@@ -1070,7 +1230,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <h2 class="section-title"><span class="badge-lg receive">RECEIVE</span> 대사 조회 요청</h2>
       <p class="section-desc">Core → Adapter</p>
       <div class="topic-info">
-        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.reconciliation.request</code></div>
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.reconciliation.inquiry</code></div>
       </div>
     </div>
     <div class="sec-right"></div>
@@ -1550,163 +1710,6 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   </details></div>
   </div>
   </section>
-<section class="section" id="receiveMonitorContractInquiry">
-  <div class="sec-row">
-    <div class="sec-left">
-      <h2 class="section-title"><span class="badge-lg receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</h2>
-      <p class="section-desc">Core → Adapter</p>
-      <div class="topic-info">
-        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.contract.request</code></div>
-      </div>
-    </div>
-    <div class="sec-right"></div>
-  </div>
-
-  <div class="sec-row">
-    <div class="sec-left">
-      <h3>메시지 스키마 — 컨트랙트 목록/상태 조회 요청</h3>
-      <div class="table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
-        <tbody><tr>
-      <td><code>request_id</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>요청 고유 ID</td>
-      <td><code>T123456789</code></td>
-    </tr><tr>
-      <td><code>chain_id</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>체인 ID</td>
-      <td><code>8217</code></td>
-    </tr></tbody>
-      </table></div>
-    </div>
-    <div class="sec-right"><details class="examples-toggle">
-    <summary>예시 보기 (1건)</summary>
-    <div class="example-block">
-      <div class="example-title">컨트랙트 조회 요청 예시</div>
-      <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
-  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>
-}</pre>
-    </div>
-  </details></div>
-  </div>
-  </section>
-<section class="section" id="sendMonitorContractResult">
-  <div class="sec-row">
-    <div class="sec-left">
-      <h2 class="section-title"><span class="badge-lg send">SEND</span> 컨트랙트 목록/상태 결과</h2>
-      <p class="section-desc">Adapter → Core</p>
-      <div class="topic-info">
-        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.contract.result</code></div>
-      </div>
-    </div>
-    <div class="sec-right"></div>
-  </div>
-
-  <div class="sec-row">
-    <div class="sec-left">
-      <h3>메시지 스키마 — 컨트랙트 목록/상태 결과</h3>
-      <div class="table-wrap"><table>
-        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
-        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
-        <tbody><tr>
-      <td><code>request_id</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>요청 고유 ID</td>
-      <td><code>T123456789</code></td>
-    </tr><tr>
-      <td><code>chain_id</code></td>
-      <td>string </td>
-      <td><span class="tag required">required</span></td>
-      <td>체인 ID</td>
-      <td><code>8217</code></td>
-    </tr><tr>
-      <td><code>contracts</code></td>
-      <td>array<object> </td>
-      <td><span class="tag required">required</span></td>
-      <td>배포된 컨트랙트 목록</td>
-      <td></td>
-    </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;name</code></td>
-          <td>string</td>
-          <td><span class="tag required">required</span></td>
-          <td>컨트랙트 이름</td>
-          <td><code>EntryPoint</code></td>
-        </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;proxy_address</code></td>
-          <td>string</td>
-          <td><span class="tag required">required</span></td>
-          <td>Proxy 컨트랙트 주소</td>
-          <td><code>0x5FF137D4b0FDCD49DcA30c7CF57E578a026d3789</code></td>
-        </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;impl_address</code></td>
-          <td>string</td>
-          <td><span class="tag required">required</span></td>
-          <td>Implementation 주소 (RPC EIP-1967 getImplementation)</td>
-          <td><code>0xImpl000000000000000000000000000000000001</code></td>
-        </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;version</code></td>
-          <td>string</td>
-          <td><span class="tag required">required</span></td>
-          <td>컨트랙트 버전</td>
-          <td><code>v0.6.0</code></td>
-        </tr><tr class="nested">
-          <td><code>&nbsp;&nbsp;paused</code></td>
-          <td>boolean</td>
-          <td><span class="tag required">required</span></td>
-          <td>일시정지 여부 (RPC paused())</td>
-          <td><code>false</code></td>
-        </tr><tr>
-      <td><code>message</code></td>
-      <td>string <span class="tag nullable">nullable</span></td>
-      <td></td>
-      <td>에러 메시지 (성공 시 null)</td>
-      <td><code>null</code></td>
-    </tr></tbody>
-      </table></div>
-    </div>
-    <div class="sec-right"><details class="examples-toggle">
-    <summary>예시 보기 (1건)</summary>
-    <div class="example-block">
-      <div class="example-title">컨트랙트 조회 성공</div>
-      <pre class="code-block">{
-  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
-  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
-  <span class="key">"contracts"</span>: [
-    {
-      <span class="key">"name"</span>: <span class="str">"EntryPoint"</span>,
-      <span class="key">"proxy_address"</span>: <span class="str">"0x5FF137D4b0FDCD49DcA30c7CF57E578a026d3789"</span>,
-      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000001"</span>,
-      <span class="key">"version"</span>: <span class="str">"v0.6.0"</span>,
-      <span class="key">"paused"</span>: <span class="lit">false</span>
-    },
-    {
-      <span class="key">"name"</span>: <span class="str">"AccountFactory"</span>,
-      <span class="key">"proxy_address"</span>: <span class="str">"0xFact000000000000000000000000000000001234"</span>,
-      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000002"</span>,
-      <span class="key">"version"</span>: <span class="str">"v1.2.0"</span>,
-      <span class="key">"paused"</span>: <span class="lit">false</span>
-    },
-    {
-      <span class="key">"name"</span>: <span class="str">"USDC Token"</span>,
-      <span class="key">"proxy_address"</span>: <span class="str">"0xUsdc00000000000000000000000000000000ABCD"</span>,
-      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000003"</span>,
-      <span class="key">"version"</span>: <span class="str">"v2.1.0"</span>,
-      <span class="key">"paused"</span>: <span class="lit">false</span>
-    },
-    "..."
-  ],
-  <span class="key">"message"</span>: <span class="lit">null</span>
-}</pre>
-    </div>
-  </details></div>
-  </div>
-  </section>
 <section class="section" id="receiveMonitorMetricInquiry">
   <div class="sec-row">
     <div class="sec-left">
@@ -1981,6 +1984,319 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
   },
   <span class="key">"peer_count"</span>: <span class="str">"0x12"</span>,
   <span class="key">"syncing"</span>: <span class="lit">false</span>,
+  <span class="key">"message"</span>: <span class="lit">null</span>
+}</pre>
+    </div>
+  </details></div>
+  </div>
+  </section>
+<section class="section" id="receiveMonitorContractInquiry">
+  <div class="sec-row">
+    <div class="sec-left">
+      <h2 class="section-title"><span class="badge-lg receive">RECEIVE</span> 컨트랙트 목록/상태 조회 요청</h2>
+      <p class="section-desc">Core → Adapter</p>
+      <div class="topic-info">
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.contract.request</code></div>
+      </div>
+    </div>
+    <div class="sec-right"></div>
+  </div>
+
+  <div class="sec-row">
+    <div class="sec-left">
+      <h3>메시지 스키마 — 컨트랙트 목록/상태 조회 요청</h3>
+      <div class="table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
+        <tbody><tr>
+      <td><code>request_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>요청 고유 ID</td>
+      <td><code>T123456789</code></td>
+    </tr><tr>
+      <td><code>chain_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>체인 ID</td>
+      <td><code>8217</code></td>
+    </tr></tbody>
+      </table></div>
+    </div>
+    <div class="sec-right"><details class="examples-toggle">
+    <summary>예시 보기 (1건)</summary>
+    <div class="example-block">
+      <div class="example-title">컨트랙트 조회 요청 예시</div>
+      <pre class="code-block">{
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
+  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>
+}</pre>
+    </div>
+  </details></div>
+  </div>
+  </section>
+<section class="section" id="sendMonitorContractResult">
+  <div class="sec-row">
+    <div class="sec-left">
+      <h2 class="section-title"><span class="badge-lg send">SEND</span> 컨트랙트 목록/상태 결과</h2>
+      <p class="section-desc">Adapter → Core</p>
+      <div class="topic-info">
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.contract.result</code></div>
+      </div>
+    </div>
+    <div class="sec-right"></div>
+  </div>
+
+  <div class="sec-row">
+    <div class="sec-left">
+      <h3>메시지 스키마 — 컨트랙트 목록/상태 결과</h3>
+      <div class="table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
+        <tbody><tr>
+      <td><code>request_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>요청 고유 ID</td>
+      <td><code>T123456789</code></td>
+    </tr><tr>
+      <td><code>chain_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>체인 ID</td>
+      <td><code>8217</code></td>
+    </tr><tr>
+      <td><code>contracts</code></td>
+      <td>array<object> </td>
+      <td><span class="tag required">required</span></td>
+      <td>배포된 컨트랙트 목록</td>
+      <td></td>
+    </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;name</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>컨트랙트 이름</td>
+          <td><code>EntryPoint</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;proxy_address</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>Proxy 컨트랙트 주소</td>
+          <td><code>0x5FF137D4b0FDCD49DcA30c7CF57E578a026d3789</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;impl_address</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>Implementation 주소 (RPC EIP-1967 getImplementation)</td>
+          <td><code>0xImpl000000000000000000000000000000000001</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;version</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>컨트랙트 버전</td>
+          <td><code>v0.6.0</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;paused</code></td>
+          <td>boolean</td>
+          <td><span class="tag required">required</span></td>
+          <td>일시정지 여부 (RPC paused())</td>
+          <td><code>false</code></td>
+        </tr><tr>
+      <td><code>message</code></td>
+      <td>string <span class="tag nullable">nullable</span></td>
+      <td></td>
+      <td>에러 메시지 (성공 시 null)</td>
+      <td><code>null</code></td>
+    </tr></tbody>
+      </table></div>
+    </div>
+    <div class="sec-right"><details class="examples-toggle">
+    <summary>예시 보기 (1건)</summary>
+    <div class="example-block">
+      <div class="example-title">컨트랙트 조회 성공</div>
+      <pre class="code-block">{
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
+  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
+  <span class="key">"contracts"</span>: [
+    {
+      <span class="key">"name"</span>: <span class="str">"EntryPoint"</span>,
+      <span class="key">"proxy_address"</span>: <span class="str">"0x5FF137D4b0FDCD49DcA30c7CF57E578a026d3789"</span>,
+      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000001"</span>,
+      <span class="key">"version"</span>: <span class="str">"v0.6.0"</span>,
+      <span class="key">"paused"</span>: <span class="lit">false</span>
+    },
+    {
+      <span class="key">"name"</span>: <span class="str">"AccountFactory"</span>,
+      <span class="key">"proxy_address"</span>: <span class="str">"0xFact000000000000000000000000000000001234"</span>,
+      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000002"</span>,
+      <span class="key">"version"</span>: <span class="str">"v1.2.0"</span>,
+      <span class="key">"paused"</span>: <span class="lit">false</span>
+    },
+    {
+      <span class="key">"name"</span>: <span class="str">"USDC Token"</span>,
+      <span class="key">"proxy_address"</span>: <span class="str">"0xUsdc00000000000000000000000000000000ABCD"</span>,
+      <span class="key">"impl_address"</span>: <span class="str">"0xImpl000000000000000000000000000000000003"</span>,
+      <span class="key">"version"</span>: <span class="str">"v2.1.0"</span>,
+      <span class="key">"paused"</span>: <span class="lit">false</span>
+    },
+    "..."
+  ],
+  <span class="key">"message"</span>: <span class="lit">null</span>
+}</pre>
+    </div>
+  </details></div>
+  </div>
+  </section>
+<section class="section" id="receiveMonitorContractHistory">
+  <div class="sec-row">
+    <div class="sec-left">
+      <h2 class="section-title"><span class="badge-lg receive">RECEIVE</span> 컨트랙트 버전 이력 조회 요청</h2>
+      <p class="section-desc">Core → Adapter</p>
+      <div class="topic-info">
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.contract.history.request</code></div>
+      </div>
+    </div>
+    <div class="sec-right"></div>
+  </div>
+
+  <div class="sec-row">
+    <div class="sec-left">
+      <h3>메시지 스키마 — 컨트랙트 버전 이력 조회 요청</h3>
+      <div class="table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
+        <tbody><tr>
+      <td><code>request_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>요청 고유 ID</td>
+      <td><code>T123456789</code></td>
+    </tr><tr>
+      <td><code>chain_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>체인 ID</td>
+      <td><code>8217</code></td>
+    </tr></tbody>
+      </table></div>
+    </div>
+    <div class="sec-right"><details class="examples-toggle">
+    <summary>예시 보기 (1건)</summary>
+    <div class="example-block">
+      <div class="example-title">버전 이력 조회 요청 예시</div>
+      <pre class="code-block">{
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
+  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>
+}</pre>
+    </div>
+  </details></div>
+  </div>
+  </section>
+<section class="section" id="sendMonitorContractHistoryResult">
+  <div class="sec-row">
+    <div class="sec-left">
+      <h2 class="section-title"><span class="badge-lg send">SEND</span> 컨트랙트 버전 이력 조회 결과</h2>
+      <p class="section-desc">Adapter → Core</p>
+      <div class="topic-info">
+        <div class="topic-row"><span class="topic-label">토픽</span><code class="topic-value">adapter.board.contract.history.result</code></div>
+      </div>
+    </div>
+    <div class="sec-right"></div>
+  </div>
+
+  <div class="sec-row">
+    <div class="sec-left">
+      <h3>메시지 스키마 — 컨트랙트 버전 이력 조회 결과</h3>
+      <div class="table-wrap"><table>
+        <colgroup><col class="col-field"><col class="col-type"><col class="col-req"><col class="col-desc"><col class="col-ex"></colgroup>
+        <thead><tr><th>필드</th><th>타입</th><th>필수</th><th>설명</th><th>예시</th></tr></thead>
+        <tbody><tr>
+      <td><code>request_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>요청 고유 ID</td>
+      <td><code>T123456789</code></td>
+    </tr><tr>
+      <td><code>chain_id</code></td>
+      <td>string </td>
+      <td><span class="tag required">required</span></td>
+      <td>체인 ID</td>
+      <td><code>8217</code></td>
+    </tr><tr>
+      <td><code>histories</code></td>
+      <td>array<object> </td>
+      <td><span class="tag required">required</span></td>
+      <td>컨트랙트별 업그레이드 이력 목록</td>
+      <td></td>
+    </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;contract</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>컨트랙트 이름</td>
+          <td><code>EntryPoint</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;prev_version</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>업그레이드 이전 구현체 버전 (최초 배포 시 null)</td>
+          <td><code>v1.1.0</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;new_version</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>업그레이드 이후 구현체 버전</td>
+          <td><code>v1.2.0</code></td>
+        </tr><tr class="nested">
+          <td><code>&nbsp;&nbsp;upgraded_at</code></td>
+          <td>string</td>
+          <td><span class="tag required">required</span></td>
+          <td>업그레이드 블록 타임스탬프 (yyyyMMddHHmmss)</td>
+          <td><code>20260419143015</code></td>
+        </tr><tr>
+      <td><code>message</code></td>
+      <td>string <span class="tag nullable">nullable</span></td>
+      <td></td>
+      <td>에러 메시지 (성공 시 null)</td>
+      <td><code>null</code></td>
+    </tr></tbody>
+      </table></div>
+    </div>
+    <div class="sec-right"><details class="examples-toggle">
+    <summary>예시 보기 (2건)</summary>
+    <div class="example-block">
+      <div class="example-title">버전 이력 조회 성공</div>
+      <pre class="code-block">{
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
+  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
+  <span class="key">"histories"</span>: [
+    {
+      <span class="key">"contract"</span>: <span class="str">"AccountFactory"</span>,
+      <span class="key">"prev_version"</span>: <span class="str">"v1.1.0"</span>,
+      <span class="key">"new_version"</span>: <span class="str">"v1.2.0"</span>,
+      <span class="key">"upgraded_at"</span>: <span class="str">"20260419143015"</span>
+    },
+    {
+      <span class="key">"contract"</span>: <span class="str">"AccountFactory"</span>,
+      <span class="key">"prev_version"</span>: <span class="lit">null</span>,
+      <span class="key">"new_version"</span>: <span class="str">"v1.1.0"</span>,
+      <span class="key">"upgraded_at"</span>: <span class="str">"20260412091500"</span>
+    },
+    {
+      <span class="key">"contract"</span>: <span class="str">"EntryPoint"</span>,
+      <span class="key">"prev_version"</span>: <span class="str">"v0.9.0"</span>,
+      <span class="key">"new_version"</span>: <span class="str">"v0.9.1"</span>,
+      <span class="key">"upgraded_at"</span>: <span class="str">"20260415120000"</span>
+    }
+  ],
+  <span class="key">"message"</span>: <span class="lit">null</span>
+}</pre>
+    </div>
+<div class="example-block">
+      <div class="example-title">이력 없음 (프록시 컨트랙트 미설정)</div>
+      <pre class="code-block">{
+  <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
+  <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
+  <span class="key">"histories"</span>: [],
   <span class="key">"message"</span>: <span class="lit">null</span>
 }</pre>
     </div>

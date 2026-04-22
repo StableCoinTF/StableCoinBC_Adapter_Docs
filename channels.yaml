@@ -1592,6 +1592,134 @@ monitorMetricResult:
             syncing: false
             message: null
 
+monitorContractHistory:
+  address: adapter.board.contract.history.request
+  title: 컨트랙트 버전 이력 조회 요청
+  description: Core → Adapter
+  x-group: 모니터링
+  x-icon: "📋"
+  messages:
+    ContractUpgradeHistoryRequest:
+      name: ContractUpgradeHistoryRequest
+      title: 컨트랙트 버전 이력 조회 요청
+      payload:
+        type: object
+        required:
+          - request_id
+          - chain_id
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          chain_id:
+            type: string
+            description: 체인 ID
+            examples:
+              - "8217"
+      examples:
+        - name: 버전 이력 조회 요청 예시
+          payload:
+            request_id: "T123456789"
+            chain_id: "8217"
+
+monitorContractHistoryResult:
+  address: adapter.board.contract.history.result
+  title: 컨트랙트 버전 이력 조회 결과
+  description: Adapter → Core
+  x-group: 모니터링
+  x-icon: "📋"
+  messages:
+    ContractUpgradeHistoryResponse:
+      name: ContractUpgradeHistoryResponse
+      title: 컨트랙트 버전 이력 조회 결과
+      description: |
+        프록시 컨트랙트(EntryPoint, AccountFactory)의 업그레이드 이력을 반환합니다.
+        eth_getLogs로 Upgraded 이벤트를 조회하고, 각 구현체 주소에서 VERSION()을 호출해 버전을 확인합니다.
+        직접 배포 컨트랙트(Create2Factory, WrappedToken)는 업그레이드 이력이 없어 목록에 포함되지 않습니다.
+      payload:
+        type: object
+        required:
+          - request_id
+          - chain_id
+          - histories
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          chain_id:
+            type: string
+            description: 체인 ID
+            examples:
+              - "8217"
+          histories:
+            type: array
+            description: 컨트랙트별 업그레이드 이력 목록
+            items:
+              type: object
+              required:
+                - contract
+                - prev_version
+                - new_version
+                - upgraded_at
+              properties:
+                contract:
+                  type: string
+                  description: 컨트랙트 이름
+                  examples:
+                    - "EntryPoint"
+                prev_version:
+                  type: string
+                  description: 업그레이드 이전 구현체 버전 (최초 배포 시 null)
+                  nullable: true
+                  examples:
+                    - "v1.1.0"
+                new_version:
+                  type: string
+                  description: 업그레이드 이후 구현체 버전
+                  examples:
+                    - "v1.2.0"
+                upgraded_at:
+                  type: string
+                  description: 업그레이드 블록 타임스탬프 (yyyyMMddHHmmss)
+                  examples:
+                    - "20260419143015"
+
+          message:
+            type: string
+            description: 에러 메시지 (성공 시 null)
+            nullable: true
+            examples:
+              - null
+      examples:
+        - name: 버전 이력 조회 성공
+          payload:
+            request_id: "T123456789"
+            chain_id: "8217"
+            histories:
+              - contract: "AccountFactory"
+                prev_version: "v1.1.0"
+                new_version: "v1.2.0"
+                upgraded_at: "20260419143015"
+              - contract: "AccountFactory"
+                prev_version: null
+                new_version: "v1.1.0"
+                upgraded_at: "20260412091500"
+              - contract: "EntryPoint"
+                prev_version: "v0.9.0"
+                new_version: "v0.9.1"
+                upgraded_at: "20260415120000"
+            message: null
+        - name: 이력 없음 (프록시 컨트랙트 미설정)
+          payload:
+            request_id: "T123456789"
+            chain_id: "8217"
+            histories: []
+            message: null
+
 monitorInfraInquiry:
   address: adapter.board.infra.request
   title: 인프라 조회 요청
