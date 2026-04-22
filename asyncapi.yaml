@@ -45,6 +45,10 @@ channels:
     $ref: './channels.yaml#/reconciliationInquiry'
   reconciliationResult:
     $ref: './channels.yaml#/reconciliationResult'
+  submissionInquiry:
+    $ref: './channels.yaml#/submissionInquiry'
+  submissionResult:
+    $ref: './channels.yaml#/submissionResult'
   depositDetected:
     $ref: './channels.yaml#/depositDetected'
 
@@ -198,6 +202,23 @@ operations:
       $ref: "#/channels/configCreate"
     title: 설정 등록 요청 수신
     summary: 설정 등록 요청 수신 (응답 없음)
+
+  receiveSubmissionInquiry:
+    action: receive
+    channel:
+      $ref: "#/channels/submissionInquiry"
+    title: 번들러 제출 현황 조회 요청 수신
+    summary: 번들러 제출 현황 조회 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/submissionResult"
+
+  sendSubmissionResult:
+    action: send
+    channel:
+      $ref: "#/channels/submissionResult"
+    title: 번들러 제출 현황 조회 결과 발행
+    summary: 번들러 제출 현황 조회 결과 발행
 
   sendDepositDetected:
     action: send
