@@ -1001,6 +1001,107 @@ reconciliationResult:
             result: []
             message: "VALIDATION_ERROR"
 
+submissionInquiry:
+  address: adapter.submission.inquiry
+  title: 번들러 제출 현황 조회 요청
+  description: Core → Adapter
+  x-group: 조회 & 대사
+  x-icon: "📋"
+  messages:
+    SubmissionInquiryRequest:
+      name: SubmissionInquiryRequest
+      title: 번들러 제출 현황 조회 요청
+      payload:
+        type: object
+        required:
+          - requestId
+          - chainId
+          - targetDt
+        properties:
+          requestId:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "SI-20260422-000001"
+          chainId:
+            type: string
+            description: 조회 대상 체인 ID
+            examples:
+              - "1"
+          targetDt:
+            type: string
+            description: 조회 기준 일시 이하 미집계 건 조회 (yyyyMMddHHmmss)
+            pattern: "^\\d{14}$"
+            examples:
+              - "20260422135900"
+      examples:
+        - name: 번들러 제출 현황 조회 요청 예시
+          payload:
+            requestId: "SI-20260422-000001"
+            chainId: "1"
+            targetDt: "20260422135900"
+
+submissionResult:
+  address: adapter.submission.result
+  title: 번들러 제출 현황 조회 결과
+  description: Adapter → Core
+  messages:
+    SubmissionInquiryResponse:
+      name: SubmissionInquiryResponse
+      title: 번들러 제출 현황 조회 결과
+      payload:
+        type: object
+        required:
+          - requestId
+          - result
+        properties:
+          requestId:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "SI-20260422-000001"
+          result:
+            type: array
+            description: 미집계 번들러 제출 기록 목록
+            items:
+              type: object
+              required:
+                - chainId
+                - submittedAt
+              properties:
+                chainId:
+                  type: string
+                  description: 체인 ID
+                  examples:
+                    - "1"
+                submittedAt:
+                  type: string
+                  description: 번들러 제출 일시 (yyyyMMddHHmmss, KST)
+                  pattern: "^\\d{14}$"
+                  examples:
+                    - "20260422134500"
+          message:
+            type: string
+            nullable: true
+            description: 에러 메시지 (성공 시 null)
+            examples:
+              - null
+      examples:
+        - name: 번들러 제출 현황 조회 성공
+          payload:
+            requestId: "SI-20260422-000001"
+            result:
+              - chainId: "1"
+                submittedAt: "20260422134500"
+              - chainId: "1"
+                submittedAt: "20260422134512"
+            message: null
+        - name: 번들러 제출 현황 조회 실패
+          payload:
+            requestId: "SI-20260422-000001"
+            result: []
+            message: "VALIDATION_ERROR"
+
 depositDetected:
   address: adapter.deposit.detected
   title: 입금 감지 이벤트
