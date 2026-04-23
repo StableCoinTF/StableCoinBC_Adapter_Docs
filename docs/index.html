@@ -121,7 +121,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
 
 <header class="header">
   <h1>🔗 <span>StableCoin BC</span> Adapter 메시지 스펙</h1>
-  <span class="header-meta">AsyncAPI 1.0.0 · 2026-04-22</span>
+  <span class="header-meta">AsyncAPI 1.0.0 · 2026-04-23</span>
 </header>
 
 <div class="layout">
@@ -2223,7 +2223,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td>체인 ID</td>
       <td><code>8217</code></td>
     </tr><tr>
-      <td><code>histories</code></td>
+      <td><code>history</code></td>
       <td>array<object> </td>
       <td><span class="tag required">required</span></td>
       <td>컨트랙트별 업그레이드 이력 목록</td>
@@ -2268,7 +2268,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <pre class="code-block">{
   <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
-  <span class="key">"histories"</span>: [
+  <span class="key">"history"</span>: [
     {
       <span class="key">"contract"</span>: <span class="str">"AccountFactory"</span>,
       <span class="key">"prev_version"</span>: <span class="str">"v1.1.0"</span>,
@@ -2296,7 +2296,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <pre class="code-block">{
   <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"8217"</span>,
-  <span class="key">"histories"</span>: [],
+  <span class="key">"history"</span>: [],
   <span class="key">"message"</span>: <span class="lit">null</span>
 }</pre>
     </div>

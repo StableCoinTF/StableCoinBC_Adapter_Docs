@@ -1643,7 +1643,7 @@ monitorContractHistoryResult:
         required:
           - request_id
           - chain_id
-          - histories
+          - history
         properties:
           request_id:
             type: string
@@ -1655,7 +1655,7 @@ monitorContractHistoryResult:
             description: 체인 ID
             examples:
               - "8217"
-          histories:
+          history:
             type: array
             description: 컨트랙트별 업그레이드 이력 목록
             items:
@@ -1699,7 +1699,7 @@ monitorContractHistoryResult:
           payload:
             request_id: "T123456789"
             chain_id: "8217"
-            histories:
+            history:
               - contract: "AccountFactory"
                 prev_version: "v1.1.0"
                 new_version: "v1.2.0"
@@ -1717,7 +1717,7 @@ monitorContractHistoryResult:
           payload:
             request_id: "T123456789"
             chain_id: "8217"
-            histories: []
+            history: []
             message: null
 
 monitorInfraInquiry:
