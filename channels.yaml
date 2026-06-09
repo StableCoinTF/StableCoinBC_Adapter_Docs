@@ -2077,7 +2077,8 @@ swapRequest:
           - request_id
           - chain_id
           - from_address
-          - amount_in
+          - symbol
+          - amount
         properties:
           request_id:
             type: string
@@ -2095,28 +2096,25 @@ swapRequest:
             pattern: "^0x[a-fA-F0-9]{40}$"
             examples:
               - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
-          amount_in:
+          symbol:
+            type: string
+            description: 변환할 토큰 심볼
+            examples:
+              - "USDC"
+          amount:
             type: string
             description: 투입할 KRWPS 금액 (decimal string)
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
               - "10000.00"
-          min_amount_out:
-            type: string
-            description: 최소 수령 wUSDC 금액 (decimal string, null이면 슬리피지 미지정)
-            nullable: true
-            pattern: "^\\d+(\\.\\d+)?$"
-            examples:
-              - "7.60"
-              - null
       examples:
         - name: KRWPS → wUSDC 스왑 요청
           payload:
             request_id: "T123456789"
             chain_id: "56357"
             from_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+            symbol: "USDC"
             amount_in: "10000.00"
-            min_amount_out: "7.60"
 
 swapResult:
   address: adapter.swap.result
