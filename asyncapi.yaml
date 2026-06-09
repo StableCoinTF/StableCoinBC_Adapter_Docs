@@ -53,6 +53,18 @@ channels:
   depositDetected:
     $ref: './channels.yaml#/depositDetected'
 
+  mintRequest:
+    $ref: './channels.yaml#/mintRequest'
+  mintResult:
+    $ref: './channels.yaml#/mintResult'
+  burnRequest:
+    $ref: './channels.yaml#/burnRequest'
+  burnResult:
+    $ref: './channels.yaml#/burnResult'
+  swapRequest:
+    $ref: './channels.yaml#/swapRequest'
+  swapResult:
+    $ref: './channels.yaml#/swapResult'
 
   monitorEntrypointTransfer:
     $ref: './channels.yaml#/monitorEntrypointTransfer'
@@ -254,7 +266,56 @@ operations:
     title: 입금 감지 이벤트 발행
     summary: 입금 감지 이벤트 발행 (WebSocket → Kafka)
 
+  receiveMintRequest:
+    action: receive
+    channel:
+      $ref: "#/channels/mintRequest"
+    title: 민팅 요청 수신
+    summary: 민팅 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/mintResult"
 
+  sendMintResult:
+    action: send
+    channel:
+      $ref: "#/channels/mintResult"
+    title: 민팅 결과 발행
+    summary: 민팅 결과 발행
+
+  receiveBurnRequest:
+    action: receive
+    channel:
+      $ref: "#/channels/burnRequest"
+    title: 버닝 요청 수신
+    summary: 버닝 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/burnResult"
+
+  sendBurnResult:
+    action: send
+    channel:
+      $ref: "#/channels/burnResult"
+    title: 버닝 결과 발행
+    summary: 버닝 결과 발행
+
+  receiveSwapRequest:
+    action: receive
+    channel:
+      $ref: "#/channels/swapRequest"
+    title: 스왑 요청 수신
+    summary: 스왑 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/swapResult"
+
+  sendSwapResult:
+    action: send
+    channel:
+      $ref: "#/channels/swapResult"
+    title: 스왑 결과 발행
+    summary: 스왑 결과 발행
 
   receiveMonitorEntrypointTransfer:
     action: receive

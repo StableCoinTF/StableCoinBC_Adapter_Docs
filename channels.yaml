@@ -1821,6 +1821,383 @@ monitorContractHistoryResult:
             history: []
             message: null
 
+mintRequest:
+  address: adapter.mint.request
+  title: 민팅 요청
+  description: Core → Adapter
+  x-group: KCP 온오프램프
+  x-icon: "🪙"
+  messages:
+    MintRequest:
+      name: MintRequest
+      title: 민팅 요청
+      payload:
+        type: object
+        required:
+          - request_id
+          - chain_id
+          - to_address
+          - amount
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          chain_id:
+            type: string
+            description: 체인 ID
+            examples:
+              - "56357"
+          to_address:
+            type: string
+            description: KRWPS를 수령할 사용자 AA 지갑 주소
+            pattern: "^0x[a-fA-F0-9]{40}$"
+            examples:
+              - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+          amount:
+            type: string
+            description: 민팅할 금액 (KRW 단위 decimal string, 1 KRWPS = 1 KRW)
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "10000"
+      examples:
+        - name: KRWPS 민팅 요청
+          payload:
+            request_id: "T123456789"
+            chain_id: "56357"
+            to_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+            amount: "10000"
+
+mintResult:
+  address: adapter.mint.result
+  title: 민팅 결과
+  description: Adapter → Core
+  messages:
+    MintResponse:
+      name: MintResponse
+      title: 민팅 결과
+      payload:
+        type: object
+        required:
+          - request_id
+          - status
+          - tx_hash
+          - complete_datetime
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          status:
+            $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
+          tx_hash:
+            type: string
+            description: 트랜잭션 해시
+            pattern: "^0x[a-fA-F0-9]{64}$"
+            examples:
+              - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+          complete_datetime:
+            type: string
+            description: 완료 일시 (yyyyMMddHHmmss)
+            examples:
+              - "20260609143015"
+          received_datetime_ms:
+            type: string
+            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            nullable: true
+            examples:
+              - "1749430215000"
+          gas_fee:
+            type: string
+            description: 가스 수수료 (실패 시 null)
+            nullable: true
+            examples:
+              - "21000"
+          message:
+            type: string
+            description: 에러 메시지 (성공 시 null)
+            nullable: true
+            examples:
+              - null
+      examples:
+        - name: 민팅 성공
+          payload:
+            request_id: "T123456789"
+            status: "TXCF"
+            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+            complete_datetime: "20260609143015"
+            received_datetime_ms: "1749430215000"
+            gas_fee: "21000"
+            message: null
+        - name: 민팅 실패
+          payload:
+            request_id: "T123456789"
+            status: "TXFA"
+            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+            complete_datetime: "20260609143015"
+            received_datetime_ms: null
+            gas_fee: null
+            message: "MINTER_ROLE_NOT_GRANTED"
+
+burnRequest:
+  address: adapter.burn.request
+  title: 버닝 요청
+  description: Core → Adapter
+  x-group: KCP 온오프램프
+  x-icon: "🔥"
+  messages:
+    BurnRequest:
+      name: BurnRequest
+      title: 버닝 요청
+      payload:
+        type: object
+        required:
+          - request_id
+          - chain_id
+          - from_address
+          - amount
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          chain_id:
+            type: string
+            description: 체인 ID
+            examples:
+              - "56357"
+          from_address:
+            type: string
+            description: wUSDC를 소각할 사용자 AA 지갑 주소
+            pattern: "^0x[a-fA-F0-9]{40}$"
+            examples:
+              - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+          amount:
+            type: string
+            description: 소각할 wUSDC 금액 (decimal string)
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "100.00"
+      examples:
+        - name: wUSDC 버닝 요청
+          payload:
+            request_id: "T123456789"
+            chain_id: "56357"
+            from_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+            amount: "100.00"
+
+burnResult:
+  address: adapter.burn.result
+  title: 버닝 결과
+  description: Adapter → Core
+  messages:
+    BurnResponse:
+      name: BurnResponse
+      title: 버닝 결과
+      payload:
+        type: object
+        required:
+          - request_id
+          - status
+          - tx_hash
+          - complete_datetime
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          status:
+            $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
+          tx_hash:
+            type: string
+            description: 트랜잭션 해시
+            pattern: "^0x[a-fA-F0-9]{64}$"
+            examples:
+              - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+          complete_datetime:
+            type: string
+            description: 완료 일시 (yyyyMMddHHmmss)
+            examples:
+              - "20260609143015"
+          received_datetime_ms:
+            type: string
+            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            nullable: true
+            examples:
+              - "1749430215000"
+          gas_fee:
+            type: string
+            description: 가스 수수료 (실패 시 null)
+            nullable: true
+            examples:
+              - "21000"
+          message:
+            type: string
+            description: 에러 메시지 (성공 시 null)
+            nullable: true
+            examples:
+              - null
+      examples:
+        - name: 버닝 성공
+          payload:
+            request_id: "T123456789"
+            status: "TXCF"
+            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+            complete_datetime: "20260609143015"
+            received_datetime_ms: "1749430215000"
+            gas_fee: "21000"
+            message: null
+        - name: 버닝 실패
+          payload:
+            request_id: "T123456789"
+            status: "TXFA"
+            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+            complete_datetime: "20260609143015"
+            received_datetime_ms: null
+            gas_fee: null
+            message: "INSUFFICIENT_BALANCE"
+
+swapRequest:
+  address: adapter.swap.request
+  title: 스왑 요청
+  description: Core → Adapter
+  x-group: KCP 온오프램프
+  x-icon: "🔄"
+  messages:
+    SwapRequest:
+      name: SwapRequest
+      title: 스왑 요청
+      payload:
+        type: object
+        required:
+          - request_id
+          - chain_id
+          - from_address
+          - amount_in
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          chain_id:
+            type: string
+            description: 체인 ID
+            examples:
+              - "56357"
+          from_address:
+            type: string
+            description: 스왑을 실행할 사용자 AA 지갑 주소
+            pattern: "^0x[a-fA-F0-9]{40}$"
+            examples:
+              - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+          amount_in:
+            type: string
+            description: 투입할 KRWPS 금액 (decimal string)
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "10000.00"
+          min_amount_out:
+            type: string
+            description: 최소 수령 wUSDC 금액 (decimal string, null이면 슬리피지 미지정)
+            nullable: true
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "7.60"
+              - null
+      examples:
+        - name: KRWPS → wUSDC 스왑 요청
+          payload:
+            request_id: "T123456789"
+            chain_id: "56357"
+            from_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+            amount_in: "10000.00"
+            min_amount_out: "7.60"
+
+swapResult:
+  address: adapter.swap.result
+  title: 스왑 결과
+  description: Adapter → Core
+  messages:
+    SwapResponse:
+      name: SwapResponse
+      title: 스왑 결과
+      payload:
+        type: object
+        required:
+          - request_id
+          - status
+          - tx_hash
+          - complete_datetime
+        properties:
+          request_id:
+            type: string
+            description: 요청 고유 ID
+            examples:
+              - "T123456789"
+          status:
+            $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
+          tx_hash:
+            type: string
+            description: 트랜잭션 해시
+            pattern: "^0x[a-fA-F0-9]{64}$"
+            examples:
+              - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+          complete_datetime:
+            type: string
+            description: 완료 일시 (yyyyMMddHHmmss)
+            examples:
+              - "20260609143015"
+          received_datetime_ms:
+            type: string
+            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            nullable: true
+            examples:
+              - "1749430215000"
+          amount:
+            type: string
+            description: 실제 수령한 wUSDC 금액 (decimal string, 실패 시 null)
+            nullable: true
+            examples:
+              - "7.68"
+          gas_fee:
+            type: string
+            description: 가스 수수료 (실패 시 null)
+            nullable: true
+            examples:
+              - "21000"
+          message:
+            type: string
+            description: 에러 메시지 (성공 시 null)
+            nullable: true
+            examples:
+              - null
+      examples:
+        - name: 스왑 성공
+          payload:
+            request_id: "T123456789"
+            status: "TXCF"
+            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+            complete_datetime: "20260609143015"
+            received_datetime_ms: "1749430215000"
+            amount: "7.68"
+            gas_fee: "21000"
+            message: null
+        - name: 스왑 실패
+          payload:
+            request_id: "T123456789"
+            status: "TXFA"
+            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+            complete_datetime: "20260609143015"
+            received_datetime_ms: null
+            amount: null
+            gas_fee: null
+            message: "SLIPPAGE_EXCEEDED"
+
 monitorInfraInquiry:
   address: adapter.board.infra.request
   title: 인프라 조회 요청
