@@ -2098,7 +2098,7 @@ swapRequest:
               - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
           symbol:
             type: string
-            description: 변환할 토큰 심볼
+            description: 받을 토큰 심볼
             examples:
               - "USDC"
           amount:
