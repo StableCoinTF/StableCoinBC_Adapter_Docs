@@ -1956,7 +1956,6 @@ burnRequest:
         required:
           - request_id
           - chain_id
-          - from_address
           - amount
         properties:
           request_id:
@@ -1969,24 +1968,23 @@ burnRequest:
             description: 체인 ID
             examples:
               - "56357"
-          from_address:
+          symbol:
             type: string
-            description: wUSDC를 소각할 사용자 AA 지갑 주소
-            pattern: "^0x[a-fA-F0-9]{40}$"
+            description: 소각할 토큰 심볼 (USDC | USDT, 생략 시 USDC)
             examples:
-              - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+              - "USDC"
           amount:
             type: string
-            description: 소각할 wUSDC 금액 (decimal string)
+            description: 소각할 토큰 금액 (decimal string)
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
               - "100.00"
       examples:
-        - name: wUSDC 버닝 요청
+        - name: USDC 버닝 요청
           payload:
             request_id: "T123456789"
             chain_id: "56357"
-            from_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+            symbol: "USDC"
             amount: "100.00"
 
 burnResult:
@@ -2079,6 +2077,7 @@ swapRequest:
           - from_address
           - symbol
           - amount
+          - fx_rate
         properties:
           request_id:
             type: string
@@ -2107,6 +2106,12 @@ swapRequest:
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
               - "10000.00"
+          fx_rate:
+            type: string
+            description: 적용 환율 (decimal string)
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "1310.50"
       examples:
         - name: KRWPS → wUSDC 스왑 요청
           payload:
@@ -2114,7 +2119,8 @@ swapRequest:
             chain_id: "56357"
             from_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
             symbol: "USDC"
-            amount_in: "10000.00"
+            amount: "10000.00"
+            fx_rate: "1310.50"
 
 swapResult:
   address: adapter.swap.result
