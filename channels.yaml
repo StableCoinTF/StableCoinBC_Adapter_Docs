@@ -2094,7 +2094,6 @@ swapRequest:
         required:
           - request_id
           - chain_id
-          - from_address
           - from_symbol
           - to_symbol
           - amount
@@ -2110,12 +2109,6 @@ swapRequest:
             description: 체인 ID
             examples:
               - "56357"
-          from_address:
-            type: string
-            description: 스왑을 실행할 사용자 AA 지갑 주소
-            pattern: "^0x[a-fA-F0-9]{40}$"
-            examples:
-              - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
           from_symbol:
             type: string
             description: 내는 토큰 심볼 (한쪽은 반드시 KRWPS, 다른 쪽은 USDC | USDT)
@@ -2143,7 +2136,6 @@ swapRequest:
           payload:
             request_id: "T123456789"
             chain_id: "56357"
-            from_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
             from_symbol: "KRWPS"
             to_symbol: "USDC"
             amount: "10000.00"
@@ -2152,7 +2144,6 @@ swapRequest:
           payload:
             request_id: "T123456790"
             chain_id: "56357"
-            from_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
             from_symbol: "USDC"
             to_symbol: "KRWPS"
             amount: "7.69"
