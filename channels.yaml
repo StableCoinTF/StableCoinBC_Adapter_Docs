@@ -231,6 +231,7 @@ withdrawRequest:
           - chain_id
           - to_address
           - amount
+          - symbol
         properties:
           request_id:
             type: string
@@ -304,13 +305,15 @@ withdrawResult:
             $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
           tx_hash:
             type: string
-            description: 트랜잭션 해시
+            description: 트랜잭션 해시 (실패 시 null)
             pattern: "^0x[a-fA-F0-9]{64}$"
+            nullable: true
             examples:
               - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
           complete_datetime:
             type: string
-            description: 완료 일시 (yyyyMMddHHmmss)
+            description: 완료 일시 (yyyyMMddHHmmss, 실패 시 null)
+            nullable: true
             examples:
               - "20260325173715"
           received_datetime_ms:
@@ -321,12 +324,14 @@ withdrawResult:
               - "1743084615000"
           amount:
             type: string
-            description: 출금 금액 (decimal string)
+            description: 출금 금액 (decimal string, 실패 시 null)
+            nullable: true
             examples:
               - "100000000000000000"
           gas_fee:
             type: string
-            description: "가스 수수료 (gas_fee = gasUsed * effectiveGasPrice)"
+            description: "가스 수수료 (gas_fee = gasUsed * effectiveGasPrice, 실패 시 null)"
+            nullable: true
             examples:
               - "21000"
           message:
@@ -553,8 +558,9 @@ commonConfirmed:
               - "T123456789"
           tx_hash:
             type: string
-            description: 트랜잭션 해시
+            description: 트랜잭션 해시 (실패 시 null)
             pattern: "^0x[a-fA-F0-9]{64}$"
+            nullable: true
             examples:
               - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
           status:
@@ -567,7 +573,8 @@ commonConfirmed:
               - "11155111"
           confirm_count:
             type: integer
-            description: 현재 블록 컨펌 수
+            description: 현재 블록 컨펌 수 (실패 시 null)
+            nullable: true
             examples:
               - 7
           gas_fee:
@@ -712,7 +719,8 @@ settlementResult:
               - "T123456789"
           chain_id:
             type: string
-            description: 체인 ID
+            description: 체인 ID (요청 검증 실패 시 누락 가능)
+            nullable: true
             examples:
               - "56357"
           status:
@@ -1014,21 +1022,21 @@ submissionInquiry:
       payload:
         type: object
         required:
-          - requestId
-          - chainId
-          - targetDt
+          - request_id
+          - chain_id
+          - target_dt
         properties:
-          requestId:
+          request_id:
             type: string
             description: 요청 고유 ID
             examples:
               - "SI-20260422-000001"
-          chainId:
+          chain_id:
             type: string
             description: 조회 대상 체인 ID
             examples:
               - "1"
-          targetDt:
+          target_dt:
             type: string
             description: 조회 기준 일시 이하 미집계 건 조회 (yyyyMMddHHmmss)
             pattern: "^\\d{14}$"
@@ -1037,9 +1045,9 @@ submissionInquiry:
       examples:
         - name: 번들러 제출 현황 조회 요청 예시
           payload:
-            requestId: "SI-20260422-000001"
-            chainId: "1"
-            targetDt: "20260422135900"
+            request_id: "SI-20260422-000001"
+            chain_id: "1"
+            target_dt: "20260422135900"
 
 submissionResult:
   address: adapter.submission.result
@@ -1052,10 +1060,10 @@ submissionResult:
       payload:
         type: object
         required:
-          - requestId
+          - request_id
           - result
         properties:
-          requestId:
+          request_id:
             type: string
             description: 요청 고유 ID
             examples:
@@ -1066,15 +1074,15 @@ submissionResult:
             items:
               type: object
               required:
-                - chainId
-                - submittedAt
+                - chain_id
+                - submitted_at
               properties:
-                chainId:
+                chain_id:
                   type: string
                   description: 체인 ID
                   examples:
                     - "1"
-                submittedAt:
+                submitted_at:
                   type: string
                   description: 번들러 제출 일시 (yyyyMMddHHmmss, KST)
                   pattern: "^\\d{14}$"
@@ -1089,16 +1097,16 @@ submissionResult:
       examples:
         - name: 번들러 제출 현황 조회 성공
           payload:
-            requestId: "SI-20260422-000001"
+            request_id: "SI-20260422-000001"
             result:
-              - chainId: "1"
-                submittedAt: "20260422134500"
-              - chainId: "1"
-                submittedAt: "20260422134512"
+              - chain_id: "1"
+                submitted_at: "20260422134500"
+              - chain_id: "1"
+                submitted_at: "20260422134512"
             message: null
         - name: 번들러 제출 현황 조회 실패
           payload:
-            requestId: "SI-20260422-000001"
+            request_id: "SI-20260422-000001"
             result: []
             message: "VALIDATION_ERROR"
 
@@ -1125,6 +1133,7 @@ depositDetected:
           - symbol
           - status
           - transaction_datetime
+          - received_datetime_ms
         properties:
           chain_id:
             type: string
@@ -1174,6 +1183,11 @@ depositDetected:
             description: 트랜잭션 일시 (yyyyMMddHHmmss)
             examples:
               - "20260325122100"
+          received_datetime_ms:
+            type: string
+            description: 수신 처리 시각 (yyyyMMddHHmmssSSS)
+            examples:
+              - "20260325122100123"
       examples:
         - name: USDT 입금 감지 (Confirmed)
           payload:
@@ -1186,6 +1200,7 @@ depositDetected:
             symbol: "USDT"
             status: "TXCF"
             transaction_datetime: "20260325122100"
+            received_datetime_ms: "20260325122100123"
         - name: 네이티브 코인 입금 감지 (Pending)
           payload:
             chain_id: "11155111"
@@ -1197,6 +1212,7 @@ depositDetected:
             symbol: "ETH"
             status: "TXPD"
             transaction_datetime: "20260325122200"
+            received_datetime_ms: "20260325122200456"
 
 monitorEntrypointTransfer:
   address: adapter.board.entrypoint.request
@@ -1894,13 +1910,15 @@ mintResult:
             $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
           tx_hash:
             type: string
-            description: 트랜잭션 해시
+            description: 트랜잭션 해시 (실패 시 null)
             pattern: "^0x[a-fA-F0-9]{64}$"
+            nullable: true
             examples:
               - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
           complete_datetime:
             type: string
-            description: 완료 일시 (yyyyMMddHHmmss)
+            description: 완료 일시 (yyyyMMddHHmmss, 실패 시 null)
+            nullable: true
             examples:
               - "20260609143015"
           received_datetime_ms:
@@ -1935,8 +1953,8 @@ mintResult:
           payload:
             request_id: "T123456789"
             status: "TXFA"
-            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
-            complete_datetime: "20260609143015"
+            tx_hash: null
+            complete_datetime: null
             received_datetime_ms: null
             gas_fee: null
             message: "MINTER_ROLE_NOT_GRANTED"
@@ -2012,13 +2030,15 @@ burnResult:
             $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
           tx_hash:
             type: string
-            description: 트랜잭션 해시
+            description: 트랜잭션 해시 (실패 시 null)
             pattern: "^0x[a-fA-F0-9]{64}$"
+            nullable: true
             examples:
               - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
           complete_datetime:
             type: string
-            description: 완료 일시 (yyyyMMddHHmmss)
+            description: 완료 일시 (yyyyMMddHHmmss, 실패 시 null)
+            nullable: true
             examples:
               - "20260609143015"
           received_datetime_ms:
@@ -2053,8 +2073,8 @@ burnResult:
           payload:
             request_id: "T123456789"
             status: "TXFA"
-            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
-            complete_datetime: "20260609143015"
+            tx_hash: null
+            complete_datetime: null
             received_datetime_ms: null
             gas_fee: null
             message: "INSUFFICIENT_BALANCE"
@@ -2163,13 +2183,15 @@ swapResult:
             $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
           tx_hash:
             type: string
-            description: 트랜잭션 해시
+            description: 트랜잭션 해시 (실패 시 null)
             pattern: "^0x[a-fA-F0-9]{64}$"
+            nullable: true
             examples:
               - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
           complete_datetime:
             type: string
-            description: 완료 일시 (yyyyMMddHHmmss)
+            description: 완료 일시 (yyyyMMddHHmmss, 실패 시 null)
+            nullable: true
             examples:
               - "20260609143015"
           received_datetime_ms:
@@ -2178,12 +2200,6 @@ swapResult:
             nullable: true
             examples:
               - "1749430215000"
-          amount:
-            type: string
-            description: 실제 수령한 wUSDC 금액 (decimal string, 실패 시 null)
-            nullable: true
-            examples:
-              - "7.68"
           gas_fee:
             type: string
             description: 가스 수수료 (실패 시 null)
@@ -2204,17 +2220,15 @@ swapResult:
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             complete_datetime: "20260609143015"
             received_datetime_ms: "1749430215000"
-            amount: "7.68"
             gas_fee: "21000"
             message: null
         - name: 스왑 실패
           payload:
             request_id: "T123456789"
             status: "TXFA"
-            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
-            complete_datetime: "20260609143015"
+            tx_hash: null
+            complete_datetime: null
             received_datetime_ms: null
-            amount: null
             gas_fee: null
             message: "SLIPPAGE_EXCEEDED"
 
