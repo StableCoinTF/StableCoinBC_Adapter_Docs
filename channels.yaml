@@ -2118,12 +2118,12 @@ swapRequest:
               - "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
           from_symbol:
             type: string
-            description: 내는 토큰 심볼 (한쪽은 반드시 KRWPS, 다른 쪽은 WUSDC | WUSDT)
+            description: 내는 토큰 심볼 (한쪽은 반드시 KRWPS, 다른 쪽은 USDC | USDT)
             examples:
               - "KRWPS"
           to_symbol:
             type: string
-            description: 받는 토큰 심볼 (한쪽은 반드시 KRWPS, 다른 쪽은 WUSDC | WUSDT)
+            description: 받는 토큰 심볼 (한쪽은 반드시 KRWPS, 다른 쪽은 USDC | USDT)
             examples:
               - "USDC"
           amount:
@@ -2139,7 +2139,7 @@ swapRequest:
             examples:
               - "1310.50"
       examples:
-        - name: KRWPS → wUSDC 스왑 요청
+        - name: KRWPS → USDC 스왑 요청
           payload:
             request_id: "T123456789"
             chain_id: "56357"
@@ -2148,7 +2148,7 @@ swapRequest:
             to_symbol: "USDC"
             amount: "10000.00"
             fx_rate: "1310.50"
-        - name: wUSDC → KRWPS 역방향 스왑 요청
+        - name: USDC → KRWPS 역방향 스왑 요청
           payload:
             request_id: "T123456790"
             chain_id: "56357"

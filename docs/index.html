@@ -1854,13 +1854,13 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>user_address</code></td>
       <td>string </td>
       <td><span class="tag required">required</span></td>
-      <td>wUSDC를 소각할 사용자 AA 지갑 주소</td>
+      <td>USDC를 소각할 사용자 AA 지갑 주소</td>
       <td><code>0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18</code></td>
     </tr><tr>
       <td><code>amount</code></td>
       <td>string </td>
       <td><span class="tag required">required</span></td>
-      <td>소각할 wUSDC 금액 (decimal string)</td>
+      <td>소각할 USDC 금액 (decimal string)</td>
       <td><code>100.00</code></td>
     </tr></tbody>
       </table></div>
@@ -1868,7 +1868,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="sec-right"><details class="examples-toggle">
     <summary>예시 보기 (1건)</summary>
     <div class="example-block">
-      <div class="example-title">wUSDC 버닝 요청</div>
+      <div class="example-title">USDC 버닝 요청</div>
       <pre class="code-block">{
   <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"56357"</span>,
@@ -2017,7 +2017,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>min_amount_out</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
-      <td>최소 수령 wUSDC 금액 (decimal string, null이면 슬리피지 미지정)</td>
+      <td>최소 수령 USDC 금액 (decimal string, null이면 슬리피지 미지정)</td>
       <td><code>7.60</code></td>
     </tr></tbody>
       </table></div>
@@ -2025,7 +2025,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
     <div class="sec-right"><details class="examples-toggle">
     <summary>예시 보기 (1건)</summary>
     <div class="example-block">
-      <div class="example-title">KRWPS → wUSDC 스왑 요청</div>
+      <div class="example-title">KRWPS → USDC 스왑 요청</div>
       <pre class="code-block">{
   <span class="key">"request_id"</span>: <span class="str">"T123456789"</span>,
   <span class="key">"chain_id"</span>: <span class="str">"56357"</span>,
@@ -2089,7 +2089,7 @@ td code,th code{background:var(--gray-100);padding:2px 6px;border-radius:4px;fon
       <td><code>amount_out</code></td>
       <td>string <span class="tag nullable">nullable</span></td>
       <td></td>
-      <td>실제 수령한 wUSDC 금액 (decimal string, 실패 시 null)</td>
+      <td>실제 수령한 USDC 금액 (decimal string, 실패 시 null)</td>
       <td><code>7.68</code></td>
     </tr><tr>
       <td><code>gas_fee</code></td>
