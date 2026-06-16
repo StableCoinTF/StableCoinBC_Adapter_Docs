@@ -1915,6 +1915,13 @@ mintResult:
             nullable: true
             examples:
               - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+          amount:
+            type: string
+            description: 온체인 발행 금액 (Transfer 이벤트 디코딩, decimal string. 미확인/실패 시 null)
+            pattern: "^\\d+(\\.\\d+)?$"
+            nullable: true
+            examples:
+              - "10000.0"
           complete_datetime:
             type: string
             description: 완료 일시 (yyyyMMddHHmmss, 실패 시 null)
@@ -1945,6 +1952,7 @@ mintResult:
             request_id: "T123456789"
             status: "TXCF"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
+            amount: "10000.0"
             complete_datetime: "20260609143015"
             received_datetime_ms: "1749430215000"
             gas_fee: "21000"
@@ -1954,6 +1962,7 @@ mintResult:
             request_id: "T123456789"
             status: "TXFA"
             tx_hash: null
+            amount: null
             complete_datetime: null
             received_datetime_ms: null
             gas_fee: null
