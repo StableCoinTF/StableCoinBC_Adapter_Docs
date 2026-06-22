@@ -262,14 +262,21 @@ withdrawRequest:
             examples:
               - "USDC"
               - null
+          fee:
+            type: string
+            description: 출금 수수료 (decimal string, 미지정 시 0)
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "1000000000000000"
       examples:
-        - name: ERC-20 토큰 출금
+        - name: ERC-20 토큰 출금 (수수료 포함)
           payload:
             request_id: "T123456789"
             chain_id: "11155111"
             to_address: "0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"
             amount: "100000000000000000"
             symbol: "USDC"
+            fee: "1000000000000000"
         - name: 네이티브 코인 출금
           payload:
             request_id: "T123456789"
@@ -481,6 +488,157 @@ paymentResult:
         - name: 결제 실패
           payload:
             request_id: "T123456789"
+            chain_id: null
+            status: "TXFA"
+            tx_hash: null
+            complete_datetime: null
+            received_datetime_ms: null
+            amount: null
+            gas_fee: null
+            message: "BUSINESS_ERROR"
+
+paymentCancel:
+  address: adapter.payment.cancel
+  title: 결제 취소 요청
+  description: Core → Adapter
+  x-group: 거래
+  x-icon: "↩️"
+  messages:
+    PaymentCancelRequest:
+      name: PaymentCancelRequest
+      title: 결제 취소 요청
+      payload:
+        type: object
+        required:
+          - request_id
+          - original_request_id
+          - amount
+          - symbol
+          - user_address
+        properties:
+          request_id:
+            type: string
+            description: 취소 요청 고유 ID
+            examples:
+              - "C123456789"
+          original_request_id:
+            type: string
+            description: 원 결제 요청 ID (pass-through)
+            examples:
+              - "T123456789"
+          amount:
+            type: string
+            description: 환불 금액 (decimal string, 정산 전 전액 환불)
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "7.69"
+          symbol:
+            type: string
+            description: "토큰 심볼 (USDC, USDT, ETH, AVAX 등)"
+            examples:
+              - "USDC"
+          user_address:
+            type: string
+            description: 환불 수신 지갑 주소 (정산 지갑 → 사용자 지갑)
+            pattern: "^0x[a-fA-F0-9]{40}$"
+            examples:
+              - "0x1111111111111111111111111111111111111111"
+      examples:
+        - name: USDC 결제 취소 요청
+          payload:
+            request_id: "C123456789"
+            original_request_id: "T123456789"
+            amount: "7.69"
+            symbol: "USDC"
+            user_address: "0x1111111111111111111111111111111111111111"
+
+paymentCanceled:
+  address: adapter.payment.canceled
+  title: 결제 취소 결과
+  description: Adapter → Core
+  messages:
+    PaymentCancelResponse:
+      name: PaymentCancelResponse
+      title: 결제 취소 결과
+      payload:
+        type: object
+        required:
+          - request_id
+          - status
+        properties:
+          request_id:
+            type: string
+            description: 취소 요청 고유 ID
+            examples:
+              - "C123456789"
+          original_request_id:
+            type: string
+            description: 원 결제 요청 ID (pass-through, 실패 시 null)
+            nullable: true
+            examples:
+              - "T123456789"
+          chain_id:
+            type: string
+            description: 체인 ID
+            nullable: true
+            examples:
+              - "56357"
+          status:
+            $ref: "asyncapi.yaml#/components/schemas/TransactionStatus"
+          tx_hash:
+            type: string
+            description: 트랜잭션 해시 (실패 시 null)
+            pattern: "^0x[a-fA-F0-9]{64}$"
+            nullable: true
+            examples:
+              - "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
+          complete_datetime:
+            type: string
+            description: 완료 일시 (yyyyMMddHHmmss, 실패 시 null)
+            nullable: true
+            examples:
+              - "20260325191630"
+          received_datetime_ms:
+            type: string
+            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            nullable: true
+            examples:
+              - "1743084615000"
+          amount:
+            type: string
+            description: 환불 금액 (실패 시 null)
+            nullable: true
+            examples:
+              - "7.69"
+          gas_fee:
+            type: string
+            description: "가스 수수료 (gas_fee = gasUsed * effectiveGasPrice, 실패 시 null)"
+            nullable: true
+            examples:
+              - "21000"
+          message:
+            type: string
+            description: 에러 메시지 (성공 시 null)
+            nullable: true
+            examples:
+              - null
+      examples:
+        - name: 결제 취소 성공
+          payload:
+            request_id: "C123456789"
+            original_request_id: "T123456789"
+            chain_id: "56357"
+            status: "TXCF"
+            tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
+            complete_datetime: "20260325191630"
+            received_datetime_ms: "1743084615000"
+            amount: "7.69"
+            gas_fee: "21000"
+            message: null
+        - name: 결제 취소 실패
+          payload:
+            request_id: "C123456789"
+            original_request_id: null
             chain_id: null
             status: "TXFA"
             tx_hash: null

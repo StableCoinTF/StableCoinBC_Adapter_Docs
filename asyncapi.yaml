@@ -27,6 +27,10 @@ channels:
     $ref: './channels.yaml#/paymentRequest'
   paymentResult:
     $ref: './channels.yaml#/paymentResult'
+  paymentCancel:
+    $ref: './channels.yaml#/paymentCancel'
+  paymentCanceled:
+    $ref: './channels.yaml#/paymentCanceled'
   commonConfirm:
     $ref: './channels.yaml#/commonConfirm'
   commonConfirmed:
@@ -165,6 +169,23 @@ operations:
       $ref: "#/channels/paymentResult"
     title: 결제 결과 발행
     summary: 결제 결과 발행
+
+  receivePaymentCancel:
+    action: receive
+    channel:
+      $ref: "#/channels/paymentCancel"
+    title: 결제 취소 요청 수신
+    summary: 결제 취소 요청 수신
+    reply:
+      channel:
+        $ref: "#/channels/paymentCanceled"
+
+  sendPaymentCanceled:
+    action: send
+    channel:
+      $ref: "#/channels/paymentCanceled"
+    title: 결제 취소 결과 발행
+    summary: 결제 취소 결과 발행
 
   receiveConfirm:
     action: receive
