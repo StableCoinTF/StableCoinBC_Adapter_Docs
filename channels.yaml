@@ -511,7 +511,6 @@ paymentCancel:
         type: object
         required:
           - request_id
-          - original_request_id
           - amount
           - symbol
           - user_address
@@ -521,11 +520,6 @@ paymentCancel:
             description: 취소 요청 고유 ID
             examples:
               - "C123456789"
-          original_request_id:
-            type: string
-            description: 원 결제 요청 ID (pass-through)
-            examples:
-              - "T123456789"
           amount:
             type: string
             description: 환불 금액 (decimal string, 정산 전 전액 환불)
@@ -547,7 +541,6 @@ paymentCancel:
         - name: USDC 결제 취소 요청
           payload:
             request_id: "C123456789"
-            original_request_id: "T123456789"
             amount: "7.69"
             symbol: "USDC"
             user_address: "0x1111111111111111111111111111111111111111"
@@ -571,12 +564,6 @@ paymentCanceled:
             description: 취소 요청 고유 ID
             examples:
               - "C123456789"
-          original_request_id:
-            type: string
-            description: 원 결제 요청 ID (pass-through, 실패 시 null)
-            nullable: true
-            examples:
-              - "T123456789"
           chain_id:
             type: string
             description: 체인 ID
@@ -626,7 +613,6 @@ paymentCanceled:
         - name: 결제 취소 성공
           payload:
             request_id: "C123456789"
-            original_request_id: "T123456789"
             chain_id: "56357"
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
@@ -638,7 +624,6 @@ paymentCanceled:
         - name: 결제 취소 실패
           payload:
             request_id: "C123456789"
-            original_request_id: null
             chain_id: null
             status: "TXFA"
             tx_hash: null
