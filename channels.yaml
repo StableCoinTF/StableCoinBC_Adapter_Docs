@@ -2333,7 +2333,7 @@ swapResult:
               - "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
           amount:
             type: string
-            description: 온체인 수령 금액 (받는 토큰 Transfer 이벤트 디코딩, to=hotWallet, decimal string. 미확인/실패 시 null)
+            description: 수령 금액 (번들러 계산 출력량 expectedOut, 받는 토큰 단위 decimal string. 미확인/실패 시 null)
             pattern: "^\\d+(\\.\\d+)?$"
             nullable: true
             examples:
