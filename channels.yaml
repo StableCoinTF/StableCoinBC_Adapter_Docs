@@ -2020,8 +2020,21 @@ mintRequest:
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
               - "10000"
+          fee:
+            type: string
+            description: 민팅 수수료 (decimal string, 미지정 시 0). 수취인은 amount-fee 발행, 수수료 지갑이 fee 발행
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "100"
       examples:
-        - name: KRWPS 민팅 요청
+        - name: KRWPS 민팅 요청 (수수료 포함)
+          payload:
+            request_id: "T123456789"
+            chain_id: "56357"
+            to_address: "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD18"
+            amount: "10000"
+            fee: "100"
+        - name: KRWPS 민팅 요청 (수수료 없음)
           payload:
             request_id: "T123456789"
             chain_id: "56357"
@@ -2292,8 +2305,14 @@ swapRequest:
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
               - "1310.50"
+          fee:
+            type: string
+            description: 스왑 수수료 (내는 토큰 기준 decimal string, 미지정 시 0). amount-fee만 스왑, 수수료 지갑이 fee 수령
+            pattern: "^\\d+(\\.\\d+)?$"
+            examples:
+              - "100"
       examples:
-        - name: KRWPS → USDC 스왑 요청
+        - name: KRWPS → USDC 스왑 요청 (수수료 포함)
           payload:
             request_id: "T123456789"
             chain_id: "56357"
@@ -2301,6 +2320,7 @@ swapRequest:
             to_symbol: "USDC"
             amount: "10000.00"
             fx_rate: "1310.50"
+            fee: "100"
         - name: USDC → KRWPS 역방향 스왑 요청
           payload:
             request_id: "T123456790"
