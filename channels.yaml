@@ -251,10 +251,10 @@ withdrawRequest:
               - "0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"
           amount:
             type: string
-            description: 출금 금액 (Wei 단위 decimal string)
+            description: 출금 금액 (토큰 단위 decimal string)
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
-              - "100000000000000000"
+              - "100"
           symbol:
             type: string
             description: 토큰 심볼 (null이면 네이티브 토큰)
@@ -264,25 +264,25 @@ withdrawRequest:
               - null
           fee:
             type: string
-            description: 출금 수수료 (decimal string, 미지정 시 0)
+            description: 출금 수수료 (decimal string, 미지정 시 0). 수취인은 amount 수령, 수수료 지갑이 fee 수령
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
-              - "1000000000000000"
+              - "1"
       examples:
         - name: ERC-20 토큰 출금 (수수료 포함)
           payload:
             request_id: "T123456789"
             chain_id: "11155111"
             to_address: "0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"
-            amount: "100000000000000000"
+            amount: "100"
             symbol: "USDC"
-            fee: "1000000000000000"
+            fee: "1"
         - name: 네이티브 코인 출금
           payload:
             request_id: "T123456789"
             chain_id: "11155111"
             to_address: "0xAb5801a7D398351b8bE11C439e05C5b3259aeC9B"
-            amount: "500000000000000000"
+            amount: "0.5"
             symbol: null
 
 withdrawResult:
@@ -325,22 +325,22 @@ withdrawResult:
               - "20260325173715"
           received_datetime_ms:
             type: string
-            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            description: 수신 처리 시각 (yyyyMMddHHmmssSSS, 실패 시 null)
             nullable: true
             examples:
-              - "1743084615000"
+              - "20260325173715123"
           amount:
             type: string
-            description: 출금 금액 (decimal string, 실패 시 null)
+            description: 출금 금액 (ERC20는 온체인 Transfer 이벤트 디코딩 실측값, Native/미확인 시 요청 금액, 토큰 단위 decimal string. 실패 시 null)
             nullable: true
             examples:
-              - "100000000000000000"
+              - "100.0"
           gas_fee:
             type: string
-            description: "가스 수수료 (gas_fee = gasUsed * effectiveGasPrice, 실패 시 null)"
+            description: "가스 수수료 (gasUsed * effectiveGasPrice, 네이티브 토큰 단위 decimal string. 미확인 시 0, 실패 시 null)"
             nullable: true
             examples:
-              - "21000"
+              - "0.000021"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -354,19 +354,19 @@ withdrawResult:
             status: "TXCF"
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             complete_datetime: "20260325173715"
-            received_datetime_ms: "1743084615000"
-            amount: "100000000000000000"
-            gas_fee: "21000"
+            received_datetime_ms: "20260325173715123"
+            amount: "100.0"
+            gas_fee: "0.000021"
             message: null
         - name: 출금 실패
           payload:
             request_id: "T123456789"
             status: "TXFA"
-            tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
-            complete_datetime: "20260325173715"
+            tx_hash: null
+            complete_datetime: null
             received_datetime_ms: null
-            amount: "100000000000000000"
-            gas_fee: "21000"
+            amount: null
+            gas_fee: null
             message: "INSUFFICIENT_BALANCE"
 
 paymentRequest:
@@ -451,10 +451,10 @@ paymentResult:
               - "20260325191630"
           received_datetime_ms:
             type: string
-            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            description: 수신 처리 시각 (yyyyMMddHHmmssSSS, 실패 시 null)
             nullable: true
             examples:
-              - "1743084615000"
+              - "20260325173715123"
           amount:
             type: string
             description: 결제 금액 (실패 시 null)
@@ -466,7 +466,7 @@ paymentResult:
             description: "가스 수수료 (gas_fee = gasUsed * effectiveGasPrice, 실패 시 null)"
             nullable: true
             examples:
-              - "21000"
+              - "0.000021"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -481,9 +481,9 @@ paymentResult:
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
             complete_datetime: "20260325191630"
-            received_datetime_ms: "1743084615000"
+            received_datetime_ms: "20260325173715123"
             amount: "7.69"
-            gas_fee: "21000"
+            gas_fee: "0.000021"
             message: null
         - name: 결제 실패
           payload:
@@ -587,10 +587,10 @@ paymentCanceled:
               - "20260325191630"
           received_datetime_ms:
             type: string
-            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            description: 수신 처리 시각 (yyyyMMddHHmmssSSS, 실패 시 null)
             nullable: true
             examples:
-              - "1743084615000"
+              - "20260325173715123"
           amount:
             type: string
             description: 환불 금액 (실패 시 null)
@@ -602,7 +602,7 @@ paymentCanceled:
             description: "가스 수수료 (gas_fee = gasUsed * effectiveGasPrice, 실패 시 null)"
             nullable: true
             examples:
-              - "21000"
+              - "0.000021"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -617,9 +617,9 @@ paymentCanceled:
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
             complete_datetime: "20260325191630"
-            received_datetime_ms: "1743084615000"
+            received_datetime_ms: "20260325173715123"
             amount: "7.69"
-            gas_fee: "21000"
+            gas_fee: "0.000021"
             message: null
         - name: 결제 취소 실패
           payload:
@@ -883,10 +883,10 @@ settlementResult:
               - "20260407143015"
           received_datetime_ms:
             type: string
-            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            description: 수신 처리 시각 (yyyyMMddHHmmssSSS, 실패 시 null)
             nullable: true
             examples:
-              - "1743084615000"
+              - "20260325173715123"
           amount:
             type: string
             description: 정산 금액 (실패 시 null)
@@ -898,7 +898,7 @@ settlementResult:
             description: 가스 수수료 (실패 시 null)
             nullable: true
             examples:
-              - "21000"
+              - "0.000021"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -913,9 +913,9 @@ settlementResult:
             status: "TXCF"
             tx_hash: "0xabc123def4567890abcdef1234567890abcdef1234567890abcdef1234567890"
             complete_datetime: "20260407143015"
-            received_datetime_ms: "1743084615000"
+            received_datetime_ms: "20260325173715123"
             amount: "100.00"
-            gas_fee: "21000"
+            gas_fee: "0.000021"
             message: null
         - name: 정산 실패
           payload:
@@ -1098,6 +1098,7 @@ reconciliationResult:
                 - platform_on_total
                 - reserve_on_total
                 - not_deploy_user_on_total
+                - fee_on_total
               properties:
                 symbol:
                   type: string
@@ -1124,6 +1125,11 @@ reconciliationResult:
                   description: 미배포 사용자 온체인 잔액 합계 (decimal string)
                   examples:
                     - "500.00"
+                fee_on_total:
+                  type: string
+                  description: 서비스 수수료 지갑(민팅/스왑/출금 수수료) 온체인 잔액 합계 (decimal string)
+                  examples:
+                    - "100.00"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -1140,11 +1146,13 @@ reconciliationResult:
                 platform_on_total: "10000.00"
                 reserve_on_total: "0"
                 not_deploy_user_on_total: "500.00"
+                fee_on_total: "100.00"
               - symbol: "USDT"
                 user_on_total: "30000.00"
                 platform_on_total: "5000.00"
                 reserve_on_total: "0"
                 not_deploy_user_on_total: "200.00"
+                fee_on_total: "50.00"
             message: null
         - name: 대사 조회 실패
           payload:
@@ -2022,7 +2030,7 @@ mintRequest:
               - "10000"
           fee:
             type: string
-            description: 민팅 수수료 (decimal string, 미지정 시 0). 수취인은 amount-fee 발행, 수수료 지갑이 fee 발행
+            description: 민팅 수수료 (decimal string, 미지정 시 0). 수취인은 amount 발행, 수수료 지갑이 fee 발행
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
               - "100"
@@ -2086,16 +2094,16 @@ mintResult:
               - "20260609143015"
           received_datetime_ms:
             type: string
-            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            description: 수신 처리 시각 (yyyyMMddHHmmssSSS, 실패 시 null)
             nullable: true
             examples:
-              - "1749430215000"
+              - "20260609143015123"
           gas_fee:
             type: string
             description: 가스 수수료 (실패 시 null)
             nullable: true
             examples:
-              - "21000"
+              - "0.000021"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -2110,8 +2118,8 @@ mintResult:
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             amount: "10000.0"
             complete_datetime: "20260609143015"
-            received_datetime_ms: "1749430215000"
-            gas_fee: "21000"
+            received_datetime_ms: "20260609143015123"
+            gas_fee: "0.000021"
             message: null
         - name: 민팅 실패
           payload:
@@ -2215,16 +2223,16 @@ burnResult:
               - "20260609143015"
           received_datetime_ms:
             type: string
-            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            description: 수신 처리 시각 (yyyyMMddHHmmssSSS, 실패 시 null)
             nullable: true
             examples:
-              - "1749430215000"
+              - "20260609143015123"
           gas_fee:
             type: string
             description: 가스 수수료 (실패 시 null)
             nullable: true
             examples:
-              - "21000"
+              - "0.000021"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -2239,8 +2247,8 @@ burnResult:
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             amount: "500.0"
             complete_datetime: "20260609143015"
-            received_datetime_ms: "1749430215000"
-            gas_fee: "21000"
+            received_datetime_ms: "20260609143015123"
+            gas_fee: "0.000021"
             message: null
         - name: 버닝 실패
           payload:
@@ -2307,7 +2315,7 @@ swapRequest:
               - "1310.50"
           fee:
             type: string
-            description: 스왑 수수료 (내는 토큰 기준 decimal string, 미지정 시 0). amount-fee만 스왑, 수수료 지갑이 fee 수령
+            description: 스왑 수수료 (내는 토큰 기준 decimal string, 미지정 시 0). amount 전액 스왑, 수수료 지갑이 fee 수령
             pattern: "^\\d+(\\.\\d+)?$"
             examples:
               - "100"
@@ -2375,16 +2383,16 @@ swapResult:
               - "20260609143015"
           received_datetime_ms:
             type: string
-            description: 수신 처리 시각 (Unix timestamp milliseconds, 실패 시 null)
+            description: 수신 처리 시각 (yyyyMMddHHmmssSSS, 실패 시 null)
             nullable: true
             examples:
-              - "1749430215000"
+              - "20260609143015123"
           gas_fee:
             type: string
             description: 가스 수수료 (실패 시 null)
             nullable: true
             examples:
-              - "21000"
+              - "0.000021"
           message:
             type: string
             description: 에러 메시지 (성공 시 null)
@@ -2399,8 +2407,8 @@ swapResult:
             tx_hash: "0xe9e91f1ee4b56c0df2e9f06c2b8c27c6076195a88a7b8537ba8313d80e6f124e"
             amount: "0.72"
             complete_datetime: "20260609143015"
-            received_datetime_ms: "1749430215000"
-            gas_fee: "21000"
+            received_datetime_ms: "20260609143015123"
+            gas_fee: "0.000021"
             message: null
         - name: 스왑 실패
           payload:
